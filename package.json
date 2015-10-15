@@ -2,6 +2,9 @@
     "name": "hlsjs-wrapper",
     "version": "0.1.0",
     "main": "./lib/streamroot-wrapper",
+    "scripts": {
+      "build": "browserify -d -s StreamrootWrapper lib/streamroot-wrapper -o dist/streamroot-wrapper.js"
+    },
     "browserify": {
         "transform": ["babelify"]
     },
