@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "main": "./lib/streamroot-wrapper",
     "scripts": {
-      "build": "browserify -d -s StreamrootWrapper lib/streamroot-wrapper -o dist/streamroot-wrapper.js"
+      "build": "browserify -d -s Hls lib/streamroot-wrapper -o dist/streamroot-wrapper.js"
     },
     "browserify": {
         "transform": ["babelify"]
@@ -13,5 +13,6 @@
         "browserify": "~2.35",
         "hls.js": "git+ssh://git@bitbucket.org/sharevicomplet/hls.js.git#sr",
         "streamroot-p2p": "2.3.0",
+        "uglify-js": "^2.4.23"
     }
 }

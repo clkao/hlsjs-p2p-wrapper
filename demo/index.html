@@ -190,7 +190,6 @@ header {
   <!-- live-reload script -->
   <script src="//localhost:8001"></script>
   <script src="../dist/streamroot-wrapper.js"></script>
-  <script src="../node_modules/hls.js/dist/hls.js"></script>
   <script src="canvas.js"></script>
   <script src="metrics.js"></script>
   <script src="jsonpack.js"></script>
@@ -218,8 +217,8 @@ $(document).ready(function() {
 
   var manifest = decodeURIComponent(location.search.split('src=')[1]);
   if(manifest === 'undefined') {
-    //manifest = 'http://wowza.streamroot.io/live/stream1/index.m3u8';
-    manifest = 'http://www.streambox.fr/playlists/x36xhzz/x36xhzz.m3u8';
+    manifest = 'http://akamai.streamroot.edgesuite.net/live/stream1/index.m3u8';
+    //manifest = 'http://www.streambox.fr/playlists/x36xhzz/x36xhzz.m3u8';
   }
   loadStream(manifest);
 
@@ -247,7 +246,7 @@ $(document).ready(function() {
 
       $("#HlsStatus").text('loading ' + url);
        events = { url : url, t0 : Date.now(), load : [], buffer : [], video : [], level : [], bitrate : []};
-       hls = new StreamrootWrapper({
+       hls = new Hls({
            debug:true,
            maxLiveLatency : 35
        }, {
