@@ -11,6 +11,6 @@
     "dependencies": {
         "babelify": "^6.1.3",
         "browserify": "~2.35",
-        "streamroot-p2p": "2.3.3"
+        "streamroot-p2p-dist": "http://streamroot-prod.s3.amazonaws.com/builds/streamroot-p2p-dist-2.3.3.tar.gz"
     }
 }
