@@ -34,17 +34,6 @@ module.exports = function(grunt) {
             }
         },
         
-        add_banner: {
-            prod: {
-                options: {
-                    pkg: '<%= pkg %>'
-                },
-                files: {
-                    cwd: 'dist',
-                    src: ['**'], 
-                }
-            },
-        },
         check_changelog: {
             options: {
                 version : '<%= pkg.version %>'
