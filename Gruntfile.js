@@ -9,24 +9,6 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         version: '<%= pkg.version %>',
         file_version: '',
-
-        browserify: {
-            hls_js_provider:{
-                src: "lib/html5.provider.hlsjs.js",
-                dest: "dist/jw71-provider-HLS.js",
-                options: {
-                    transform: [['uglifyify', {
-                        compress: {
-                            drop_console : true,
-                        },
-                        mangle: true,
-                        global: true
-                    }]],
-                    watch: false,
-                    keepAlive: false,
-                }
-            }
-        },
         
         shell: {
             npmPublish: {
@@ -60,9 +42,6 @@ module.exports = function(grunt) {
             },
         }
     });
-
-    // Default task.
-    grunt.registerTask('default', ['browserify']);
 
     //This task is used to make a preprod build and push it to S3, see structureProd for an explanation
     grunt.registerTask('release', [
