@@ -16,5 +16,9 @@
     "predef": [ 
         "_TEST_"
     ],
-    "esnext": true
+    "esnext": true,
+    "globals": {
+        "performance": true,
+        "ProgressEvent": true        
+    }
 }
