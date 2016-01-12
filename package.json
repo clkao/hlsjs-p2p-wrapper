@@ -11,7 +11,7 @@
     "dependencies": {
         "babelify": "^6.1.3",
         "browserify": "~2.35",
-        "streamroot-p2p": "2.4.5"
+        "streamroot-p2p": "2.4.10"
     },
     "devDependencies": {
         "grunt": "^0.4.5",
