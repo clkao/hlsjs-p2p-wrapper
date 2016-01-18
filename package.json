@@ -3,10 +3,13 @@
     "version": "1.0.8",
     "main": "./lib/streamroot-wrapper",
     "scripts": {
-      "build": "browserify -d -s Hls lib/streamroot-wrapper -o dist/streamroot-wrapper.js"
+        "build": "browserify -d -s Hls lib/streamroot-wrapper -o dist/streamroot-wrapper.js",
+        "test": "mocha --require mochahook"
     },
     "browserify": {
-        "transform": ["babelify"]
+        "transform": [
+            "babelify"
+        ]
     },
     "dependencies": {
         "babelify": "^6.1.3",
@@ -14,10 +17,12 @@
         "streamroot-p2p": "2.4.10"
     },
     "devDependencies": {
+        "babel": "^5.8.23",
         "grunt": "^0.4.5",
         "grunt-bump": "^0.6.0",
         "grunt-clean-repo": "0.2.2",
         "grunt-shell": "^1.1.2",
-        "matchdep": "0.3.0"
+        "matchdep": "0.3.0",
+        "should": "^8.1.1"
     }
 }
