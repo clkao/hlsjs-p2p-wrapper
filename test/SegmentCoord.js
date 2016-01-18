@@ -13,36 +13,25 @@ describe("SegmentCoord",() => {
         var segmentCoord;
 
         it("Should return the correct values (low values)", function() {
-            segmentCoord = new SegmentCoord({timestamp: 25, trackCoord: {adaptationId:1, representationId:0}});
+            segmentCoord = new SegmentCoord({sn: 25, trackCoord: {level: 1}});
             var arrayBuffer = segmentCoord.toArrayBuffer();
-            SegmentCoord.fromArrayBuffer(arrayBuffer).isEqual(segmentCoord).should.be.true();
-        });
-        it("Should return the correct values (high values)", function() {
-            segmentCoord = new SegmentCoord({timestamp: 8257546242.3, trackCoord: {adaptationId:8, representationId:5}});
-            var arrayBuffer = segmentCoord.toArrayBuffer();
-            // SegmentCoord.fromArrayBuffer(arrayBuffer).isEqual(segmentCoord)
             SegmentCoord.fromArrayBuffer(arrayBuffer).isEqual(segmentCoord).should.be.true();
         });
     });
     describe("isEqual", function() {
       it('should be equal', () => {
-        let segmentCoord1 = new SegmentCoord({timestamp: 1257546242.3, trackCoord: {adaptationId:0, representationId:0}});
-        let segmentCoord2 = new SegmentCoord({timestamp: 1257546242.3, trackCoord: {adaptationId:0, representationId:0}});
+        let segmentCoord1 = new SegmentCoord({sn: 25, trackCoord: {level: 1}});
+        let segmentCoord2 = new SegmentCoord({sn: 25, trackCoord: {level: 1}});
         segmentCoord1.isEqual(segmentCoord2).should.be.true();
       });
-      it('should not be equal if timestamp is different', () => {
-        let segmentCoord1 = new SegmentCoord({timestamp: 1257546242.3, trackCoord: {adaptationId:0, representationId:0}});
-        let segmentCoord2 = new SegmentCoord({timestamp: 8556458458.5, trackCoord: {adaptationId:0, representationId:0}});
+      it('should not be equal if sequence number is different', () => {
+        let segmentCoord1 = new SegmentCoord({sn: 25, trackCoord: {level: 1}});
+        let segmentCoord2 = new SegmentCoord({sn: 1560, trackCoord: {level: 1}});
         segmentCoord1.isEqual(segmentCoord2).should.be.false();
       });
-      it('should not be equal if representation is different', () => {
-        let segmentCoord1 = new SegmentCoord({timestamp: 1257546242.3, trackCoord: {adaptationId:0, representationId:0}});
-        let segmentCoord2 = new SegmentCoord({timestamp: 1257546242.3, trackCoord: {adaptationId:0, representationId:1}});
-        segmentCoord1.isEqual(segmentCoord2).should.be.false();
-      });
-      it('should not be equal if adaptation is different', () => {
-        let segmentCoord1 = new SegmentCoord({timeline: {ts: 1257546242.3}, trackCoord: {adaptationId:0, representationId:0}});
-        let segmentCoord2 = new SegmentCoord({timeline: {ts: 1257546242.3}, trackCoord: {adaptationId:1, representationId:0}});
+      it('should not be equal if level is different', () => {
+        let segmentCoord1 = new SegmentCoord({sn: 25, trackCoord: {level: 1}});
+        let segmentCoord2 = new SegmentCoord({sn: 25, trackCoord: {level: 5}});
         segmentCoord1.isEqual(segmentCoord2).should.be.false();
       });
     });
