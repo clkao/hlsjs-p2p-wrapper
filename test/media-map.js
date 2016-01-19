@@ -2,9 +2,9 @@ import MediaMap from '../lib/mapping/media-map';
 import HlsMock from './mocks/hls';
 
 describe("MediaMap",() => {
-  describe.only("isLive", function() {
+  describe("isLive", function() {
     it("Should return live if defined (both master and 1 level playlist parsed)", function() {
-      let hlsMock = new HlsMock(3, false);
+      let hlsMock = new HlsMock(3, false, 1);
       let mediaMap = new MediaMap(hlsMock);
       mediaMap.isLive().should.be.false;
     });
