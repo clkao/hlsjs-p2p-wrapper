@@ -1,5 +1,4 @@
 var SegmentCoord = require("../lib/mapping/segment-coord");
-var should = require('should');
 
 describe("SegmentCoord",() => {
     describe("toJSON", function() {

@@ -1,6 +1,5 @@
 var SegmentCoord = require("../lib/mapping/segment-coord");
 var TrackCoord = require("../lib/mapping/track-coord");
-var should = require('should');
 
 describe("SegmentCoord",() => {
     describe("isEqual", function() {
