@@ -8,8 +8,14 @@ describe("SegmentCoord",() => {
             transferedSegmentCoord.isEqual(segmentCoord).should.be.true();
         });
     });
-    describe("toArrayBuffer to parseSegChunkIdData", function() {
+    describe("to/fromArrayBuffer", function() {
         var segmentCoord;
+      
+        it("toArrayBuffer should return an ArrayBuffer", function() {
+          segmentCoord = new SegmentCoord({sn: 25, trackCoord: {level: 1}});
+          var arrayBuffer = segmentCoord.toArrayBuffer();
+          arrayBuffer.should.be.an.instanceof(ArrayBuffer);
+        });
 
         it("Should return the correct values (low values)", function() {
             segmentCoord = new SegmentCoord({sn: 25, trackCoord: {level: 1}});
