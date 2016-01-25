@@ -1,4 +1,5 @@
 var SegmentCoord = require("../lib/mapping/segment-coord");
+var TrackCoord = require("../lib/mapping/track-coord");
 
 describe("SegmentCoord",() => {
     describe("toJSON", function() {
@@ -22,6 +23,19 @@ describe("SegmentCoord",() => {
             var arrayBuffer = segmentCoord.toArrayBuffer();
             SegmentCoord.fromArrayBuffer(arrayBuffer).isEqual(segmentCoord).should.be.true();
         });
+    });
+    describe("isInTrack", function() {
+      var trackCoord;
+      it('should be in track', () => {
+        let trackCoord = new TrackCoord({level: 0});
+        let segmentCoord = new SegmentCoord({sn: 25, trackCoord: {level: 0}});
+        segmentCoord.isInTrack(trackCoord).should.be.true();
+      });
+      it('should not be in track if level is different', () => {
+        let trackCoord = new TrackCoord({level: 0});
+        let segmentCoord = new SegmentCoord({sn: 25, trackCoord: {level: 1}});
+        segmentCoord.isInTrack(trackCoord).should.be.false();
+      });
     });
     describe("isEqual", function() {
       it('should be equal', () => {
