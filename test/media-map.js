@@ -59,7 +59,7 @@ describe("MediaMap",() => {
       mediaMap.getSegmentTime.bind(mediaMap, segmentCoord).should.throw("Called getSegmentTime on a level that was not parsed yet (or whose index didn't exist)");
     });
   });
-  describe("getSegmentsList", function() {
+  describe("getSegmentList", function() {
     it("Should return list of segments in timerange (timerange included in segment index)", function() {
       let hlsMock = new HlsMock(3, false, 1);
       let mediaMap = new MediaMap(hlsMock);
@@ -71,7 +71,7 @@ describe("MediaMap",() => {
         new SegmentCoord({sn: 38, trackCoord}),
         new SegmentCoord({sn: 39, trackCoord}),
       ];
-      mediaMap.getSegmentsList(trackCoord, 365, 33).should.be.eql(expectedSegmentList);
+      mediaMap.getSegmentList(trackCoord, 365, 33).should.be.eql(expectedSegmentList);
     });
     it("Should return list of segments in timerange (left intersection)", function() {
       let hlsMock = new HlsMock(3, false, 1);
@@ -85,7 +85,7 @@ describe("MediaMap",() => {
         new SegmentCoord({sn: 27, trackCoord}),
         new SegmentCoord({sn: 28, trackCoord}),
       ];
-      mediaMap.getSegmentsList(trackCoord, 10, 275).should.be.eql(expectedSegmentList);
+      mediaMap.getSegmentList(trackCoord, 10, 275).should.be.eql(expectedSegmentList);
     });
     it("Should return list of segments in timerange (right intersection)", function() {
       let hlsMock = new HlsMock(3, false, 1);
@@ -97,7 +97,7 @@ describe("MediaMap",() => {
         new SegmentCoord({sn: 198, trackCoord}),
         new SegmentCoord({sn: 199, trackCoord}),
       ];
-      mediaMap.getSegmentsList(trackCoord, 1975, 3000).should.be.eql(expectedSegmentList);
+      mediaMap.getSegmentList(trackCoord, 1975, 3000).should.be.eql(expectedSegmentList);
     });
     it("Should return list of segments in timerange (timerange includes segment index)", function() {
       let hlsMock = new HlsMock(3, false, 1);
@@ -114,7 +114,7 @@ describe("MediaMap",() => {
         }));
       }
 
-      mediaMap.getSegmentsList(trackCoord, 240, 2100).should.be.eql(expectedSegmentList);
+      mediaMap.getSegmentList(trackCoord, 240, 2100).should.be.eql(expectedSegmentList);
     });
     it("Should return an empty array if no segment is found in that timerange", function() {
       let hlsMock = new HlsMock(3, false, 1);
@@ -124,7 +124,7 @@ describe("MediaMap",() => {
       });
       let expectedSegmentList = [];
 
-      mediaMap.getSegmentsList(trackCoord, 2100, 3000).should.be.eql(expectedSegmentList);
+      mediaMap.getSegmentList(trackCoord, 2100, 3000).should.be.eql(expectedSegmentList);
     });
     it("Should throw if called on a level that is not parsed", function() {
       let hlsMock = new HlsMock(3, false, 0);
@@ -137,7 +137,7 @@ describe("MediaMap",() => {
         new SegmentCoord({sn: 38, trackCoord}),
         new SegmentCoord({sn: 39, trackCoord}),
       ];
-      mediaMap.getSegmentsList.bind(mediaMap, trackCoord, 365, 33).should.throw("Called getSegmentsList on a level that was not parsed yet (or whose index didn't exist)");
+      mediaMap.getSegmentList.bind(mediaMap, trackCoord, 365, 33).should.throw("Called getSegmentList on a level that was not parsed yet (or whose index didn't exist)");
     });
   });
 });
