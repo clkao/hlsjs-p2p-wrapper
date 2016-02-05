@@ -9,13 +9,26 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         version: '<%= pkg.version %>',
         file_version: '',
-        
+
+        browserify:{
+            standAlone:{
+                src: "tools/stand-alone.js",
+                dest: "tools/build.js",
+                options: {
+                    browserifyOptions: {
+                        debug: true
+                    },
+                    watch: true,
+                    keepAlive: true,
+                }
+            }
+        },
         shell: {
             npmPublish: {
                 command: 'npm publish',
             }
         },
-        
+
         check_changelog: {
             options: {
                 version : '<%= pkg.version %>'
