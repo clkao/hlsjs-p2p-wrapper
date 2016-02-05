@@ -4,23 +4,6 @@ import TrackCoord from '../lib/mapping/track-coord';
 import HlsMock from './mocks/hls';
 
 describe("MediaMap",() => {
-  describe("isLive", function() {
-    it("Should return live if defined (both master and 1 level playlist parsed)", function() {
-      let hlsMock = new HlsMock(3, false, 1);
-      let mediaMap = new MediaMap(hlsMock);
-      mediaMap.isLive().should.be.false;
-    });
-    it("Should throw if isLive is called before the master playlist is parsed", function() {
-      let hlsMock = new HlsMock(0, false);
-      let mediaMap = new MediaMap(hlsMock);
-      mediaMap.isLive.bind(mediaMap).should.throw("Called isLive before the master playlist was parsed");
-    });
-    it("Should throw if isLive is called before any levelplaylist is parsed", function() {
-      let hlsMock = new HlsMock(3, undefined);
-      let mediaMap = new MediaMap(hlsMock);
-      mediaMap.isLive.bind(mediaMap).should.throw("Called isLive before any levelplaylist was parsed");
-    });
-  });
   describe("getSegmentTime", function() {
     it("Should return segment start timestamp if segment exists", function() {
       let hlsMock = new HlsMock(3, false, 1);

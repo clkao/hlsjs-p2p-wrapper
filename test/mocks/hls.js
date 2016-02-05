@@ -28,7 +28,9 @@ class HlsMock {
   get levels() {
     return this._levels;
   }
-  
+
+  on(){}
+
 }
 
 export default HlsMock;
