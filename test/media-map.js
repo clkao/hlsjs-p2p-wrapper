@@ -49,7 +49,7 @@ describe("MediaMap",() => {
       let trackCoord = new TrackCoord({
         level: 1
       });
-      let expectedSegmentList = [ 
+      let expectedSegmentList = [
         new SegmentCoord({sn: 37, trackCoord}),
         new SegmentCoord({sn: 38, trackCoord}),
         new SegmentCoord({sn: 39, trackCoord}),
@@ -62,7 +62,7 @@ describe("MediaMap",() => {
       let trackCoord = new TrackCoord({
         level: 1
       });
-      let expectedSegmentList = [ 
+      let expectedSegmentList = [
         new SegmentCoord({sn: 25, trackCoord}),
         new SegmentCoord({sn: 26, trackCoord}),
         new SegmentCoord({sn: 27, trackCoord}),
@@ -76,7 +76,7 @@ describe("MediaMap",() => {
       let trackCoord = new TrackCoord({
         level: 1
       });
-      let expectedSegmentList = [ 
+      let expectedSegmentList = [
         new SegmentCoord({sn: 198, trackCoord}),
         new SegmentCoord({sn: 199, trackCoord}),
       ];
@@ -115,7 +115,7 @@ describe("MediaMap",() => {
       let trackCoord = new TrackCoord({
         level: 1
       });
-      let expectedSegmentList = [ 
+      let expectedSegmentList = [
         new SegmentCoord({sn: 37, trackCoord}),
         new SegmentCoord({sn: 38, trackCoord}),
         new SegmentCoord({sn: 39, trackCoord}),
