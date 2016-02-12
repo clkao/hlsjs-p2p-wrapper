@@ -6,7 +6,8 @@ function createWrappedHls(p2pConfig, hlsConfig = {}){
     if(!window.Hls){
         throw new Error("window.Hls is not defined");
     }
-    var hlsjsWrapper = new HlsjsWrapper(XhrLoader);
+    var StreamrootDownloader = window.Streamroot.Downloader;
+    var hlsjsWrapper = new HlsjsWrapper(XhrLoader, StreamrootDownloader);
 
     hlsConfig.loader = hlsjsWrapper.P2PLoader;
     hlsConfig.xhrSetup = hlsjsWrapper.setRange;
