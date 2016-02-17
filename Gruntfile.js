@@ -10,19 +10,6 @@ module.exports = function(grunt) {
         version: '<%= pkg.version %>',
         file_version: '',
 
-        browserify:{
-            standAlone:{
-                src: "tools/stand-alone.js",
-                dest: "tools/build.js",
-                options: {
-                    browserifyOptions: {
-                        debug: true
-                    },
-                    watch: true,
-                    keepAlive: true,
-                }
-            }
-        },
         shell: {
             npmPublish: {
                 command: 'npm publish',

@@ -21,4 +21,4 @@ function createWrappedHls(StreamrootDownloader, Hls, p2pConfig, hlsConfig = {}){
     return hls;
 }
 
-window.createWrappedHls = createWrappedHls;
+export default createWrappedHls;
