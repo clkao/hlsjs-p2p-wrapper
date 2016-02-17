@@ -2,11 +2,7 @@
 import HlsjsWrapper from "../lib/streamroot-wrapper";
 import XhrLoader from './originalXhrLoader';
 
-function createWrappedHls(p2pConfig, hlsConfig = {}){
-    if(!window.Hls){
-        throw new Error("window.Hls is not defined");
-    }
-    var StreamrootDownloader = window.Streamroot.Downloader;
+function createWrappedHls(StreamrootDownloader, Hls, p2pConfig, hlsConfig = {}){
     var hlsjsWrapper = new HlsjsWrapper(XhrLoader, StreamrootDownloader);
 
     hlsConfig.loader = hlsjsWrapper.P2PLoader;
@@ -16,10 +12,10 @@ function createWrappedHls(p2pConfig, hlsConfig = {}){
     hlsConfig.maxBufferSize = hlsConfig.maxBufferSize || 0;
     hlsConfig.maxBufferLength = hlsConfig.maxBufferLength || 30;
 
-    var hls = new window.Hls(hlsConfig);
+    var hls = new Hls(hlsConfig);
 
-    hls.on(window.Hls.Events.MANIFEST_LOADING, () => {
-        hlsjsWrapper.createSRModule(p2pConfig, hls, window.Hls.Events);
+    hls.on(Hls.Events.MANIFEST_LOADING, () => {
+        hlsjsWrapper.createSRModule(p2pConfig, hls, Hls.Events);
     });
 
     return hls;
