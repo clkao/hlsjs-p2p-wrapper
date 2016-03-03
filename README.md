@@ -6,11 +6,11 @@ This module wraps an instance of hls.js to interface it with streamroot-p2p
 
 # Usage
 
-### API (TODO)
+### API
 
 ##### Constructor
 
-Initialize this module by passing the original XhrLoader in the constructor. This module will build a p2p-enabled loader class (see lib/p2p-loader-factory.js) and expose it.
+The constructor doesn't expect any argument.
 
 The instance will have the following properties:
 
@@ -38,7 +38,6 @@ Events | The Hls.Events enum
 ```javascript
 import HlsjsWrapper from "hlsjs-wrapper";
 import Hls from "hls.js";
-import XhrLoader from '../../node_modules/hls.js/src/utils/xhr-loader.js';
 
 // ...
 // ...
@@ -50,7 +49,7 @@ var hlsConfig = {},
     };
 
 
-var hlsjsWrapper = new HlsjsWrapper(XhrLoader);
+var hlsjsWrapper = new HlsjsWrapper();
 
 hlsConfig.loader = hlsjsWrapper.P2PLoader;
 hlsConfig.xhrSetup = hlsjsWrapper.setRange;
