@@ -8,6 +8,9 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
+
+## [1.0.12] - 2016-03-04
+### Changed
 - Use streamroot-p2p-dist (tarball) instead of streamroot-p2p
 - Upgrade streamroot-p2p-dist to 2.4.18
 
