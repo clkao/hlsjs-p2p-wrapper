@@ -8,6 +8,7 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
+- Use streamroot-p2p instead of streamroot-p2p-dist
 
 ## [1.0.12] - 2016-03-04
 ### Changed
@@ -63,4 +64,3 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 ## [1.0.0] - 2015-11-05
 ### Changed
 - Add release workflow
-
