@@ -8,8 +8,9 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
+- fix streamroot-p2p import
 
-## [1.0.13] - 2016-03-04
+## [1.0.13] - 2016-03-04 [BROKEN]
 ### Changed
 - Use streamroot-p2p instead of streamroot-p2p-dist
 
