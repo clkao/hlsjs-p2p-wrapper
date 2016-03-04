@@ -8,6 +8,9 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
+
+## [1.0.14] - 2016-03-04
+### Changed
 - fix streamroot-p2p import
 
 ## [1.0.13] - 2016-03-04 [BROKEN]
