@@ -109,18 +109,15 @@ describe("MediaMap",() => {
 
       mediaMap.getSegmentList(trackView, 2100, 3000).should.be.eql(expectedSegmentList);
     });
-    it("Should throw if called on a level that is not parsed", function() {
+    it("Should return an empty array if called on a level that is not parsed", function() {
       let hlsMock = new HlsMock(3, false, 0);
       let mediaMap = new MediaMap(hlsMock);
       let trackView = new TrackView({
         level: 1
       });
-      let expectedSegmentList = [
-        new SegmentView({sn: 37, trackView}),
-        new SegmentView({sn: 38, trackView}),
-        new SegmentView({sn: 39, trackView}),
-      ];
-      mediaMap.getSegmentList.bind(mediaMap, trackView, 365, 33).should.throw("Called getSegmentList on a level that was not parsed yet (or whose index didn't exist)");
+      let expectedSegmentList = [];
+
+      mediaMap.getSegmentList(trackView, 2100, 3000).should.be.eql(expectedSegmentList);
     });
   });
 });
