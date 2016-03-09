@@ -119,5 +119,14 @@ describe("MediaMap",() => {
 
       mediaMap.getSegmentList(trackView, 2100, 3000).should.be.eql(expectedSegmentList);
     });
+    it("Should throw if level does not exist", function() {
+      let hlsMock = new HlsMock(3, false, 0);
+      let mediaMap = new MediaMap(hlsMock);
+      let trackView = new TrackView({
+        level: 4
+      });
+
+      mediaMap.getSegmentList.bind(mediaMap, trackView, 2100, 3000).should.throw("getSegmentList: level doesn't exist");
+    });
   });
 });
