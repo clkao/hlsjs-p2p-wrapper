@@ -1,9 +1,8 @@
 
 import HlsjsWrapper from "../lib/streamroot-wrapper";
-import XhrLoader from '../lib/xhr-loader';
 
 function createWrappedHls(StreamrootDownloader, Hls, p2pConfig, hlsConfig = {}){
-    var hlsjsWrapper = new HlsjsWrapper(XhrLoader, StreamrootDownloader);
+    var hlsjsWrapper = new HlsjsWrapper(StreamrootDownloader);
 
     hlsConfig.loader = hlsjsWrapper.P2PLoader;
     hlsConfig.xhrSetup = hlsjsWrapper.setRange;
