@@ -8,6 +8,11 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
+- fix mistake when changing the signature of HlsjsWrapper
+
+## [2.0.0] - 2016-03-10
+### Changed
+- adaptation to the new p2p interface (P2P-164)
 
 ## [1.0.14] - 2016-03-04
 ### Changed
