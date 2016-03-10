@@ -8,9 +8,6 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
-
-## [2.0.0] - 2016-03-10
-### Changed
 - fix mistake when changing the signature of HlsjsWrapper
 
 ## [2.0.0] - 2016-03-10
