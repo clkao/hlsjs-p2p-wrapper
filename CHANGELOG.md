@@ -8,6 +8,9 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
+
+## [2.0.2] - 2016-03-16
+### Changed
 - Fix retry loop on download abort (it was breaking the PTS drift calculation and crashing hls.js)
 
 ## [2.0.1] - 2016-03-10
