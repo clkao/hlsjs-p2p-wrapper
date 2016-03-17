@@ -10,17 +10,13 @@ This module wraps an instance of hls.js to interface it with streamroot-p2p
 
 ##### Constructor
 
-The constructor doesn't expect any argument.
+The constructor expects the constructor of the Streamroot module as argument.
 
 The instance will have the following properties:
 
 ##### P2Ploader
 
 This is the constructor you need to override `loader`in `hls.config`.
-
-##### setRange
-
-Use this method as `xhrSetup` in `hls.config`.
 
 ##### createSRModule(p2pConfig, hls, Events)
 
@@ -38,6 +34,7 @@ Events | The Hls.Events enum
 ```javascript
 import HlsjsWrapper from "hlsjs-wrapper";
 import Hls from "hls.js";
+import StreamrootDownloader from "streamroot-p2p-dist";
 
 // ...
 // ...
@@ -49,10 +46,9 @@ var hlsConfig = {},
     };
 
 
-var hlsjsWrapper = new HlsjsWrapper();
+var hlsjsWrapper = new HlsjsWrapper(StreamrootDownloader);
 
 hlsConfig.loader = hlsjsWrapper.P2PLoader;
-hlsConfig.xhrSetup = hlsjsWrapper.setRange;
 
 //Set buffer configuration params, unless they're specified
 hlsConfig.maxBufferSize = hlsConfig.maxBufferSize || 0;
