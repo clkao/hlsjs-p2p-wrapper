@@ -8,6 +8,9 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
+
+## [2.0.3] - 2016-03-18
+### Changed
 - rename custom object for withCredentials and headers from xhr to request
 
 ## [2.0.2] - 2016-03-16
