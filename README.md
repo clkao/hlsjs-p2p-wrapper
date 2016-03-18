@@ -60,3 +60,27 @@ hls.on(Hls.Events.MANIFEST_LOADING, (event, data) => {
     hlsjsWrapper.createSRModule(p2pConfig, hls, Hls.Events);
 });
 ```
+
+# Important notes
+
+### xhrSetup, cookies and headers
+
+`config.xhrSetup` is broken by this wrapper. The reason is that we override the loader for fragments, and this loader does not use xhr directly. Thus we throw if `xhrSetup` is defined.
+
+However, we think that the overwhelming majority of the xhr configuration developpers need to do is:
+- enable use of cookies
+- set custom headers
+
+We introduced a custom object in hls.js configuration object for that purpose:
+
+```javascript
+var hlsjsConfig = {
+  // ... ,
+  request: {
+    withCredentials: true, // true | false.
+    headers: [ ["X-CUSTOM-HEADER-1", value1], ["X-CUSTOM-HEADER-2", value2] ] // List of headers you want to set for your requests
+  },
+  // ... ,
+}
+
+```
