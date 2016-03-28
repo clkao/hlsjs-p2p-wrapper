@@ -4,6 +4,7 @@
   "main": "./lib/streamroot-wrapper",
   "scripts": {
     "build": "browserify -d -s HlsjsWrapper lib/streamroot-wrapper -o dist/streamroot-wrapper.js",
+    "bundle": "browserify -d -s StreamrootBundle bundle/streamroot-bundle -o dist/streamroot-bundle.js",
     "test": "mocha --require mochahook",
     "debug": "iron-mocha --require mochahook"
   },
@@ -16,6 +17,9 @@
     "babelify": "^6.1.3",
     "browserify": "~2.35",
     "url": "^0.11.0"
+  },
+  "optionalDependencies": {
+    "streamroot-p2p-dist": "http://sdk.streamroot.io/npm/streamroot-p2p-dist-3.0.6.tar.gz"
   },
   "devDependencies": {
     "babel": "^5.8.23",
