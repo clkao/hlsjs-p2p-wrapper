@@ -27,6 +27,7 @@ parameter | description
 p2pConfig | Your p2p module configuration object. Check out the doc [here](https://streamroot.readme.io/docs/p2p-config)
 hls       | Your instance of hls.js
 Events | The Hls.Events enum
+content | _(optionnal)_ a string identifying your content. Do not use character `?` as we remove the query strings from urls. **TODO: finalize spec and update doc**
 
 
 ### Example
