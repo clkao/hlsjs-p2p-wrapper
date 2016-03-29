@@ -18,7 +18,7 @@ The instance will have the following properties:
 
 This is the constructor you need to override `loader`in `hls.config`.
 
-##### createSRModule(p2pConfig, hls, Events)
+##### createSRModule(p2pConfig, hls, Events [, content] )
 
 Use this method to actually instantiate the p2p module, on `Hls.Events.MANIFEST_LOADING`.
 
@@ -27,7 +27,7 @@ parameter | description
 p2pConfig | Your p2p module configuration object. Check out the doc [here](https://streamroot.readme.io/docs/p2p-config)
 hls       | Your instance of hls.js
 Events | The Hls.Events enum
-content | _(optionnal)_ a string identifying your content. Do not use character `?` as we remove the query strings from urls. **TODO: finalize spec and update doc**
+content | _(optionnal)_ a unique string identifier for your content. See [important notes on this parameter](https://github.com/streamroot/hlsjs-wrapper/blob/master/README.md#content-identifier) before using it.
 
 
 ### Example
@@ -85,3 +85,15 @@ var hlsjsConfig = {
 }
 
 ```
+
+### Content identifier
+
+:warning: If you plan on using the optionnal content identifier, you must be careful about several things:
+- You should be really careful that you pass a string that identifies a content in a truly unique manner. If there's a collision, our backend is going to match peers that aren't watching the same content together, and that can lead to unpredicable results.
+
+
+- Furthermore, you should be careful that we need a content identified by the same id to be **packaged** in the exact same way. If you are packaging your content in an origin server, and using your edge servers merely as cache servers, you're fine. If your edge servers are doing the packaging, as can happen with some Wowza or Nimble configurations for example, then you shouldn't identify contents coming from different edge servers as being the same content. It is advised then that you don't set this optionnal parameter and that you use the default (full url without the query string).
+
+
+- Be careful about elements non-related to the content in your id. For example, if you derive your content id from its url, and you have a user specific token in your query string, you're going to have to strip that token from the id. Same thing if you have query parameters identifying the device, you'll want to remove them if your content is package the same for all devices (but keep it if the content is different for mobile and desktop for example).
+
