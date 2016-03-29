@@ -13,6 +13,11 @@ describe('Content ID format helper method: cleanManifestString', function() {
   it('should compute the hash the same way as the backend for special urls', function() {
     const contentUrl = "http://cdn.rtmp.webverbosity.com:1935/dvr/chardikla_12HRDVR/playlist.m3u8?dvr";
     const contentId = 0;
-    formatContentId.bind(null, { contentUrl, contentId }).should.throw("Content identifier needs to be a string");
+    formatContentId.bind(null, { contentUrl, contentId }).should.throw("Content identifier needs to be a non-empty string");
+  });
+  it('should compute the hash the same way as the backend for special urls', function() {
+    const contentUrl = "http://cdn.rtmp.webverbosity.com:1935/dvr/chardikla_12HRDVR/playlist.m3u8?dvr";
+    const contentId = "";
+    formatContentId.bind(null, { contentUrl, contentId }).should.throw("Content identifier needs to be a non-empty string");
   });
 });
