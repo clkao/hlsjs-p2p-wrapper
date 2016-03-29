@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "babelify": "^6.1.3",
-    "browserify": "~2.35"
+    "browserify": "~2.35",
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "babel": "^5.8.23",
