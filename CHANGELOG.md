@@ -8,6 +8,7 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
+- allow passing a custom content id in createSRModule (optional: defaults to hls.url)
 
 ## [2.0.3] - 2016-03-18
 ### Changed
