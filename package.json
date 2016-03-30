@@ -4,7 +4,7 @@
   "main": "./lib/streamroot-wrapper",
   "scripts": {
     "build": "browserify -d -s HlsjsWrapper lib/streamroot-wrapper -o dist/streamroot-wrapper.js",
-    "bundle": "browserify -d -s StreamrootBundle bundle/streamroot-bundle -o dist/streamroot-bundle.js",
+    "bundle": "browserify -d -s StreamrootBundle lib/streamroot-bundle -o dist/streamroot-bundle.js",
     "test": "mocha --require mochahook",
     "debug": "iron-mocha --require mochahook"
   },
