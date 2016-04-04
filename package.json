@@ -19,7 +19,7 @@
     "url": "^0.11.0"
   },
   "optionalDependencies": {
-    "streamroot-p2p-dist": "http://sdk.streamroot.io/npm/streamroot-p2p-dist-3.0.7.tar.gz"
+    "streamroot-p2p-dist": "http://sdk.streamroot.io/npm/streamroot-p2p-dist-3.0.8.tar.gz"
   },
   "devDependencies": {
     "babel": "^5.8.23",
