@@ -8,6 +8,7 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
+- Use `liveSyncDuration` as max buffer level when available
 
 ## [2.0.4] - 2016-03-29
 ### Changed
