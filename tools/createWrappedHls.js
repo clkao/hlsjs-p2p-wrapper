@@ -1,7 +1,7 @@
 
 import HlsjsWrapper from "../lib/streamroot-wrapper";
 
-function createWrappedHls(StreamrootDownloader, Hls, p2pConfig, hlsConfig = {}){
+function createWrappedHls(StreamrootDownloader, Hls, p2pConfig, hlsConfig = {}, customId=undefined){
     var hlsjsWrapper = new HlsjsWrapper(StreamrootDownloader);
 
     hlsConfig.loader = hlsjsWrapper.P2PLoader;
@@ -14,7 +14,7 @@ function createWrappedHls(StreamrootDownloader, Hls, p2pConfig, hlsConfig = {}){
     var hls = new Hls(hlsConfig);
 
     hls.on(Hls.Events.MANIFEST_LOADING, () => {
-        hlsjsWrapper.createSRModule(p2pConfig, hls, Hls.Events);
+        hlsjsWrapper.createSRModule(p2pConfig, hls, Hls.Events, customId);
     });
 
     return hls;
