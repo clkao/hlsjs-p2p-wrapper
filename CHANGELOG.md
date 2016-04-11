@@ -8,6 +8,7 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
+- Fix optionnal method used by debug tool
 
 ## [2.0.5] - 2016-04-05
 ### Changed
