@@ -8,6 +8,7 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
+- Fix P2P bandwidth feedback to abr-controller: timing metrics are calculated on progress
 
 ## [2.0.6] - 2016-04-11
 ### Changed
