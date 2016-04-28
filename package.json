@@ -1,6 +1,6 @@
 {
   "name": "hlsjs-wrapper",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "main": "./lib/streamroot-wrapper",
   "scripts": {
     "build": "browserify -d -s HlsjsWrapper lib/streamroot-wrapper -o dist/streamroot-wrapper.js",
