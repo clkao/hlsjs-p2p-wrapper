@@ -63,6 +63,8 @@ module.exports = function (grunt) {
     grunt.registerTask('release', [
         'pre_build',
         'check_changelog',
+        'browserify:lib',
+        'browserify:helper',
         'shell:npmPublish',
         'update_release_log',
         'bump',
