@@ -1,30 +1,31 @@
 {
-    "name": "hlsjs-wrapper",
-    "version": "2.0.8",
-    "main": "./lib/streamroot-wrapper",
-    "scripts": {
-        "build": "browserify -d -s HlsjsWrapper lib/streamroot-wrapper -o dist/streamroot-wrapper.js",
-        "test": "mocha --require mochahook",
-        "debug": "iron-mocha --require mochahook"
-    },
-    "browserify": {
-        "transform": [
+  "name": "hlsjs-wrapper",
+  "version": "2.0.8",
+  "main": "./lib/streamroot-wrapper",
+  "scripts": {
+    "build": "browserify -d -s HlsjsWrapper lib/streamroot-wrapper -o dist/streamroot-wrapper.js",
+    "test": "mocha --require mochahook",
+    "debug": "iron-mocha --require mochahook"
+  },
+  "browserify": {
+    "transform": [
       "babelify"
     ]
-    },
-    "dependencies": {
-        "url": "^0.11.0"
-    },
-    "devDependencies": {
-        "babel-core": "^6.7.7",
-        "babel-preset-es2015": "^6.6.0",
-        "babelify": "^7.3.0",
-        "grunt": "^1.0.1",
-        "grunt-bump": "^0.8.0",
-        "grunt-clean-repo": "^1.0.0",
-        "grunt-shell": "^1.1.2",
-        "matchdep": "^1.0.1",
-        "mocha": "^2.4.5",
-        "should": "^8.1.1"
-    }
+  },
+  "dependencies": {
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.7.7",
+    "babel-preset-es2015": "^6.6.0",
+    "babelify": "^7.3.0",
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.0.0",
+    "grunt-bump": "^0.8.0",
+    "grunt-clean-repo": "^1.0.0",
+    "grunt-shell": "^1.1.2",
+    "matchdep": "^1.0.1",
+    "mocha": "^2.4.5",
+    "should": "^8.1.1"
+  }
 }
