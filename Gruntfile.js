@@ -42,14 +42,14 @@ module.exports = function (grunt) {
         },
         bump: {
             options: {
-                files: ['package.json'],
+                files: ['package.json', 'dist/package.json'],
                 updateConfigs: ['pkg'], // Updates so that tasks running in the same process see the updated value
                 commit: true,
                 createTag: true,
                 push: false,
                 pushTo: 'upstream',
                 commitFiles: [
-                    'package.json', 'releaseLog.md'
+                    'package.json', 'dist/package.json', 'releaseLog.md'
                 ], // '-a' for all files
                 commitMessage: 'Release <%= version %>',
                 tagName: 'v<%= version %>',
