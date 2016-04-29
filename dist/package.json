@@ -1,7 +1,11 @@
 {
   "name": "hlsjs-wrapper",
   "version": "2.0.8",
-  "author": "Streamroot",
-  "main": "./streamroot-wrapper",
+  "homepage": "www.streamroot.io",
+  "author": {
+    "name": "Streamroot",
+    "email": "contact@streamroot.io"
+  },
+  "main": "./streamroot-wrapper.js",
   "dependencies": {}
 }

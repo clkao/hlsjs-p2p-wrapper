@@ -27,7 +27,7 @@ module.exports = function (grunt) {
         },
         shell: {
             npmPublish: {
-                command: 'npm publish'
+                command: 'npm publish dist/'
             }
         },
         check_changelog: {
