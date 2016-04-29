@@ -1,5 +1,5 @@
-var SegmentView = require("../lib/mapping/segment-view");
-var TrackView = require("../lib/mapping/track-view");
+import SegmentView from '../lib/mapping/segment-view';
+import TrackView from '../lib/mapping/track-view';
 
 describe("SegmentView",() => {
     describe("toJSON", function() {
@@ -11,7 +11,7 @@ describe("SegmentView",() => {
     });
     describe("to/fromArrayBuffer", function() {
         var segmentView;
-      
+
         it("toArrayBuffer should return an ArrayBuffer", function() {
           segmentView = new SegmentView({sn: 25, trackView: {level: 1}});
           var arrayBuffer = segmentView.toArrayBuffer();
