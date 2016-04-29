@@ -1,5 +1,5 @@
 /*global module:false*/
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     //Load NPM tasks for dependencies
     require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
@@ -10,20 +10,34 @@ module.exports = function(grunt) {
         version: '<%= pkg.version %>',
         file_version: '',
 
-        shell: {
-            npmPublish: {
-                command: 'npm publish',
+        browserify: {
+            options: {
+                transform: ['babelify']
+            },
+            lib: {
+                files: {
+                    'dist/streamroot-wrapper.js': ['lib/streamroot-wrapper.js']
+                }
+            },
+            helper: {
+                files: {
+                    'dist/createWrappedHls.js': ['tools/createWrappedHls.js']
+                }
             }
         },
-
+        shell: {
+            npmPublish: {
+                command: 'npm publish'
+            }
+        },
         check_changelog: {
             options: {
-                version : '<%= pkg.version %>'
+                version: '<%= pkg.version %>'
             }
         },
         update_release_log: {
             options: {
-                version : '<%= pkg.version %>'
+                version: '<%= pkg.version %>'
             }
         },
         bump: {
@@ -34,12 +48,14 @@ module.exports = function(grunt) {
                 createTag: true,
                 push: false,
                 pushTo: 'upstream',
-                commitFiles: ['package.json', 'releaseLog.md'], // '-a' for all files
+                commitFiles: [
+                    'package.json', 'releaseLog.md'
+                ], // '-a' for all files
                 commitMessage: 'Release <%= version %>',
                 tagName: 'v<%= version %>',
                 tagMessage: 'Tagging version <%= version %>',
                 gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d' // options to use with '$ git describe'
-            },
+            }
         }
     });
 
@@ -50,5 +66,6 @@ module.exports = function(grunt) {
         'shell:npmPublish',
         'update_release_log',
         'bump',
-        'post_build']);
+        'post_build'
+    ]);
 };
