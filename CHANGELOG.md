@@ -9,6 +9,9 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 ## [Unreleased]
 ### Changed
 
+## [2.0.8] - 2016-05-02
+- Hotfix for P2P-227 - Don't use P2P loader for encryption keys or playlists
+
 ## [2.0.7] - 2016-04-28
 ### Changed
 - Fix P2P bandwidth feedback to abr-controller: timing metrics are calculated on progress
