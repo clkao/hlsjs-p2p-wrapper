@@ -44,6 +44,18 @@ describe("MediaMap",() => {
       })
       mediaMap.getSegmentTime(segmentView).should.be.equal(560);
     });
+    it("Should throw if property time doesn't exists", function() {
+      let hlsMock = new HlsMock(3, false, 0);
+      let mediaMap = new MediaMap(hlsMock);
+      let trackView = new TrackView({
+        level: 1
+      });
+      let segmentView = new SegmentView({
+        sn: 56,
+        trackView
+      })
+      mediaMap.getSegmentTime.bind(mediaMap, segmentView).should.throw("getSegmentTime: segmentView.time is undefined");
+    });
   });
   describe("getSegmentList", function() {
     it("Should return list of segments in timerange (timerange included in segment index)", function() {
