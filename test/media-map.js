@@ -13,11 +13,12 @@ describe("MediaMap",() => {
       });
       let segmentView = new SegmentView({
         sn: 56,
-        trackView
+        trackView,
+        time: 560
       })
       mediaMap.getSegmentTime(segmentView).should.be.equal(560);
     });
-    it("Should throw error if segment index can't be found", function() {
+    it("Should not throw error if segment index can't be found, if property time exists", function() {
       let hlsMock = new HlsMock(3, false, 1);
       let mediaMap = new MediaMap(hlsMock);
       let trackView = new TrackView({
@@ -25,11 +26,12 @@ describe("MediaMap",() => {
       });
       let segmentView = new SegmentView({
         sn: 24,
-        trackView
+        trackView,
+        time: 240
       })
-      mediaMap.getSegmentTime.bind(mediaMap, segmentView).should.throw("Segment index not found");
+      mediaMap.getSegmentTime(segmentView).should.be.equal(240);
     });
-    it("Should throw if called on a level that is not parsed", function() {
+    it("Should not throw if called on a level that is not parsed, if property time exists", function() {
       let hlsMock = new HlsMock(3, false, 0);
       let mediaMap = new MediaMap(hlsMock);
       let trackView = new TrackView({
@@ -37,9 +39,10 @@ describe("MediaMap",() => {
       });
       let segmentView = new SegmentView({
         sn: 56,
-        trackView
+        trackView,
+        time: 560
       })
-      mediaMap.getSegmentTime.bind(mediaMap, segmentView).should.throw("Called getSegmentTime on a level that was not parsed yet (or whose index didn't exist)");
+      mediaMap.getSegmentTime(segmentView).should.be.equal(560);
     });
   });
   describe("getSegmentList", function() {
@@ -50,9 +53,9 @@ describe("MediaMap",() => {
         level: 1
       });
       let expectedSegmentList = [
-        new SegmentView({sn: 37, trackView}),
-        new SegmentView({sn: 38, trackView}),
-        new SegmentView({sn: 39, trackView}),
+        new SegmentView({sn: 37, trackView, time: 370}),
+        new SegmentView({sn: 38, trackView, time: 380}),
+        new SegmentView({sn: 39, trackView, time: 390}),
       ];
       mediaMap.getSegmentList(trackView, 365, 33).should.be.eql(expectedSegmentList);
     });
@@ -63,10 +66,10 @@ describe("MediaMap",() => {
         level: 1
       });
       let expectedSegmentList = [
-        new SegmentView({sn: 25, trackView}),
-        new SegmentView({sn: 26, trackView}),
-        new SegmentView({sn: 27, trackView}),
-        new SegmentView({sn: 28, trackView}),
+        new SegmentView({sn: 25, trackView, time: 250}),
+        new SegmentView({sn: 26, trackView, time: 260}),
+        new SegmentView({sn: 27, trackView, time: 270}),
+        new SegmentView({sn: 28, trackView, time: 280}),
       ];
       mediaMap.getSegmentList(trackView, 10, 275).should.be.eql(expectedSegmentList);
     });
@@ -77,8 +80,8 @@ describe("MediaMap",() => {
         level: 1
       });
       let expectedSegmentList = [
-        new SegmentView({sn: 198, trackView}),
-        new SegmentView({sn: 199, trackView}),
+        new SegmentView({sn: 198, trackView, time: 1980}),
+        new SegmentView({sn: 199, trackView, time: 1990}),
       ];
       mediaMap.getSegmentList(trackView, 1975, 3000).should.be.eql(expectedSegmentList);
     });
@@ -93,7 +96,8 @@ describe("MediaMap",() => {
       for (var f=25; f<200; f++) {
         expectedSegmentList.push(new SegmentView({
           sn: f,
-          trackView
+          trackView,
+          time: f*10
         }));
       }
 
