@@ -12,7 +12,10 @@ module.exports = function (grunt) {
 
         browserify: {
             options: {
-                transform: ['babelify']
+                transform: ['babelify'],
+                plugin: [
+                    ['browserify-derequire']
+                ]
             },
             lib: {
                 files: {
@@ -21,7 +24,7 @@ module.exports = function (grunt) {
             },
             helper: {
                 files: {
-                    'dist/createWrappedHls.js': ['tools/createWrappedHls.js']
+                    'dist/createWrappedHls.js': ['tools/bonjoure.js']
                 }
             }
         },
