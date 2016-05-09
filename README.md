@@ -2,77 +2,78 @@
 
 This module wraps an instance of hls.js to bootstrap it with the Streamroot P2P agent module.
 
-** IMPORTANT: ** it's better to use babel-runtime when building this module. It makes use of Object.assign, and IE11 reports error due to the use of Symbol, although we don't make use of them
-
 # Usage
 
 ### Setup
 
-    After cloning the repo, make sure that you have `grunt-cli` installed in your global node binaries:
+After cloning the repo, make sure that you have `grunt-cli` installed in your global node binaries:
 
-    ```
-    npm install -g grunt-cli
-    ```
+```
+npm install -g grunt-cli
+```
 
 ### API docs
 
-    The public API documentation is generated from the code.
+The public API documentation is generated from the code.
 
-    After clonig the repo run:
+After clonig the repo run:
 
-    ```
-    grunt docs
-    ```
+```
+grunt docs
+```
 
-    This will start a server. Go to [http://localhost:8080/docs]
+This will start a server. Go to [http://localhost:8080/docs]
 
 ### Example
 
-    To see sample code of how to use this module, take a look at `example/index.html`.
+To see sample code of how to use this module, take a look at `example/index.html`.
 
-    To build and run the example run:
+To build and run the example run:
 
-    ```
-    grunt demo
-    ```
+```
+grunt demo
+```
 
-    This will start a server. Go to [http://localhost:8080/example]
+This will start a server. Go to [http://localhost:8080/example]
 
 ### Demo
 
-    To build and run the shipped Hls.js demo run:
+To build and run the shipped Hls.js demo run:
 
-    ```
-    grunt demo
-    ```
+```
+grunt demo
+```
 
-    This will start a server. Go to [http://localhost:8080/demo]
+This will start a server. Go to [http://localhost:8080/demo]
 
 ### Development
 
-    To build and compile-watch the wrapper/bundle/example files run:
+To build and compile-watch the wrapper/bundle/example files run:
 
-    ```
-    grunt wrapper
-    ```
+```
+grunt wrapper
+```
 
-    or
+or
 
-    ```
-    grunt bundle
-    ```
+```
+grunt bundle
+```
 
-    or
+or
 
-    ```
-    grunt example
-    ```
+```
+grunt example
+```
+
+**NOTE:** it's better to use `babel-runtime` when building this module. It makes use of Object.assign, and IE11 reports error due to the use of Symbol, although we don't make use of them
+
 
 # Important notes
 
 ### xhrSetup, cookies and headers
 
-`config.xhrSetup` is broken by this wrapper. The reason is that we override the loader for fragments, and this loader does not use xhr directly. Thus we throw if `xhrSetup` is defined.
+In Hls.js config, `xhrSetup` is broken by this wrapper. The reason is that we override the loader for fragments, and this loader does not use XHR directly. Thus we throw if `xhrSetup` is defined.
 
 However, we think that the overwhelming majority of the xhr configuration developpers need to do is:
 - enable use of cookies
