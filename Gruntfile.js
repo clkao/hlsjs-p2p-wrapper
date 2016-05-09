@@ -15,7 +15,10 @@ module.exports = function (grunt) {
                 transform: ['babelify'],
                 plugin: [
                     ['browserify-derequire']
-                ]
+                ],
+                browserifyOptions: {
+                    standalone: 'HlsjsWrapper',
+                }
             },
             lib: {
                 files: {
