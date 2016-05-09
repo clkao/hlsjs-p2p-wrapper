@@ -71,7 +71,7 @@ grunt example
 
 # Important notes
 
-### xhrSetup, cookies and headers
+### Hls.js xhrSetup, cookies and headers
 
 In Hls.js config, `xhrSetup` is broken by this wrapper. The reason is that we override the loader for fragments, and this loader does not use XHR directly. Thus we throw if `xhrSetup` is defined.
 
