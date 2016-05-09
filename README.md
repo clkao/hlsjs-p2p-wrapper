@@ -10,11 +10,22 @@ It also provides a low-level wrapper that allows you to create/configure a playe
 
 ### Setup
 
-After cloning the repo, make sure that you have `grunt-cli` installed in your global node binaries:
+After cloning the repo, make sure that you have `grunt-cli` installed in your global node binaries and install local dependencies in the project root:
 
 ```
 npm install -g grunt-cli
+npm install
 ```
+
+### Usage
+
+Run this task to build the distro:
+
+```
+grunt build
+```
+
+Now you can include `dist/streamroot-hlsjs-bundle` (high-level) or `dist/hlsjs-wrapper` (low-level) into your application. You can access the respective public APIs via the namespaces `StreamrootHlsjsBundle` and `StreamrootHlsjsWrapper`.
 
 ### Example
 
@@ -41,23 +52,19 @@ var hls = wrapper.createPlayer(myHlsjsConfig, myStreamrootP2PConfig, myOptionalC
 
 To see full sample code and extended possibilites of how to use this module, take a look at `example/main.js`.
 
-To build and run the example run:
+### Run demos
+
+To build and run the shipped Hls.js and Streamroot demos run:
 
 ```
 grunt demo
 ```
 
-This will start a server. Go to <http://localhost:8080/example>
+This will start a server. 
 
-### Demo
+Go to <http://localhost:8080/example> for the Streamroot demo.
 
-To build and run the shipped Hls.js demo run:
-
-```
-grunt demo
-```
-
-This will start a server. Go to <http://localhost:8080/demo>
+Go to <http://localhost:8080/demo> for the Hls.js demo.
 
 ### API docs
 
