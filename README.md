@@ -22,11 +22,11 @@ After clonig the repo run:
 grunt docs
 ```
 
-This will start a server. Go to [http://localhost:8080/docs]
+This will start a server. Go to (http://localhost:8080/docs)[http://localhost:8080/docs]
 
 ### Example
 
-To see sample code of how to use this module, take a look at `example/index.html`.
+To see sample code of how to use this module, take a look at `example/main.js`.
 
 To build and run the example run:
 
