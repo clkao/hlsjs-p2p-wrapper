@@ -1,66 +1,72 @@
 # Hlsjs-wrapper
 
-This module wraps an instance of hls.js to interface it with streamroot-p2p
+This module wraps an instance of hls.js to bootstrap it with the Streamroot P2P agent module.
 
 ** IMPORTANT: ** it's better to use babel-runtime when building this module. It makes use of Object.assign, and IE11 reports error due to the use of Symbol, although we don't make use of them
 
 # Usage
 
-### API
+### Setup
 
-##### Constructor
+    After cloning the repo, make sure that you have `grunt-cli` installed in your global node binaries:
 
-The constructor expects the constructor of the Streamroot module as argument.
+    ```
+    npm install -g grunt-cli
+    ```
 
-The instance will have the following properties:
+### API docs
 
-##### P2Ploader
+    The public API documentation is generated from the code.
 
-This is the constructor you need to override `loader`in `hls.config`.
+    After clonig the repo run:
 
-##### createSRModule(p2pConfig, hls, Events [, content] )
+    ```
+    grunt docs
+    ```
 
-Use this method to actually instantiate the p2p module, on `Hls.Events.MANIFEST_LOADING`.
-
-parameter | description
-----------|--------------
-p2pConfig | Your p2p module configuration object. Check out the doc [here](https://streamroot.readme.io/docs/p2p-config)
-hls       | Your instance of hls.js
-Events | The Hls.Events enum
-content | _(optionnal)_ a unique string identifier for your content. See [important notes on this parameter](https://github.com/streamroot/hlsjs-wrapper/blob/master/README.md#content-identifier) before using it.
-
+    This will start a server. Go to [http://localhost:8080/docs]
 
 ### Example
 
-```javascript
-import HlsjsWrapper from "hlsjs-wrapper";
-import Hls from "hls.js";
-import StreamrootDownloader from "streamroot-p2p-dist";
+    To see sample code of how to use this module, take a look at `example/index.html`.
 
-// ...
-// ...
-// ...
+    To build and run the example run:
 
-var hlsConfig = {},
-    p2pConfig = {
-        streamrootKey: 'your-streamroot-key'
-    };
+    ```
+    grunt demo
+    ```
 
+    This will start a server. Go to [http://localhost:8080/example]
 
-var hlsjsWrapper = new HlsjsWrapper(StreamrootDownloader);
+### Demo
 
-hlsConfig.loader = hlsjsWrapper.P2PLoader;
+    To build and run the shipped Hls.js demo run:
 
-//Set buffer configuration params, unless they're specified
-hlsConfig.maxBufferSize = hlsConfig.maxBufferSize || 0;
-hlsConfig.maxBufferLength = hlsConfig.maxBufferLength || 30;
+    ```
+    grunt demo
+    ```
 
-var hls = new Hls(hlsConfig);
+    This will start a server. Go to [http://localhost:8080/demo]
 
-hls.on(Hls.Events.MANIFEST_LOADING, (event, data) => {
-    hlsjsWrapper.createSRModule(p2pConfig, hls, Hls.Events);
-});
-```
+### Development
+
+    To build and compile-watch the wrapper/bundle/example files run:
+
+    ```
+    grunt wrapper
+    ```
+
+    or
+
+    ```
+    grunt bundle
+    ```
+
+    or
+
+    ```
+    grunt example
+    ```
 
 # Important notes
 

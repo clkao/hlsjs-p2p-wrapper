@@ -1,11 +1,15 @@
 {
   "name": "hlsjs-wrapper",
   "version": "2.0.8",
-  "main": "./lib/streamroot-wrapper",
+  "main": "./lib/hlsjs-wrapper",
   "scripts": {
-    "build": "browserify -d -s HlsjsWrapper lib/streamroot-wrapper -o dist/streamroot-wrapper.js",
-    "bundle": "browserify -d -s StreamrootBundle lib/streamroot-bundle -o dist/streamroot-bundle.js",
+    "wrapper": "mkdir -p dist && browserify -d -s StreamrootHlsjsWrapper lib/hlsjs-wrapper -o dist/hlsjs-wrapper.js",
+    "bundle": "mkdir -p dist && browserify -d -s StreamrootHlsjsBundle lib/streamroot-hlsjs-bundle -o dist/streamroot-hlsjs-bundle.js",
+    "example": "browserify -d -s HlsjsWrapperExample example/main.js -o example/build.js",
     "test": "mocha --require mochahook",
+    "docs": "./node_modules/.bin/jsdoc -d docs lib/hlsjs-wrapper.js lib/streamroot-hlsjs-bundle.js",
+    "lint": "node_modules/.bin/eslint lib",
+    "server": "node_modules/.bin/static",
     "debug": "iron-mocha --require mochahook"
   },
   "browserify": {
@@ -14,8 +18,10 @@
     ]
   },
   "dependencies": {
-    "babelify": "^6.1.3",
     "browserify": "~2.35",
+    "hls.js": "0.5.27",
+    "lodash.defaults": "4.0.1",
+    "ua-parser-js": "^0.7.10",
     "url": "^0.11.0"
   },
   "optionalDependencies": {
@@ -23,11 +29,17 @@
   },
   "devDependencies": {
     "babel": "^5.8.23",
+    "babel-core": "^6.8.0",
+    "babel-eslint": "^6.0.4",
+    "babelify": "^6.4.0",
+    "eslint": "2.9.0",
     "grunt": "^0.4.5",
+    "grunt-browserify": "^5.0.0",
     "grunt-bump": "^0.6.0",
-    "grunt-clean-repo": "0.2.2",
     "grunt-shell": "^1.1.2",
+    "jsdoc": "^3.4.0",
     "matchdep": "0.3.0",
+    "node-static": "^0.7.7",
     "should": "^8.1.1"
   }
 }

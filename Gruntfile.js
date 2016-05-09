@@ -11,11 +11,67 @@ module.exports = function(grunt) {
         file_version: '',
 
         shell: {
-            npmPublish: {
+            publish: {
                 command: 'npm publish',
+            },
+            install: {
+                command: 'npm install'
+            },
+            example: {
+                command: 'npm run example'
+            },
+            bundle: {
+                command: 'npm run bundle'
+            },
+            server: {
+                command: 'npm run server'
+            },
+            docs: {
+                command: 'npm run docs'
             }
         },
 
+        /* Compile & watch */
+        browserify: {
+
+            wrapper:{
+                src: "lib/hlsjs-wrapper.js",
+                dest: "dist/hlsjs-wrapper.js",
+                options: {
+                    browserifyOptions: {
+                        debug: true
+                    },
+                    watch: true,
+                    keepAlive: true,
+                }
+            },
+
+            bundle:{
+                src: "lib/streamroot-hlsjs-bundle.js",
+                dest: "dist/streamroot-hlsjs-bundle.js",
+                options: {
+                    browserifyOptions: {
+                        debug: true
+                    },
+                    watch: true,
+                    keepAlive: true,
+                }
+            },
+
+            example:{
+                src: "example/main.js",
+                dest: "example/build.js",
+                options: {
+                    browserifyOptions: {
+                        debug: true
+                    },
+                    watch: true,
+                    keepAlive: true,
+                }
+            }
+        },
+
+        /* Release flow tasks */
         check_changelog: {
             options: {
                 version : '<%= pkg.version %>'
@@ -34,7 +90,7 @@ module.exports = function(grunt) {
                 createTag: true,
                 push: false,
                 pushTo: 'upstream',
-                commitFiles: ['package.json', 'releaseLog.md'], // '-a' for all files
+                commitFiles: ['package.json', 'RELEASELOG.md'], // '-a' for all files
                 commitMessage: 'Release <%= version %>',
                 tagName: 'v<%= version %>',
                 tagMessage: 'Tagging version <%= version %>',
@@ -43,12 +99,39 @@ module.exports = function(grunt) {
         }
     });
 
-    //This task is used to make a preprod build and push it to S3, see structureProd for an explanation
+    grunt.registerTask('wrapper', [
+        'shell:install',
+        'browserify:wrapper'
+    ]);
+
+    grunt.registerTask('bundle', [
+        'shell:install',
+        'browserify:bundle'
+    ]);
+
+    grunt.registerTask('example', [
+        'shell:install',
+        'browserify:example'
+    ]);
+
+    grunt.registerTask('demo', [
+        'shell:install',
+        'shell:bundle',
+        'shell:example',
+        'shell:server'
+    ]);
+
+    grunt.registerTask('docs', [
+        'shell:install',
+        'shell:docs',
+        'shell:server'
+    ]);
+
+    /* Publishes to NPM, updates release log and bumps version number */
     grunt.registerTask('release', [
-        'pre_build',
         'check_changelog',
-        'shell:npmPublish',
+        'shell:publish',
         'update_release_log',
-        'bump',
-        'post_build']);
+        'bump'
+    ]);
 };
