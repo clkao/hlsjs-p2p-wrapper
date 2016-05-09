@@ -10,11 +10,22 @@ It also provides a low-level wrapper that allows you to create/configure a playe
 
 ### Setup
 
-After cloning the repo, make sure that you have `grunt-cli` installed in your global node binaries:
+After cloning the repo, make sure that you have `grunt-cli` installed in your global node binaries and install local dependencies in the project root:
 
 ```
 npm install -g grunt-cli
+npm install
 ```
+
+### Usage
+
+Run this task to build the distro:
+
+```
+grunt build
+```
+
+Now you can include `dist/streamroot-hlsjs-bundle` (high-level) or `dist/hlsjs-wrapper` (low-level) into your application. You can access the respective public APIs via the namespaces `StreamrootHlsjsBundle` and `StreamrootHlsjsWrapper`.
 
 ### Example
 
