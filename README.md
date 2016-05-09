@@ -2,6 +2,10 @@
 
 This module wraps an instance of hls.js to bootstrap it with the Streamroot P2P agent module.
 
+It provides a high-level Hls.js shim to construct a fully configured player which will use the agent, based on the same API. Which means you can integrate with minimal changes in your application (you only need to add an additional argument to the constructor).
+
+It also provides a low-level wrapper that allows you to create/configure a player based on a DI'd constructor or instance so you can rule over what Hls.js version to use or initialize the player instance on your own.
+
 # Usage
 
 ### Setup
@@ -11,18 +15,6 @@ After cloning the repo, make sure that you have `grunt-cli` installed in your gl
 ```
 npm install -g grunt-cli
 ```
-
-### API docs
-
-The public API documentation is generated from the code.
-
-After clonig the repo run:
-
-```
-grunt docs
-```
-
-This will start a server. Go to <http://localhost:8080/docs>
 
 ### Example
 
@@ -45,6 +37,18 @@ grunt demo
 ```
 
 This will start a server. Go to <http://localhost:8080/demo>
+
+### API docs
+
+The public API documentation is generated from the code.
+
+After clonig the repo run:
+
+```
+grunt docs
+```
+
+This will start a server. Go to <http://localhost:8080/docs>
 
 ### Development
 
