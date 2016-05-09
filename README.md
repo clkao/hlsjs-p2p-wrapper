@@ -41,9 +41,9 @@ var hls = wrapper.createPlayer(myHlsjsConfig, myStreamrootP2PConfig, myOptionalC
 
 To see full sample code and extended possibilites of how to use this module, take a look at `example/main.js`.
 
-### Run demo & example
+### Run demos
 
-To build and run the shipped Hls.js demo and Streamroot examples run:
+To build and run the shipped Hls.js and Streamroot demos run:
 
 ```
 grunt demo
@@ -51,9 +51,9 @@ grunt demo
 
 This will start a server. 
 
-Go to <http://localhost:8080/demo> for the Hls.js demo
+Go to <http://localhost:8080/example> for the Streamroot demo.
 
-Go to <http://localhost:8080/example> for the Streamroot demo
+Go to <http://localhost:8080/demo> for the Hls.js demo.
 
 ### API docs
 
