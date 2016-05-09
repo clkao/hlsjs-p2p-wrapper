@@ -27,6 +27,14 @@ grunt build
 
 Now you can include `dist/streamroot-hlsjs-bundle` (high-level) or `dist/hlsjs-wrapper` (low-level) into your application. You can access the respective public APIs via the namespaces `StreamrootHlsjsBundle` and `StreamrootHlsjsWrapper`.
 
+### Install
+
+You can also include this as an npm module:
+
+```
+//FIXME
+```
+
 ### Example
 
 High-level Hls.js extended constructor:
