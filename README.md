@@ -17,7 +17,7 @@ npm install -g grunt-cli
 npm install
 ```
 
-### Usage
+### Build
 
 Run this task to build the distro:
 
@@ -32,7 +32,7 @@ Now you can include `dist/streamroot-hlsjs-bundle` (high-level) or `dist/hlsjs-w
 High-level Hls.js extended constructor:
 
 ```
-// Override Hls constructor with our bundle 
+// Override Hls constructor with our bundle
 var Hls = window.StreamrootHlsjsBundle;
 ...
 var hls = new Hls(myHlsjsConfig, myStreamrootP2PConfig);
@@ -60,7 +60,7 @@ To build and run the shipped Hls.js and Streamroot demos run:
 grunt demo
 ```
 
-This will start a server. 
+This will start a server.
 
 Go to <http://localhost:8080/example> for the Streamroot demo.
 
