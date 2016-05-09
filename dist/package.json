@@ -6,6 +6,5 @@
     "name": "Streamroot",
     "email": "contact@streamroot.io"
   },
-  "main": "./streamroot-wrapper.js",
-  "dependencies": {}
+  "main": "./streamroot-wrapper.js"
 }
