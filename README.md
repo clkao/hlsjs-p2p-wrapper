@@ -22,7 +22,7 @@ After clonig the repo run:
 grunt docs
 ```
 
-This will start a server. Go to (http://localhost:8080/docs)[http://localhost:8080/docs]
+This will start a server. Go to <http://localhost:8080/docs>
 
 ### Example
 
@@ -34,7 +34,7 @@ To build and run the example run:
 grunt demo
 ```
 
-This will start a server. Go to [http://localhost:8080/example]
+This will start a server. Go to <http://localhost:8080/example>
 
 ### Demo
 
@@ -44,7 +44,7 @@ To build and run the shipped Hls.js demo run:
 grunt demo
 ```
 
-This will start a server. Go to [http://localhost:8080/demo]
+This will start a server. Go to <http://localhost:8080/demo>
 
 ### Development
 
