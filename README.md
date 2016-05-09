@@ -2,9 +2,9 @@
 
 This module wraps an instance of hls.js to bootstrap it with the Streamroot P2P agent module.
 
-It provides a high-level Hls.js shim to construct a fully configured player which will use the agent, based on the same API. Which means you can integrate with minimal changes in your application (you only need to add an additional argument to the constructor).
+It provides a high-level Hls.js extended constructor to create fully configured player which will use the agent, giving you the exact same API. Which means you can integrate the wrapper player with minimal changes in your application (you only need to add an additional argument to the constructor).
 
-It also provides a low-level wrapper that allows you to create/configure a player based on a DI'd constructor or instance so you can rule over what Hls.js version to use or initialize the player instance on your own.
+It also provides a low-level wrapper that allows you to create/configure a player based on a DI'd constructor or instance so you can rule over what Hls.js version to use or initialize the player instance on your own and set an optional custom content ID.
 
 # Usage
 
@@ -18,7 +18,28 @@ npm install -g grunt-cli
 
 ### Example
 
-To see sample code of how to use this module, take a look at `example/main.js`.
+High-level Hls.js extended constructor:
+
+```
+// Override Hls constructor with our bundle 
+var Hls = window.StreamrootHlsjsBundle;
+...
+var hls = new Hls(myHlsjsConfig, myStreamrootP2PConfig);
+...
+// Use `hls` just like your usual hls.js ...
+```
+
+Low-level wrapper for DI:
+
+```
+var wrapper = new HlsJsWrapper(Hls);
+...
+var hls = wrapper.createPlayer(myHlsjsConfig, myStreamrootP2PConfig, myOptionalContentId);
+...
+// Use `hls` just like your usual hls.js ...
+```
+
+To see full sample code and extended possibilites of how to use this module, take a look at `example/main.js`.
 
 To build and run the example run:
 
