@@ -3,8 +3,6 @@
   "version": "2.0.8",
   "main": "lib/streamroot-wrapper.js",
   "scripts": {
-    "build": "browserify -d -s HlsjsWrapper lib/streamroot-wrapper -o dist/streamroot-wrapper.js",
-    "buildTest": "browserify -d -s HlsjsWrapper tools/bonjoure -o dist/lolol.js",
     "test": "mocha --require mochahook",
     "debug": "iron-mocha --require mochahook"
   },

@@ -24,7 +24,7 @@ module.exports = function (grunt) {
             },
             helper: {
                 files: {
-                    'dist/createWrappedHls.js': ['tools/bonjoure.js']
+                    'dist/createWrappedHls.js': ['tools/createWrappedHls.js']
                 }
             }
         },
