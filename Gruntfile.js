@@ -12,7 +12,13 @@ module.exports = function (grunt) {
 
         browserify: {
             options: {
-                transform: ['babelify']
+                transform: ['babelify'],
+                plugin: [
+                    ['browserify-derequire']
+                ],
+                browserifyOptions: {
+                    standalone: 'HlsjsWrapper',
+                }
             },
             lib: {
                 files: {
