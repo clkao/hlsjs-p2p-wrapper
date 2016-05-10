@@ -49,7 +49,11 @@ var hlsConfig = {},
 
 var hlsjsWrapper = new HlsjsWrapper(StreamrootDownloader);
 
-hlsConfig.loader = hlsjsWrapper.P2PLoader;
+// Overload the default fLoader (media fragment loading interface) with our implementation
+// NOTICE: We don't want to use the plain 'loader' in the hls.js config as this will also 
+// be the loader for playlist and encryption key resources, which are not supposed to be 
+// fetched via the Streamroot module (you've been warned: don't do this - it is known to cause serious trouble!).
+hlsConfig.fLoader = hlsjsWrapper.P2PLoader;
 
 //Set buffer configuration params, unless they're specified
 hlsConfig.maxBufferSize = hlsConfig.maxBufferSize || 0;
