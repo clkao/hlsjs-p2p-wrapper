@@ -37,7 +37,6 @@
     "grunt": "^0.4.5",
     "grunt-browserify": "^5.0.0",
     "grunt-bump": "^0.6.0",
-    "grunt-clean-repo": "1.0.0",
     "grunt-shell": "^1.1.2",
     "jsdoc": "^3.4.0",
     "matchdep": "0.3.0",

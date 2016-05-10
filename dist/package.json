@@ -6,5 +6,5 @@
     "name": "Streamroot",
     "email": "contact@streamroot.io"
   },
-  "main": "./streamroot-wrapper.js"
+  "main": "./hlsjs-wrapper.js"
 }
