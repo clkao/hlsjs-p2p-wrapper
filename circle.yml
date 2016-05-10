@@ -1,0 +1,15 @@
+machine:
+  node:
+    version: 4.2.3
+
+dependencies:
+  pre:
+    - npm set registry http:${NPM_HOST}
+    - npm set always-auth true
+    - 'echo ${NPM_HOST}:_authToken=${NPM_TOKEN} > ~/.npmrc'
+  override:
+    - npm install
+
+test:
+  override:
+    - npm test

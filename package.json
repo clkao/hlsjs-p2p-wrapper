@@ -18,7 +18,6 @@
     ]
   },
   "dependencies": {
-    "browserify": "~2.35",
     "hls.js": "0.5.27",
     "lodash.defaults": "4.0.1",
     "ua-parser-js": "^0.7.10",
@@ -28,17 +27,21 @@
     "streamroot-p2p-dist": "http://sdk.streamroot.io/npm/streamroot-p2p-dist-3.0.12.tar.gz"
   },
   "devDependencies": {
-    "babel": "^5.8.23",
-    "babel-core": "^6.8.0",
-    "babel-eslint": "^6.0.4",
-    "babelify": "^6.4.0",
+    "babel-core": "^6.7.7",
+    "babel-plugin-add-module-exports": "^0.2.0",
+    "babel-preset-es2015": "^6.6.0",
+    "babelify": "^7.3.0",
+    "browserify": "~2.35",
+    "browserify-derequire": "^0.9.4",
     "eslint": "2.9.0",
     "grunt": "^0.4.5",
     "grunt-browserify": "^5.0.0",
     "grunt-bump": "^0.6.0",
+    "grunt-clean-repo": "1.0.0",
     "grunt-shell": "^1.1.2",
     "jsdoc": "^3.4.0",
     "matchdep": "0.3.0",
+    "mocha": "^2.4.5",
     "node-static": "^0.7.7",
     "should": "^8.1.1"
   }

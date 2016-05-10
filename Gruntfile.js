@@ -1,5 +1,5 @@
 /*global module:false*/
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     //Load NPM tasks for dependencies
     require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 
         shell: {
             publish: {
-                command: 'npm publish',
+                command: 'npm publish dist/',
             },
             install: {
                 command: 'npm install'
@@ -34,24 +34,34 @@ module.exports = function(grunt) {
         /* Compile & watch */
         browserify: {
 
-            wrapper:{
+            wrapper: {
                 src: "lib/hlsjs-wrapper.js",
                 dest: "dist/hlsjs-wrapper.js",
                 options: {
+                    transform: ['babelify'],
+                    plugin: [
+                      ['browserify-derequire']
+                    ],
                     browserifyOptions: {
-                        debug: true
+                        debug: true,
+                        standalone: "StreamrootHlsjsWrapper"
                     },
                     watch: true,
                     keepAlive: true,
                 }
             },
 
-            bundle:{
+            bundle: {
                 src: "lib/streamroot-hlsjs-bundle.js",
                 dest: "dist/streamroot-hlsjs-bundle.js",
                 options: {
+                    transform: ['babelify'],
+                    plugin: [
+                      ['browserify-derequire']
+                    ],
                     browserifyOptions: {
-                        debug: true
+                        debug: true,
+                        standalone: "StreamrootHlsjsBundle"
                     },
                     watch: true,
                     keepAlive: true,
@@ -74,28 +84,30 @@ module.exports = function(grunt) {
         /* Release flow tasks */
         check_changelog: {
             options: {
-                version : '<%= pkg.version %>'
+                version: '<%= pkg.version %>'
             }
         },
         update_release_log: {
             options: {
-                version : '<%= pkg.version %>'
+                version: '<%= pkg.version %>'
             }
         },
         bump: {
             options: {
-                files: ['package.json'],
+                files: ['package.json', 'dist/package.json'],
                 updateConfigs: ['pkg'], // Updates so that tasks running in the same process see the updated value
                 commit: true,
                 createTag: true,
                 push: false,
                 pushTo: 'upstream',
-                commitFiles: ['package.json', 'RELEASELOG.md'], // '-a' for all files
+                commitFiles: [
+                    'package.json', 'dist/package.json', 'RELEASELOG.md'
+                ], // '-a' for all files
                 commitMessage: 'Release <%= version %>',
                 tagName: 'v<%= version %>',
                 tagMessage: 'Tagging version <%= version %>',
                 gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d' // options to use with '$ git describe'
-            },
+            }
         }
     });
 
@@ -136,8 +148,10 @@ module.exports = function(grunt) {
     /* Publishes to NPM, updates release log and bumps version number */
     grunt.registerTask('release', [
         'check_changelog',
+        'build',
         'shell:publish',
         'update_release_log',
-        'bump'
+        'bump',
+        'post_build'
     ]);
 };
