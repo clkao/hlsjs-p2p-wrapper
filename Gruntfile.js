@@ -13,7 +13,10 @@ module.exports = function (grunt) {
         browserify: {
             options: {
                 transform: ['babelify', ['uglifyify', {
-                    global: true
+                    global: true,
+                    compress: {
+                        drop_console: true,
+                    }
                 }]],
                 plugin: [
                     ['browserify-derequire']
