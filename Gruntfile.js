@@ -12,17 +12,24 @@ module.exports = function (grunt) {
 
         browserify: {
             options: {
-                transform: ['babelify'],
+                transform: ['babelify', ['uglifyify', {
+                    global: true,
+                    compress: {
+                        drop_console: true,
+                    }
+                }]],
                 plugin: [
                     ['browserify-derequire']
-                ],
-                browserifyOptions: {
-                    standalone: 'HlsjsWrapper',
-                }
+                ]
             },
             lib: {
                 files: {
                     'dist/streamroot-wrapper.js': ['lib/streamroot-wrapper.js']
+                },
+                options: {
+                    browserifyOptions: {
+                        standalone: 'HlsjsWrapper',
+                    }
                 }
             },
             helper: {
