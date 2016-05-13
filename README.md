@@ -35,10 +35,30 @@ Now you can include `dist/streamroot-hlsjs-bundle` (high-level) or `dist/hlsjs-w
 
 ### Install
 
-You can also include this as an NPM module:
+You can install the artifacts distributed as NPM modules:
+
+For the wrapper:
 
 ```
-//FIXME
+npm install streamroot-hlsjs-wrapper
+```
+
+For the bundle
+
+```
+npm install streamroot-hlsjs-bundle
+```
+
+In your application import/require the package you want to use as in the example like
+
+```
+import StreamrootHlsjsBundle from 'streamroot-hlsjs-bundle';
+```
+
+or
+
+```
+import HlsjsWrapper from 'streamroot-hlsjs-wrapper.js';
 ```
 
 ### Example
