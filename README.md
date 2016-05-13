@@ -31,7 +31,7 @@ Run this task to build the distro:
 grunt build
 ```
 
-Now you can include `dist/streamroot-hlsjs-bundle` (high-level) or `dist/hlsjs-wrapper` (low-level) into your application. You can access the respective public APIs via the namespaces `StreamrootHlsjsBundle` and `StreamrootHlsjsWrapper`.
+Now you can include `dist/bundle/streamroot-hlsjs-bundle` (high-level) or `dist/wrapper/hlsjs-wrapper` (low-level) into your application. You can access the respective public APIs via the namespaces `StreamrootHlsjsBundle` and `StreamrootHlsjsWrapper`.
 
 ### Install
 

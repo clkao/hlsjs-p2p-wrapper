@@ -3,13 +3,12 @@
   "version": "2.0.8",
   "main": "./lib/hlsjs-wrapper",
   "scripts": {
-    "wrapper": "mkdir -p dist && browserify -d -s StreamrootHlsjsWrapper lib/hlsjs-wrapper -o dist/wrapper/hlsjs-wrapper.js",
-    "bundle": "mkdir -p dist && browserify -d -s StreamrootHlsjsBundle lib/streamroot-hlsjs-bundle -o dist/bundle/streamroot-hlsjs-bundle.js",
-    "example": "browserify -d -s HlsjsWrapperExample example/main.js -o example/build.js",
+    "build": "grunt build",
+    "demo": "grunt demo",
     "test": "mocha --require mochahook",
     "docs": "./node_modules/.bin/jsdoc -d docs lib/hlsjs-wrapper.js lib/streamroot-hlsjs-bundle.js",
     "lint": "node_modules/.bin/eslint lib",
-    "server": "node_modules/.bin/static",
+    "start": "node_modules/.bin/static",
     "debug": "iron-mocha --require mochahook"
   },
   "browserify": {

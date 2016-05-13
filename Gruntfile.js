@@ -1,3 +1,27 @@
+const WATCH = false;
+const DEBUG = false;
+const KEEP_ALIVE = false;
+
+function makeBrowserifyTask (src, dest, standalone, watch, debug) {
+    const task = {
+        src: src,
+        dest: dest,
+        options: {
+            transform: ['babelify'],
+            plugin: [
+              ['browserify-derequire']
+            ],
+            browserifyOptions: {
+                debug: debug,
+                standalone: standalone
+            },
+            watch: watch,
+            keepAlive: KEEP_ALIVE
+        }
+    }
+    return task;
+}
+
 /*global module:false*/
 module.exports = function (grunt) {
 
@@ -17,14 +41,8 @@ module.exports = function (grunt) {
             install: {
                 command: 'npm install'
             },
-            example: {
-                command: 'npm run example'
-            },
-            bundle: {
-                command: 'npm run bundle'
-            },
-            server: {
-                command: 'npm run server'
+            start: {
+                command: 'npm run start'
             },
             docs: {
                 command: 'npm run docs'
@@ -33,51 +51,18 @@ module.exports = function (grunt) {
 
         /* Compile & watch */
         browserify: {
-            wrapper: {
-                src: "lib/hlsjs-wrapper.js",
-                dest: "dist/wrapper/hlsjs-wrapper.js",
-                options: {
-                    transform: ['babelify'],
-                    plugin: [
-                      ['browserify-derequire']
-                    ],
-                    browserifyOptions: {
-                        debug: true,
-                        standalone: "StreamrootHlsjsWrapper"
-                    },
-                    watch: true,
-                    keepAlive: true,
-                }
-            },
-
-            bundle: {
-                src: "lib/streamroot-hlsjs-bundle.js",
-                dest: "dist/bundle/streamroot-hlsjs-bundle.js",
-                options: {
-                    transform: ['babelify'],
-                    plugin: [
-                      ['browserify-derequire']
-                    ],
-                    browserifyOptions: {
-                        debug: true,
-                        standalone: "StreamrootHlsjsBundle"
-                    },
-                    watch: true,
-                    keepAlive: true,
-                }
-            },
-
-            example:{
-                src: "example/main.js",
-                dest: "example/build.js",
-                options: {
-                    browserifyOptions: {
-                        debug: true
-                    },
-                    watch: true,
-                    keepAlive: true,
-                }
-            }
+            wrapper: makeBrowserifyTask ("lib/hlsjs-wrapper.js",
+                                    "dist/wrapper/hlsjs-wrapper.js",
+                                    "StreamrootHlsjsWrapper",
+                                    WATCH, DEBUG),
+            bundle: makeBrowserifyTask ("lib/streamroot-hlsjs-bundle.js",
+                                    "dist/bundle/streamroot-hlsjs-bundle.js",
+                                    "StreamrootHlsjsBundle",
+                                    WATCH, DEBUG),
+            example: makeBrowserifyTask ("example/main.js",
+                                         "example/build.js",
+                                          null,
+                                          WATCH, DEBUG)
         },
 
         /* Release flow tasks */
@@ -122,8 +107,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'shell:install',
-        'wrapper',
-        'bundle'
+        'browserify:wrapper',
+        'browserify:bundle'
     ]);
 
     grunt.registerTask('example', [
@@ -133,15 +118,15 @@ module.exports = function (grunt) {
 
     grunt.registerTask('demo', [
         'shell:install',
-        'shell:bundle',
-        'shell:example',
-        'shell:server'
+        'browserify:bundle',
+        'browserify:example',
+        'shell:start'
     ]);
 
     grunt.registerTask('docs', [
         'shell:install',
         'shell:docs',
-        'shell:server'
+        'shell:start'
     ]);
 
     /* Publishes to NPM, updates release log and bumps version number */
