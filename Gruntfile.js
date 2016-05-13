@@ -12,7 +12,7 @@ module.exports = function (grunt) {
 
         shell: {
             publish: {
-                command: 'npm publish dist/',
+                command: 'npm publish dist/bundle && npm publish dist/wrapper',
             },
             install: {
                 command: 'npm install'
@@ -33,7 +33,6 @@ module.exports = function (grunt) {
 
         /* Compile & watch */
         browserify: {
-
             wrapper: {
                 src: "lib/hlsjs-wrapper.js",
                 dest: "dist/wrapper/hlsjs-wrapper.js",
