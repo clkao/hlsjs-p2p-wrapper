@@ -36,7 +36,7 @@ module.exports = function (grunt) {
 
             wrapper: {
                 src: "lib/hlsjs-wrapper.js",
-                dest: "dist/hlsjs-wrapper.js",
+                dest: "dist/wrapper/hlsjs-wrapper.js",
                 options: {
                     transform: ['babelify'],
                     plugin: [
@@ -53,7 +53,7 @@ module.exports = function (grunt) {
 
             bundle: {
                 src: "lib/streamroot-hlsjs-bundle.js",
-                dest: "dist/streamroot-hlsjs-bundle.js",
+                dest: "dist/bundle/streamroot-hlsjs-bundle.js",
                 options: {
                     transform: ['babelify'],
                     plugin: [

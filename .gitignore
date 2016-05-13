@@ -1,6 +1,7 @@
 node_modules/
 npm-debug.log
-dist/*.js
+dist/wrapper/*.js
+dist/bundle/*.js
 docs/
 example/build.js
 

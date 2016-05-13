@@ -7,7 +7,7 @@ index d0132fc..720ecf7 100644
    <!-- live-reload script -->
    <script src="//localhost:8001"></script>
 -  <script src="../dist/hls.js"></script>
-+  <script src="../dist/streamroot-hlsjs-bundle.js"></script>
++  <script src="../dist/bundle/streamroot-hlsjs-bundle.js"></script>
 +  <script type="text/javascript">
 +    window.Hls = StreamrootHlsjsBundle;
 +  </script>
