@@ -8,6 +8,7 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 ### Changed
+- uglify the bundle and remove console.log in it.
 
 ## [2.0.8] - 2016-05-11
 ### Added
