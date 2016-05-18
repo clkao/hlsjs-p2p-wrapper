@@ -53,16 +53,12 @@ module.exports = function (grunt) {
         browserify: {
             wrapper: makeBrowserifyTask ("lib/hlsjs-wrapper.js",
                                     "dist/wrapper/hlsjs-wrapper.js",
-                                    "StreamrootHlsjsWrapper",
+                                    "HlsjsWrapper",
                                     WATCH, DEBUG),
             bundle: makeBrowserifyTask ("lib/streamroot-hlsjs-bundle.js",
                                     "dist/bundle/streamroot-hlsjs-bundle.js",
-                                    "StreamrootHlsjsBundle",
-                                    WATCH, DEBUG),
-            example: makeBrowserifyTask ("example/main.js",
-                                         "example/build.js",
-                                          null,
-                                          WATCH, DEBUG)
+                                    "Hls",
+                                    WATCH, DEBUG)
         },
 
         /* Release flow tasks */
@@ -127,6 +123,12 @@ module.exports = function (grunt) {
         'shell:install',
         'shell:docs',
         'shell:start'
+    ]);
+
+    grunt.registerTask('examples', [
+        'browserify:example_bundle',
+        'browserify:example_custom',
+        'browserify:example_legacy'
     ]);
 
     /* Publishes to NPM, updates release log and bumps version number */
