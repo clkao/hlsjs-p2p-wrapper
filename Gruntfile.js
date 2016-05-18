@@ -1,6 +1,5 @@
 const WATCH = false;
-const DEBUG = false;
-const KEEP_ALIVE = false;
+const DEBUG = true;
 
 function makeBrowserifyTask (src, dest, standalone, watch, debug) {
     const task = {
@@ -16,7 +15,7 @@ function makeBrowserifyTask (src, dest, standalone, watch, debug) {
                 standalone: standalone
             },
             watch: watch,
-            keepAlive: KEEP_ALIVE
+            keepAlive: false
         }
     }
     return task;
@@ -107,15 +106,9 @@ module.exports = function (grunt) {
         'browserify:bundle'
     ]);
 
-    grunt.registerTask('example', [
-        'shell:install',
-        'browserify:example'
-    ]);
-
     grunt.registerTask('demo', [
         'shell:install',
         'browserify:bundle',
-        'browserify:example',
         'shell:start'
     ]);
 
@@ -123,12 +116,6 @@ module.exports = function (grunt) {
         'shell:install',
         'shell:docs',
         'shell:start'
-    ]);
-
-    grunt.registerTask('examples', [
-        'browserify:example_bundle',
-        'browserify:example_custom',
-        'browserify:example_legacy'
     ]);
 
     /* Publishes to NPM, updates release log and bumps version number */
