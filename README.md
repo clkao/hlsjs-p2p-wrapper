@@ -114,23 +114,20 @@ This will start a server. Go to <http://localhost:8080/docs>
 
 ### Development
 
+Make sure to have run `npm install` at least once.
+
 To build and compile-watch the wrapper/bundle/example files run:
 
 ```
-grunt wrapper
+grunt browserify:wrapper_dev
 ```
 
 or
 
 ```
-grunt bundle
+grunt browserify:bundle_dev
 ```
 
-or
-
-```
-grunt example
-```
 
 **NOTE:** it's better to use `babel-runtime` when building this module. It makes use of Object.assign, and IE11 reports error due to the use of Symbol, although we don't make use of them
 
