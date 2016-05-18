@@ -7,6 +7,9 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 ### Changed
 
 ## [Unreleased]
+### Changed
+
+## [2.0.8] - 2016-05-11
 ### Added
 - Grunt tasks to build module and `createWrappedHls` helper.
 
