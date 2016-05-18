@@ -1,7 +1,5 @@
-const WATCH = false;
-const DEBUG = true;
 
-function makeBrowserifyTask (src, dest, standalone, watch, debug) {
+function makeBrowserifyTask (src, dest, standalone, dev) {
     const task = {
         src: src,
         dest: dest,
@@ -11,11 +9,11 @@ function makeBrowserifyTask (src, dest, standalone, watch, debug) {
               ['browserify-derequire']
             ],
             browserifyOptions: {
-                debug: debug,
+                debug: dev,
                 standalone: standalone
             },
-            watch: watch,
-            keepAlive: false
+            watch: dev,
+            keepAlive: dev
         }
     }
     return task;
@@ -53,11 +51,19 @@ module.exports = function (grunt) {
             wrapper: makeBrowserifyTask ("lib/hlsjs-wrapper.js",
                                     "dist/wrapper/hlsjs-wrapper.js",
                                     "HlsjsWrapper",
-                                    WATCH, DEBUG),
+                                    false),
+            wrapper_dev: makeBrowserifyTask ("lib/hlsjs-wrapper.js",
+                                    "dist/wrapper/hlsjs-wrapper.js",
+                                    "HlsjsWrapper",
+                                    true),
             bundle: makeBrowserifyTask ("lib/streamroot-hlsjs-bundle.js",
                                     "dist/bundle/streamroot-hlsjs-bundle.js",
                                     "Hls",
-                                    WATCH, DEBUG)
+                                    false),
+            bundle_dev: makeBrowserifyTask ("lib/streamroot-hlsjs-bundle.js",
+                                    "dist/bundle/streamroot-hlsjs-bundle.js",
+                                    "Hls",
+                                    true),
         },
 
         /* Release flow tasks */
