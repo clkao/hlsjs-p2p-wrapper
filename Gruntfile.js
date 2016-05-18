@@ -115,6 +115,7 @@ module.exports = function (grunt) {
     grunt.registerTask('demo', [
         'shell:install',
         'browserify:bundle',
+        'browserify:wrapper',
         'shell:start'
     ]);
 
