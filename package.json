@@ -22,9 +22,6 @@
     "ua-parser-js": "^0.7.10",
     "url": "^0.11.0"
   },
-  "optionalDependencies": {
-    "streamroot-p2p-dist": "http://sdk.streamroot.io/npm/streamroot-p2p-dist-3.0.12.tar.gz"
-  },
   "devDependencies": {
     "babel-core": "^6.7.7",
     "babel-plugin-add-module-exports": "^0.2.0",
