@@ -1,4 +1,4 @@
-import TrackView from '../lib/mapping/track-view';
+import TrackView from '../lib/integration/mapping/track-view';
 
 describe("TrackView",() => {
     describe("isEqual", function() {
