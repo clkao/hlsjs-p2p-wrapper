@@ -64,6 +64,10 @@ module.exports = function (grunt) {
                                     "dist/bundle/streamroot-hlsjs-bundle.js",
                                     "Hls",
                                     true),
+            tests: makeBrowserifyTask("test/html/tests.js",
+                                    "test/html/build.js",
+                                    "Tests",
+                                    true)
         },
 
         /* Release flow tasks */
