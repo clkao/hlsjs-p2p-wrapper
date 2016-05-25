@@ -16,11 +16,6 @@ After cloning the repo, make sure that you have `grunt-cli` installed in your gl
 npm install -g grunt-cli
 npm install
 ```
-and
-
-```
-./update_deps.sh
-```
 
 ### Build
 

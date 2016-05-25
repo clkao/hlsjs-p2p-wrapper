@@ -19,6 +19,7 @@
   "dependencies": {
     "hls.js": "0.5.27",
     "lodash.defaults": "4.0.1",
+    "streamroot-p2p": "^3.1.0-beta140",
     "ua-parser-js": "^0.7.10",
     "url": "^0.11.0"
   },
