@@ -24,7 +24,7 @@ module.exports = function (grunt) {
             },
             lib: {
                 files: {
-                    'dist/streamroot-wrapper.js': ['lib/streamroot-wrapper.js']
+                    'dist/hlsjs-p2p-wrapper.js': ['lib/streamroot-wrapper.js']
                 },
                 options: {
                     browserifyOptions: {

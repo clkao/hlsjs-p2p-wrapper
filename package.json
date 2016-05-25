@@ -1,5 +1,5 @@
 {
-  "name": "hlsjs-wrapper",
+  "name": "streamroot-hlsjs-p2p-wrapper",
   "version": "2.0.9",
   "main": "lib/streamroot-wrapper.js",
   "homepage": "www.streamroot.io",

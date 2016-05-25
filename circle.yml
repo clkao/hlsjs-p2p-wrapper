@@ -25,12 +25,12 @@ deployment:
 
             # Upload dist
             - grunt browserify:lib
-            - toolkit/add_banner.rb --file dist/streamroot-wrapper.js --deploy_env $CIRCLE_BRANCH
-            - cp dist/streamroot-wrapper.js $CIRCLE_ARTIFACTS/streamroot-wrapper.js
+            - toolkit/add_banner.rb --file dist/hlsjs-p2p-wrapper.js --deploy_env $CIRCLE_BRANCH
+            - cp dist/hlsjs-p2p-wrapper.js $CIRCLE_ARTIFACTS/hlsjs-p2p-wrapper.js
             - toolkit/upload_to_s3.rb --bucket features.streamroot.io
                                       --region eu-west-1
-                                      --file $CIRCLE_ARTIFACTS/streamroot-wrapper.js
-                                      --destinations streamroot-wrapper/$CIRCLE_BRANCH/streamroot-wrapper.js
+                                      --file $CIRCLE_ARTIFACTS/hlsjs-p2p-wrapper.js
+                                      --destinations hlsjs-p2p-wrapper/$CIRCLE_BRANCH/hlsjs-p2p-wrapper.js
                                       --key $S3_KEY
                                       --secret $S3_SECRET
 
@@ -46,14 +46,14 @@ deployment:
 
             # Generate dist
             - grunt browserify:lib
-            - toolkit/add_banner.rb --file dist/streamroot-wrapper.js
+            - toolkit/add_banner.rb --file dist/hlsjs-p2p-wrapper.js
                                     --deploy_env staging
                                     --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
-            - cp dist/streamroot-wrapper.js $CIRCLE_ARTIFACTS/streamroot-wrapper.js
+            - cp dist/hlsjs-p2p-wrapper.js $CIRCLE_ARTIFACTS/hlsjs-p2p-wrapper.js
 
             # Build package.json
             - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
-                                            --main ./streamroot-wrapper.js
+                                            --main ./hlsjs-p2p-wrapper.js
 
             # Publish
             - 'echo //registry.npmjs.org/:_authToken=${PUBLIC_NPM_TOKEN} > ~/.npmrc'
@@ -62,14 +62,14 @@ deployment:
             # Upload version
             - toolkit/upload_to_s3.rb --bucket staging.streamroot.io
                                       --region eu-west-1
-                                      --file $CIRCLE_ARTIFACTS/streamroot-wrapper.js
-                                      --destinations streamroot-wrapper/$(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})/streamroot-wrapper.js
-                                                     streamroot-wrapper/latest/streamroot-wrapper.js
+                                      --file $CIRCLE_ARTIFACTS/hlsjs-p2p-wrapper.js
+                                      --destinations hlsjs-p2p-wrapper/$(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})/hlsjs-p2p-wrapper.js
+                                                     hlsjs-p2p-wrapper/latest/hlsjs-p2p-wrapper.js
                                       --key $S3_KEY
                                       --secret $S3_SECRET
 
             # Changelog
-            - toolkit/post_changelog.rb   --project streamroot-wrapper
+            - toolkit/post_changelog.rb   --project hlsjs-p2p-wrapper
                                           --env staging
                                           --subtitle _Rompopopom_
                                           --channel team-client
@@ -78,7 +78,7 @@ deployment:
                                           --icon-url https://pbs.twimg.com/profile_images/3630440066/534fcdee974c7311d13aa2a2e3381bb6.jpeg
 
             # Run bridge
-            - bridge/run.rb --current_module streamroot-wrapper --trigger_branch dev --token $BRIDGE_TOKEN
+            - bridge/run.rb --current_module hlsjs-p2p-wrapper --trigger_branch dev --token $BRIDGE_TOKEN
 
     preprod:
         branch: master
@@ -98,10 +98,10 @@ deployment:
 
             # Generate dist
             - grunt browserify:lib
-            - toolkit/add_banner.rb --file dist/streamroot-wrapper.js
+            - toolkit/add_banner.rb --file dist/hlsjs-p2p-wrapper.js
                                     --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
 
-            - cp dist/streamroot-wrapper.js $CIRCLE_ARTIFACTS/streamroot-wrapper.js
+            - cp dist/hlsjs-p2p-wrapper.js $CIRCLE_ARTIFACTS/hlsjs-p2p-wrapper.js
 
             # Build package.json
             - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb)
@@ -113,16 +113,16 @@ deployment:
             # Upload version
             - toolkit/upload_to_s3.rb --bucket preprod.streamroot.io
                                       --region eu-west-1
-                                      --file $CIRCLE_ARTIFACTS/streamroot-wrapper.js
-                                      --destinations streamroot-wrapper/$(toolkit/current_version.rb --major)/streamroot-wrapper.js
-                                                     streamroot-wrapper/$(toolkit/current_version.rb --no_patch)/streamroot-wrapper.js
-                                                     streamroot-wrapper/$(toolkit/current_version.rb)/streamroot-wrapper.js
-                                                     streamroot-wrapper/latest/streamroot-wrapper.js
+                                      --file $CIRCLE_ARTIFACTS/hlsjs-p2p-wrapper.js
+                                      --destinations hlsjs-p2p-wrapper/$(toolkit/current_version.rb --major)/hlsjs-p2p-wrapper.js
+                                                     hlsjs-p2p-wrapper/$(toolkit/current_version.rb --no_patch)/hlsjs-p2p-wrapper.js
+                                                     hlsjs-p2p-wrapper/$(toolkit/current_version.rb)/hlsjs-p2p-wrapper.js
+                                                     hlsjs-p2p-wrapper/latest/hlsjs-p2p-wrapper.js
                                       --key $S3_KEY
                                       --secret $S3_SECRET
 
             # Changelog
-            - toolkit/post_changelog.rb   --project streamroot-wrapper
+            - toolkit/post_changelog.rb   --project hlsjs-p2p-wrapper
                                           --env preprod
                                           --subtitle _Rompopopom_
                                           --channel team-client
@@ -131,5 +131,5 @@ deployment:
                                           --icon-url https://pbs.twimg.com/profile_images/3630440066/534fcdee974c7311d13aa2a2e3381bb6.jpeg
 
             # Run bridge
-            - bridge/run.rb --current_module streamroot-wrapper --trigger_branch master --token $BRIDGE_TOKEN
+            - bridge/run.rb --current_module hlsjs-p2p-wrapper --trigger_branch master --token $BRIDGE_TOKEN
 
