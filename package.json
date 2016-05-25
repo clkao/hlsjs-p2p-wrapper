@@ -2,6 +2,11 @@
   "name": "hlsjs-wrapper",
   "version": "2.0.9",
   "main": "lib/streamroot-wrapper.js",
+  "homepage": "www.streamroot.io",
+  "author": {
+    "name": "streamroot",
+    "email": "contact@streamroot.io"
+  },
   "scripts": {
     "test": "mocha --require mochahook",
     "debug": "iron-mocha --require mochahook"
