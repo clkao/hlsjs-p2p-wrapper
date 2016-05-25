@@ -127,6 +127,7 @@ module.exports = function (grunt) {
 
     /* Publishes to NPM, updates release log and bumps version number */
     grunt.registerTask('release', [
+        'pre_build',
         'check_changelog',
         'build',
         'shell:publish',
