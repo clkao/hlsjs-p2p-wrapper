@@ -6,9 +6,11 @@ machine:
 
 dependencies:
     pre:
+        - gem install aws-sdk
         - npm set registry http:${NPM_HOST}
         - npm set always-auth true
         - 'echo ${NPM_HOST}:_authToken=${NPM_TOKEN} > ~/.npmrc'
+        - npm install -g grunt-cli
     override:
         - npm install
 
