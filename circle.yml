@@ -9,7 +9,7 @@ dependencies:
     - 'echo ${NPM_HOST}:_authToken=${NPM_TOKEN} > ~/.npmrc'
   override:
     - npm install
-    - ./update_deps
+    - ./update_deps.sh
 
 test:
   override:

@@ -16,11 +16,10 @@ After cloning the repo, make sure that you have `grunt-cli` installed in your gl
 npm install -g grunt-cli
 npm install
 ```
-
-**NOTE:** In case you get a 4xx error from npm when pulling optional deps, pull them using this script and everything will be OK :)
+and
 
 ```
-./install_opt_deps.sh
+./update_deps.sh
 ```
 
 ### Build
