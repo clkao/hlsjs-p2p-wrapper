@@ -1,15 +1,135 @@
 machine:
-  node:
-    version: 4.2.3
+    node:
+        version: 4.2.3
+    ruby:
+        version: 2.2.0
 
 dependencies:
-  pre:
-    - npm set registry http:${NPM_HOST}
-    - npm set always-auth true
-    - 'echo ${NPM_HOST}:_authToken=${NPM_TOKEN} > ~/.npmrc'
-  override:
-    - npm install
+    pre:
+        - npm set registry http:${NPM_HOST}
+        - npm set always-auth true
+        - 'echo ${NPM_HOST}:_authToken=${NPM_TOKEN} > ~/.npmrc'
+    override:
+        - npm install
 
 test:
-  override:
-    - npm test
+    override:
+        - npm test
+
+deployment:
+    features:
+        branch: /^(?!(?:dev|master)$).+$/
+        commands:
+            # Clone tools
+            - git clone https://$BITBUCKET_TOKEN:x-oauth-basic@bitbucket.org/sharevicomplet/toolkit.git
+
+            # Upload dist
+            - grunt browserify:lib
+            - toolkit/add_banner.rb --file dist/streamroot-wrapper.js --deploy_env $CIRCLE_BRANCH
+            - cp dist/streamroot-wrapper.js $CIRCLE_ARTIFACTS/streamroot-wrapper.js
+            - toolkit/upload_to_s3.rb --bucket features.streamroot.io
+                                      --region eu-west-1
+                                      --file $CIRCLE_ARTIFACTS/streamroot-wrapper.js
+                                      --destinations streamroot-wrapper/$CIRCLE_BRANCH/streamroot-wrapper.js
+                                      --key $S3_KEY
+                                      --secret $S3_SECRET
+
+    staging:
+        branch: dev
+        commands:
+            # Clone tools
+            - git clone https://$BITBUCKET_TOKEN:x-oauth-basic@bitbucket.org/sharevicomplet/bridge.git
+            - git clone https://$BITBUCKET_TOKEN:x-oauth-basic@bitbucket.org/sharevicomplet/toolkit.git
+
+            # Cleanup
+            - rm -rf dist
+
+            # Generate dist
+            - grunt browserify:lib
+            - toolkit/add_banner.rb --file dist/streamroot-wrapper.js
+                                    --deploy_env staging
+                                    --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
+            - cp dist/streamroot-wrapper.js $CIRCLE_ARTIFACTS/streamroot-wrapper.js
+
+            # Build package.json
+            - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
+                                            --main ./streamroot-wrapper.js
+
+            # Publish
+            - 'echo //registry.npmjs.org/:_authToken=${PUBLIC_NPM_TOKEN} > ~/.npmrc'
+            - npm publish dist
+
+            # Upload version
+            - toolkit/upload_to_s3.rb --bucket staging.streamroot.io
+                                      --region eu-west-1
+                                      --file $CIRCLE_ARTIFACTS/streamroot-wrapper.js
+                                      --destinations streamroot-wrapper/$(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})/streamroot-wrapper.js
+                                                     streamroot-wrapper/latest/streamroot-wrapper.js
+                                      --key $S3_KEY
+                                      --secret $S3_SECRET
+
+            # Changelog
+            - toolkit/post_changelog.rb   --project streamroot-wrapper
+                                          --env staging
+                                          --subtitle _Rompopopom_
+                                          --channel team-client
+                                          --slack-token $SLACK_TOKEN
+                                          --username Rihanna
+                                          --icon-url https://pbs.twimg.com/profile_images/3630440066/534fcdee974c7311d13aa2a2e3381bb6.jpeg
+
+            # Run bridge
+            - bridge/run.rb --current_module streamroot-wrapper --trigger_branch dev --token $BRIDGE_TOKEN
+
+    preprod:
+        branch: master
+        commands:
+            # Clone tools
+            - git clone https://$BITBUCKET_TOKEN:x-oauth-basic@bitbucket.org/sharevicomplet/bridge.git
+            - git clone https://$BITBUCKET_TOKEN:x-oauth-basic@bitbucket.org/sharevicomplet/toolkit.git
+
+            # Changelog
+            - toolkit/bump_current_changelog.rb --version $(toolkit/current_version.rb)
+
+            # Update version
+            - toolkit/update_version.rb
+
+            # Cleanup
+            - rm -rf dist
+
+            # Generate dist
+            - grunt browserify:lib
+            - toolkit/add_banner.rb --file dist/streamroot-wrapper.js
+                                    --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
+
+            - cp dist/streamroot-wrapper.js $CIRCLE_ARTIFACTS/streamroot-wrapper.js
+
+            # Build package.json
+            - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb)
+
+            # Publish
+            - 'echo //registry.npmjs.org/:_authToken=${PUBLIC_NPM_TOKEN} > ~/.npmrc'
+            - npm publish dist
+
+            # Upload version
+            - toolkit/upload_to_s3.rb --bucket preprod.streamroot.io
+                                      --region eu-west-1
+                                      --file $CIRCLE_ARTIFACTS/streamroot-wrapper.js
+                                      --destinations streamroot-wrapper/$(toolkit/current_version.rb --major)/streamroot-wrapper.js
+                                                     streamroot-wrapper/$(toolkit/current_version.rb --no_patch)/streamroot-wrapper.js
+                                                     streamroot-wrapper/$(toolkit/current_version.rb)/streamroot-wrapper.js
+                                                     streamroot-wrapper/latest/streamroot-wrapper.js
+                                      --key $S3_KEY
+                                      --secret $S3_SECRET
+
+            # Changelog
+            - toolkit/post_changelog.rb   --project streamroot-wrapper
+                                          --env preprod
+                                          --subtitle _Rompopopom_
+                                          --channel team-client
+                                          --slack-token $SLACK_TOKEN
+                                          --username Rihanna
+                                          --icon-url https://pbs.twimg.com/profile_images/3630440066/534fcdee974c7311d13aa2a2e3381bb6.jpeg
+
+            # Run bridge
+            - bridge/run.rb --current_module streamroot-wrapper --trigger_branch master --token $BRIDGE_TOKEN
+
