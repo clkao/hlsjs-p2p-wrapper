@@ -3,6 +3,7 @@ npm-debug.log
 dist/wrapper/*.js
 dist/bundle/*.js
 docs/
+demo-hls.js/
 example/build.js
 
 

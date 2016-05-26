@@ -4,7 +4,12 @@ function makeBrowserifyTask (src, dest, standalone, dev) {
         src: src,
         dest: dest,
         options: {
-            transform: ['babelify'],
+            transform: ['babelify', ['uglifyify', {
+                    global: true,
+                    compress: {
+                        drop_console: true,
+                    }
+                }]],
             plugin: [
               ['browserify-derequire']
             ],
@@ -131,6 +136,7 @@ module.exports = function (grunt) {
 
     /* Publishes to NPM, updates release log and bumps version number */
     grunt.registerTask('release', [
+        'pre_build',
         'check_changelog',
         'build',
         'shell:publish',

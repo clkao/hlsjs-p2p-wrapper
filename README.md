@@ -17,12 +17,6 @@ npm install -g grunt-cli
 npm install
 ```
 
-**NOTE:** In case you get a 4xx error from npm when pulling optional deps, pull them using this script and everything will be OK :)
-
-```
-./install_opt_deps.sh
-```
-
 ### Build
 
 Run this task to build the distro:
