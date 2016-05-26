@@ -4,9 +4,16 @@ import Hls from "hls.js";
 
 const TEST_URL1 = "http://www.streambox.fr/playlists/test_001/stream_110k_48k_416x234_000.ts";
 
-describe.only("P2PLoaderGenerator", () => {
+describe("P2PLoaderGenerator", () => {
+
+    // this should only run in the browser
+    if (typeof window === 'undefined') {
+        return;
+    }
 
     it("should succeed to load a fragment, trigger success events and return valid stats", (done) => {
+
+
 
         const P2PLoader = P2PLoaderGenerator(new HlsjsWrapperMock());
 
@@ -95,6 +102,7 @@ describe.only("P2PLoaderGenerator", () => {
             done();
         }
     });
+
 
 
 });
