@@ -6,8 +6,6 @@ module.exports = function(config) {
       'test/html/build.js'
     ],
 
-    browsers: ['Chrome'],
-
-    singleRun: true
+    browsers: ['Chrome']
   });
 };

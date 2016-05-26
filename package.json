@@ -7,7 +7,7 @@
     "demo": "grunt demo",
     "test": "npm run mocha && npm run karma",
     "mocha": "node_modules/.bin/mocha --require mochahook",
-    "karma": "grunt browserify:test && ./node_modules/.bin/karma start",
+    "karma": "node_modules/.bin/grunt browserify:test && ./node_modules/.bin/karma start --single-run",
     "docs": "node_modules/.bin/jsdoc -d docs lib/hlsjs-wrapper.js lib/streamroot-hlsjs-bundle.js",
     "lint": "node_modules/.bin/eslint lib",
     "start": "node_modules/.bin/static"
