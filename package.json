@@ -1,6 +1,6 @@
 {
   "name": "hlsjs-wrapper",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "main": "./lib/hlsjs-wrapper",
   "scripts": {
     "build": "grunt build",
@@ -38,7 +38,7 @@
     "jsdoc": "^3.4.0",
     "matchdep": "0.3.0",
     "mocha": "^2.4.5",
-    "node-static": "^0.7.7",
-    "should": "^8.1.1"
+    "should": "^8.1.1",
+    "uglifyify": "^3.0.1"
   }
 }

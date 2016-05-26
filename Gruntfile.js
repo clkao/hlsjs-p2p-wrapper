@@ -4,7 +4,12 @@ function makeBrowserifyTask (src, dest, standalone, dev) {
         src: src,
         dest: dest,
         options: {
-            transform: ['babelify'],
+            transform: ['babelify', ['uglifyify', {
+                    global: true,
+                    compress: {
+                        drop_console: true,
+                    }
+                }]],
             plugin: [
               ['browserify-derequire']
             ],
