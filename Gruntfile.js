@@ -4,12 +4,12 @@ function makeBrowserifyTask (src, dest, standalone, dev) {
         src: src,
         dest: dest,
         options: {
-            transform: ['babelify', ['uglifyify', {
+            transform: ['babelify'/*, ['uglifyify', {
                     global: true,
                     compress: {
                         drop_console: true,
                     }
-                }]],
+            }]*/],
             plugin: [
               ['browserify-derequire']
             ],
@@ -48,6 +48,9 @@ module.exports = function (grunt) {
             },
             docs: {
                 command: 'npm run docs'
+            },
+            update_demo: {
+                command: './update_demo.rb'
             }
         },
 
@@ -123,6 +126,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('demo', [
         'shell:install',
+        'shell:update_demo',
         'browserify:bundle',
         'browserify:wrapper',
         'shell:start'
