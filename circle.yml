@@ -22,8 +22,10 @@ deployment:
     features:
         branch: /^(?!(?:dev|master)$).+$/
         commands:
-            # Clone tools
-            - git clone https://$BITBUCKET_TOKEN:x-oauth-basic@bitbucket.org/sharevicomplet/toolkit.git
+            # Clone tool
+            - git config --global user.email "test@streamroot.io"
+            - git config --global user.name "Jean Hum"
+            - git clone git@github.com:streamroot/toolkit.git
 
             # Upload dist
             - grunt browserify:lib
@@ -40,8 +42,10 @@ deployment:
         branch: dev
         commands:
             # Clone tools
-            - git clone https://$BITBUCKET_TOKEN:x-oauth-basic@bitbucket.org/sharevicomplet/bridge.git
-            - git clone https://$BITBUCKET_TOKEN:x-oauth-basic@bitbucket.org/sharevicomplet/toolkit.git
+            - git config --global user.email "test@streamroot.io"
+            - git config --global user.name "Jean Hum"
+            - git clone git@github.com:streamroot/bridge.git
+            - git clone git@github.com:streamroot/toolkit.git
 
             # Cleanup
             - rm -rf dist
@@ -86,8 +90,10 @@ deployment:
         branch: master
         commands:
             # Clone tools
-            - git clone https://$BITBUCKET_TOKEN:x-oauth-basic@bitbucket.org/sharevicomplet/bridge.git
-            - git clone https://$BITBUCKET_TOKEN:x-oauth-basic@bitbucket.org/sharevicomplet/toolkit.git
+            - git config --global user.email "test@streamroot.io"
+            - git config --global user.name "Jean Hum"
+            - git clone git@github.com:streamroot/bridge.git
+            - git clone git@github.com:streamroot/toolkit.git
 
             # Changelog
             - toolkit/bump_current_changelog.rb --version $(toolkit/current_version.rb)
