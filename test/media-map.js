@@ -1,6 +1,6 @@
-import MediaMap from '../lib/mapping/media-map';
-import SegmentView from '../lib/mapping/segment-view';
-import TrackView from '../lib/mapping/track-view';
+import MediaMap from '../lib/integration/mapping/media-map';
+import SegmentView from '../lib/integration/mapping/segment-view';
+import TrackView from '../lib/integration/mapping/track-view';
 import HlsMock from './mocks/hls';
 
 describe("MediaMap",() => {

@@ -1,4 +1,4 @@
-import PlayerInterface from '../lib/playerInterface';
+import PlayerInterface from '../lib/integration/player-interface';
 import HlsMock from './mocks/hls';
 
 describe("PlayerInterface",() => {
