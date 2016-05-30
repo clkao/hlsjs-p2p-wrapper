@@ -1,23 +1,30 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 require 'json'
 
 # Updates the Hls.js demo based on the supported version
 
-PACKAGE = File.read('package.json')
+CURRENT_FOLDER = File.expand_path File.dirname(__FILE__)
+
+PACKAGE = File.read(File.join(CURRENT_FOLDER, 'package.json'))
 PACKAGE_HASH = JSON.parse(PACKAGE)
 VERSION = PACKAGE_HASH['dependencies']['hls.js']
 
 FILENAME = "v#{VERSION}.tar.gz"
-DEMO_DIR = "demo-hls.js"
+DEMO_DIR = File.join(CURRENT_FOLDER, "demo-hls.js")
+
+Dir.chdir CURRENT_FOLDER
 
 `mkdir -p #{DEMO_DIR}`
-`cd #{DEMO_DIR} && rm -Rf *`
-`cd #{DEMO_DIR} && wget https://github.com/dailymotion/hls.js/archive/#{FILENAME}`
-`cd #{DEMO_DIR} && tar -xzvf #{FILENAME}`
-`cd #{DEMO_DIR} && cp hls.js-#{VERSION}/demo/* .`
-`cd #{DEMO_DIR} && rm -Rf hls.js-#{VERSION}`
-`cd #{DEMO_DIR} && rm #{FILENAME}`
+
+Dir.chdir DEMO_DIR
+
+`rm -Rf *`
+`wget https://github.com/dailymotion/hls.js/archive/#{FILENAME}`
+`tar -xzvf #{FILENAME}`
+`cp hls.js-#{VERSION}/demo/* .`
+`rm -Rf hls.js-#{VERSION}`
+`rm #{FILENAME}`
 
 # In case this conflicts the patch script has to be updated coherently!
 
@@ -33,7 +40,6 @@ INDEX = File.read(DEMO_INDEX)
 
 NEW_INDEX = INDEX.gsub(OLD_CONSTRUCTOR, NEW_CONSTRUCTOR).gsub(OLD_SCRIPT, NEW_SCRIPT)
 
-# To write changes to the file, use:
-File.open(DEMO_INDEX, "w") {|file| file.puts NEW_INDEX }
+File.open(DEMO_INDEX, "w") {|file| file.puts NEW_INDEX}
 
 
