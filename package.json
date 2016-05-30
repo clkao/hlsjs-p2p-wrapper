@@ -9,7 +9,8 @@
     "docs": "./node_modules/.bin/jsdoc -d docs lib/hlsjs-wrapper.js lib/streamroot-hlsjs-bundle.js",
     "lint": "node_modules/.bin/eslint lib",
     "start": "node_modules/.bin/static",
-    "debug": "iron-mocha --require mochahook"
+    "debug": "iron-mocha --require mochahook",
+    "postinstall": "./update_demo.rb"
   },
   "browserify": {
     "transform": [
