@@ -1,6 +1,6 @@
 {
   "name": "hlsjs-wrapper",
-  "version": "2.0.9",
+  "version": "3.0.0",
   "main": "./lib/hlsjs-wrapper",
   "scripts": {
     "build": "grunt build",
