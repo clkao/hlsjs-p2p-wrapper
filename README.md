@@ -27,6 +27,10 @@ grunt build
 
 Now you can include `dist/bundle/streamroot-hlsjs-bundle` (high-level) or `dist/wrapper/hlsjs-wrapper` (low-level) into your application. You can access the respective public APIs via the namespaces `StreamrootHlsjsBundle` and `StreamrootHlsjsWrapper`.
 
+### Tests
+
+FIXME
+
 ### Install
 
 You can install the artifacts distributed as NPM modules:
