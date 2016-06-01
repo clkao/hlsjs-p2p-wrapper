@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.4.6/rickshaw.min.js"> </script>
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.4.6/rickshaw.min.css">
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.9/d3.min.js"> </script>
+
+        <script>
+            window._DEBUG_ = true;
+            window._TEST_ = false;
+            window.streamrootConfig = {
+                p2pConfig:{
+                    streamrootKey: "ry-v7xuywnt",
+                    debug: true,
+                },
+                contentUrl: 'http://www.streambox.fr/playlists/test_001/stream.m3u8',
+            }
+
+            window.previousTotalCDN = 0;
+        </script>
+
+        <script src="../../node_modules/hls.js/dist/hls.js"></script>
+        <script src="../../dist/wrapper/hlsjs-wrapper.js"></script>
+
+        <script src="http://cdn.streamroot.io/2/scripts/p2pGraph.js"></script>
+        <script src="http://cdn.streamroot.io/2/scripts/peerStat.js"></script>
+
+        <script>
+
+            var config = window.streamrootConfig;
+
+            window.addEventListener("load", () => {
+
+                // Check for config in environment
+                if (!config) {
+                    throw new Error('Streamroot config is not set');
+                }
+
+                // Check feature support
+                if (Hls.isSupported()) {
+
+                    const video = document.getElementById('video');
+
+                    // Create plain wrapper without DI (legacy way)
+                    const wrapper = new HlsjsWrapper();
+
+                    // Create Hls.js instance your way
+                    let hls = new Hls(config.hlsConfig);
+
+                    hls.on(Hls.Events.MANIFEST_LOADING, (event, data) => {
+                        wrapper.createSRModule(config.p2pConfig, hls, Hls.Events);
+                    });
+
+                    hls.loadSource(config.contentUrl);
+                    hls.attachMedia(video);
+                    hls.on(Hls.Events.MANIFEST_PARSED,function() {
+                        video.play();
+                    });
+                }
+            });
+
+        </script>
+
+    </head>
+    <body>
+        <video id="video" controls></video>
+    </body>
+</html>

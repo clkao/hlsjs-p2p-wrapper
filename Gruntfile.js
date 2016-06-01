@@ -1,3 +1,29 @@
+
+function makeBrowserifyTask (src, dest, standalone, dev) {
+    const task = {
+        src: src,
+        dest: dest,
+        options: {
+            transform: ['babelify'/*, ['uglifyify', {
+                    global: true,
+                    compress: {
+                        drop_console: true,
+                    }
+            }]*/],
+            plugin: [
+              ['browserify-derequire']
+            ],
+            browserifyOptions: {
+                debug: dev,
+                standalone: standalone
+            },
+            watch: dev,
+            keepAlive: dev
+        }
+    }
+    return task;
+}
+
 /*global module:false*/
 module.exports = function (grunt) {
 
@@ -10,39 +36,45 @@ module.exports = function (grunt) {
         version: '<%= pkg.version %>',
         file_version: '',
 
-        browserify: {
-            options: {
-                transform: ['babelify', ['uglifyify', {
-                    global: true,
-                    compress: {
-                        drop_console: true,
-                    }
-                }]],
-                plugin: [
-                    ['browserify-derequire']
-                ]
-            },
-            lib: {
-                files: {
-                    'dist/hlsjs-p2p-wrapper.js': ['lib/streamroot-wrapper.js']
-                },
-                options: {
-                    browserifyOptions: {
-                        standalone: 'HlsjsWrapper',
-                    }
-                }
-            },
-            helper: {
-                files: {
-                    'dist/createWrappedHls.js': ['tools/createWrappedHls.js']
-                }
-            }
-        },
         shell: {
-            npmPublish: {
-                command: 'npm publish dist/'
+            publish: {
+                command: 'npm publish dist/bundle && npm publish dist/wrapper',
+            },
+            install: {
+                command: 'npm install'
+            },
+            start: {
+                command: 'npm run start'
+            },
+            docs: {
+                command: 'npm run docs'
+            },
+            update_demo: {
+                command: './update_demo.rb'
             }
         },
+
+        /* Compile & watch */
+        browserify: {
+            wrapper: makeBrowserifyTask ("lib/hlsjs-wrapper.js",
+                                    "dist/wrapper/hlsjs-wrapper.js",
+                                    "HlsjsWrapper",
+                                    false),
+            wrapper_dev: makeBrowserifyTask ("lib/hlsjs-wrapper.js",
+                                    "dist/wrapper/hlsjs-wrapper.js",
+                                    "HlsjsWrapper",
+                                    true),
+            bundle: makeBrowserifyTask ("lib/streamroot-hlsjs-bundle.js",
+                                    "dist/bundle/streamroot-hlsjs-bundle.js",
+                                    "Hls",
+                                    false),
+            bundle_dev: makeBrowserifyTask ("lib/streamroot-hlsjs-bundle.js",
+                                    "dist/bundle/streamroot-hlsjs-bundle.js",
+                                    "Hls",
+                                    true),
+        },
+
+        /* Release flow tasks */
         check_changelog: {
             options: {
                 version: '<%= pkg.version %>'
@@ -62,7 +94,7 @@ module.exports = function (grunt) {
                 push: false,
                 pushTo: 'upstream',
                 commitFiles: [
-                    'package.json', 'dist/package.json', 'releaseLog.md'
+                    'package.json', 'dist/package.json', 'RELEASELOG.md'
                 ], // '-a' for all files
                 commitMessage: 'Release <%= version %>',
                 tagName: 'v<%= version %>',
@@ -72,13 +104,42 @@ module.exports = function (grunt) {
         }
     });
 
-    //This task is used to make a preprod build and push it to S3, see structureProd for an explanation
+    grunt.registerTask('wrapper', [
+        'shell:install',
+        'browserify:wrapper'
+    ]);
+
+    grunt.registerTask('bundle', [
+        'shell:install',
+        'browserify:bundle'
+    ]);
+
+    grunt.registerTask('build', [
+        'shell:install',
+        'browserify:wrapper',
+        'browserify:bundle'
+    ]);
+
+    grunt.registerTask('demo', [
+        'shell:install',
+        'shell:update_demo',
+        'browserify:bundle',
+        'browserify:wrapper',
+        'shell:start'
+    ]);
+
+    grunt.registerTask('docs', [
+        'shell:install',
+        'shell:docs',
+        'shell:start'
+    ]);
+
+    /* Publishes to NPM, updates release log and bumps version number */
     grunt.registerTask('release', [
         'pre_build',
         'check_changelog',
-        'browserify:lib',
-        'browserify:helper',
-        'shell:npmPublish',
+        'build',
+        'shell:publish',
         'update_release_log',
         'bump',
         'post_build'

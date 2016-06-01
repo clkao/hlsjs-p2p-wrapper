@@ -1,5 +1,5 @@
-import SegmentView from '../lib/mapping/segment-view';
-import TrackView from '../lib/mapping/track-view';
+import SegmentView from '../lib/integration/mapping/segment-view';
+import TrackView from '../lib/integration/mapping/track-view';
 
 describe("SegmentView",() => {
     describe("toJSON", function() {

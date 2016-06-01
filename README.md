@@ -1,76 +1,136 @@
 # Hlsjs-wrapper
 
-This module wraps an instance of hls.js to interface it with streamroot-p2p
+This module wraps an instance of hls.js to bootstrap it with the Streamroot P2P agent module.
 
-** IMPORTANT: ** it's better to use babel-runtime when building this module. It makes use of Object.assign, and IE11 reports error due to the use of Symbol, although we don't make use of them
+It provides a high-level Hls.js extended constructor to create fully configured player which will use the agent, giving you the exact same API. Which means you can integrate the wrapper player with minimal changes in your application (you only need to add an additional argument to the constructor).
+
+It also provides a low-level wrapper that allows you to create/configure a player based on a DI'd constructor or instance so you can rule over what Hls.js version to use or initialize the player instance on your own and set an optional custom content ID.
 
 # Usage
 
-### API
+### Setup
 
-##### Constructor
+After cloning the repo, make sure that you have `grunt-cli` installed in your global node binaries and install local dependencies in the project root:
 
-The constructor expects the constructor of the Streamroot module as argument.
+```
+npm install -g grunt-cli
+npm install
+```
 
-The instance will have the following properties:
+### Build
 
-##### P2Ploader
+Run this task to build the distro:
 
-This is the constructor you need to override `loader`in `hls.config`.
+```
+grunt build
+```
 
-##### createSRModule(p2pConfig, hls, Events [, content] )
+Now you can include `dist/bundle/streamroot-hlsjs-bundle` (high-level) or `dist/wrapper/hlsjs-wrapper` (low-level) into your application. You can access the respective public APIs via the namespaces `StreamrootHlsjsBundle` and `StreamrootHlsjsWrapper`.
 
-Use this method to actually instantiate the p2p module, on `Hls.Events.MANIFEST_LOADING`.
+### Install
 
-parameter | description
-----------|--------------
-p2pConfig | Your p2p module configuration object. Check out the doc [here](https://streamroot.readme.io/docs/p2p-config)
-hls       | Your instance of hls.js
-Events | The Hls.Events enum
-content | _(optionnal)_ a unique string identifier for your content. See [important notes on this parameter](https://github.com/streamroot/hlsjs-wrapper/blob/master/README.md#content-identifier) before using it.
+You can install the artifacts distributed as NPM modules:
 
+For the wrapper:
+
+```
+npm install streamroot-hlsjs-wrapper
+```
+
+For the bundle
+
+```
+npm install streamroot-hlsjs-bundle
+```
+
+In your application import/require the package you want to use as in the example like
+
+```
+import StreamrootHlsjsBundle from 'streamroot-hlsjs-bundle';
+```
+
+or
+
+```
+import HlsjsWrapper from 'streamroot-hlsjs-wrapper.js';
+```
 
 ### Example
 
-```javascript
-import HlsjsWrapper from "hlsjs-wrapper";
-import Hls from "hls.js";
-import StreamrootDownloader from "streamroot-p2p-dist";
+High-level Hls.js extended constructor:
 
-// ...
-// ...
-// ...
-
-var hlsConfig = {},
-    p2pConfig = {
-        streamrootKey: 'your-streamroot-key'
-    };
-
-
-var hlsjsWrapper = new HlsjsWrapper(StreamrootDownloader);
-
-// Overload the default fLoader (media fragment loading interface) with our implementation
-// NOTICE: We don't want to use the plain 'loader' in the hls.js config as this will also 
-// be the loader for playlist and encryption key resources, which are not supposed to be 
-// fetched via the Streamroot module (you've been warned: don't do this - it is known to cause serious trouble!).
-hlsConfig.fLoader = hlsjsWrapper.P2PLoader;
-
-//Set buffer configuration params, unless they're specified
-hlsConfig.maxBufferSize = hlsConfig.maxBufferSize || 0;
-hlsConfig.maxBufferLength = hlsConfig.maxBufferLength || 30;
-
-var hls = new Hls(hlsConfig);
-
-hls.on(Hls.Events.MANIFEST_LOADING, (event, data) => {
-    hlsjsWrapper.createSRModule(p2pConfig, hls, Hls.Events);
-});
 ```
+// Override Hls constructor with our bundle
+var Hls = window.StreamrootHlsjsBundle;
+...
+var hls = new Hls(myHlsjsConfig, myStreamrootP2PConfig);
+...
+// Use `hls` just like your usual hls.js ...
+```
+
+Low-level wrapper for DI:
+
+```
+var wrapper = new HlsJsWrapper(Hls);
+...
+var hls = wrapper.createPlayer(myHlsjsConfig, myStreamrootP2PConfig, myOptionalContentId);
+...
+// Use `hls` just like your usual hls.js ...
+```
+
+To see full sample code and extended possibilites of how to use this module, take a look at `example/main.js`.
+
+### Run demos
+
+To build and run the shipped Hls.js and Streamroot demos run:
+
+```
+grunt demo
+```
+
+This will start a server.
+
+Go to <http://localhost:8080/example> for the Streamroot demo.
+
+Go to <http://localhost:8080/demo> for the Hls.js demo.
+
+### API docs
+
+The public API documentation is generated from the code.
+
+After clonig the repo run:
+
+```
+grunt docs
+```
+
+This will start a server. Go to <http://localhost:8080/docs>
+
+### Development
+
+Make sure to have run `npm install` at least once.
+
+To build and compile-watch the wrapper/bundle/example files run:
+
+```
+grunt browserify:wrapper_dev
+```
+
+or
+
+```
+grunt browserify:bundle_dev
+```
+
+
+**NOTE:** it's better to use `babel-runtime` when building this module. It makes use of Object.assign, and IE11 reports error due to the use of Symbol, although we don't make use of them
+
 
 # Important notes
 
-### xhrSetup, cookies and headers
+### Hls.js xhrSetup, cookies and headers
 
-`config.xhrSetup` is broken by this wrapper. The reason is that we override the loader for fragments, and this loader does not use xhr directly. Thus we throw if `xhrSetup` is defined.
+In Hls.js config, `xhrSetup` is broken by this wrapper. The reason is that we override the loader for fragments, and this loader does not use XHR directly. Thus we throw if `xhrSetup` is defined.
 
 However, we think that the overwhelming majority of the xhr configuration developpers need to do is:
 - enable use of cookies

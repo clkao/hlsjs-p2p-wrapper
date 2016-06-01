@@ -1,0 +1,41 @@
+<html>
+
+<head>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.4.6/rickshaw.min.js"> </script>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.4.6/rickshaw.min.css">
+</head>
+
+<body style="width:500px;margin-left:3em;margin-top:3em">
+
+
+<p>
+There are two main ways to use the Hls.js wrapper. Using it as a fully bundled Hls.js shim, or injecting the dependency (or even the instance) by yourself.
+</p>
+
+<p>
+First and preferred way is with the bundle including the Hls.js library
+(i.e a specific version for which we provide support in this combination), which is the simplest
+one, and giving you an constructor just as if you imported the vanilla Hls.js - only minimal to no changes needed in your app. You only need to add the Streamroot config to the constructor.
+<br><br>
+<a href="./bundle">Go to the "bundle" example.</a>
+</p>
+
+<p>
+The other way is dependency-injecting yourself the Hls.js constructor to rule over what version or fork
+of the player you will use. Both ways are exposed below. We do not officially recommend to
+do the low-level DI yourself because we do not support just any version of Hls.js in combination
+with our peer-agent technology i.e this wrapper.
+<br><br>
+<a href="./custom">Go to the "custom" example.</a>
+</p>
+
+<p>
+We also still support the legacy way of injecting an Hls.js player instance created by your app. See the "legacy" example. WARNING: This example documents a deprecated API. We will not support this mode any further soon.
+<br><br>
+<a href="./legacy">Go to the "legacy" example.</a>
+</p>
+
+
+</body>
+
+</html>
