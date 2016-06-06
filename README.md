@@ -143,7 +143,11 @@ var hlsjsConfig = {
   // ... ,
   request: {
     withCredentials: true, // true | false.
-    headers: [ ["X-CUSTOM-HEADER-1", value1], ["X-CUSTOM-HEADER-2", value2] ] // List of headers you want to set for your requests
+    headers: {
+        'X-CUSTOM-HEADER-1': value1,
+        'X-CUSTOM-HEADER-2': value2
+        // List of headers you want to set for your requests
+    }
   },
   // ... ,
 }

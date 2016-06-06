@@ -4,7 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This changelog's template come from [keepachangelog.com](http://keepachangelog.com/). When editing this document, please follow the convention specified there.
 
 ## [Dev]
+### Added
+- getId() method in SegmentView to identify segments
+- getTracksList() is now getTrackList()
 ### Changed
+- Pass HLS streamType to PeerAgent constructor.
+- Custom headers are now in JSON format
+- Rely on streamroot-p2p v4.x
 
 ## [Unreleased]
 ### Changed
