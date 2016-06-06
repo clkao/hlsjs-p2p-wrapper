@@ -46,6 +46,7 @@
     "matchdep": "0.3.0",
     "mocha": "^2.4.5",
     "should": "^8.1.1",
-    "uglifyify": "^3.0.1"
+    "uglifyify": "^3.0.1",
+    "xhr-shaper": "^0.2.1"
   }
 }

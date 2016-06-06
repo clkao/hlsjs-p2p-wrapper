@@ -3,13 +3,13 @@ import Hls from "../lib/streamroot-hlsjs-bundle"
 describe("StreamrootHlsjsBundle", function() { // NOTE: We need to use the oldschool syntax
                                                // (no ES6 arraw funcs) here because of mocha`s `this.timeout`
 
-  let video, config, hls;
+  let video, config, hls, isDone;
 
   if (!Hls.isSupported()) {
     throw new Error('Hls is not supported');
   }
 
-  this.timeout("10000");
+  this.timeout("30000");
 
   before(() => {
 
@@ -26,22 +26,23 @@ describe("StreamrootHlsjsBundle", function() { // NOTE: We need to use the oldsc
   });
 
   beforeEach(() => {
+    isDone = false;
+    hls = null;
     video = document.createElement('video');
     document.body.appendChild(video);
   });
 
   afterEach(() => {
+    video.pause();
+    hls && hls.detachMedia();
     document.body.removeChild(video);
   });
 
   it("should play from the start", (done) => {
 
-    let isDone = false;
-
     video.addEventListener('timeupdate', () => {
-      if (video.currentTime > 1.0 && !isDone) {
-        done();
-        isDone = true;
+      if (video.currentTime > 1.0) {
+        doneOnce(done);
       }
     });
 
@@ -52,7 +53,6 @@ describe("StreamrootHlsjsBundle", function() { // NOTE: We need to use the oldsc
 
     let seeking = false;
     let seeked = false;
-    let isDone = false;
 
     video.addEventListener('timeupdate', () => {
 
@@ -61,9 +61,8 @@ describe("StreamrootHlsjsBundle", function() { // NOTE: We need to use the oldsc
         seeking = true;
       }
 
-      if (video.currentTime > 31 && seeked && !isDone) {
-        done();
-        isDone = true;
+      if (video.currentTime > 31 && seeked) {
+        doneOnce(done);
       }
     });
 
@@ -74,15 +73,43 @@ describe("StreamrootHlsjsBundle", function() { // NOTE: We need to use the oldsc
     createAndStartPlayer();
   });
 
-  function createAndStartPlayer() {
+  it("should play at lowest quality with bandwidth shaping enabled", (done) => {
 
-    hls = new Hls({}, config.p2pConfig);
+    XMLHttpRequest.Shaper.maxBandwidth = 64;
+
+    createAndStartPlayer(() => {
+      setTimeout(() => {
+        console.log('current level: ' + hls.loadLevel);
+        console.log('next level: ' + hls.nextLoadLevel);
+        video.currentTime = 30;
+      }, 1000);
+    });
+
+    video.addEventListener('seeked', () => {
+      console.log('current level: ' + hls.loadLevel);
+      console.log('next level: ' + hls.nextLoadLevel);
+
+      hls.loadLevel.should.be.equal(0);
+      hls.nextLoadLevel.should.be.equal(0);
+
+      doneOnce(done);
+    });
+  });
+
+  function createAndStartPlayer(cb) {
+    hls = new Hls({debug: true}, config.p2pConfig);
     hls.loadSource(config.contentUrl);
     hls.attachMedia(video);
     hls.on(Hls.Events.MANIFEST_PARSED,function() {
+      video.volume = 0;
       video.play();
+      cb();
     });
+  }
 
+  function doneOnce(doneFn) {
+    !isDone && doneFn();
+    isDone = true;
   }
 
 });
