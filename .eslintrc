@@ -30,6 +30,7 @@
         ],
         "guard-for-in": "error",
         "keyword-spacing": "error",
+        "indent": [1, 4, {"SwitchCase": 1}],
         "new-cap": "error",
         "no-alert": "error",
         "no-bitwise": "error",
@@ -69,8 +70,7 @@
         "no-trailing-spaces": "error",
         "no-undef": "error",
         "no-unused-vars": [
-            "error",
-            {
+            "error", {
                 "args": "all"
             }
         ],
