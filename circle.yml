@@ -1,6 +1,6 @@
 machine:
     node:
-        version: 4.2.3
+        version: 6.2.0
     ruby:
         version: 2.2.0
 
