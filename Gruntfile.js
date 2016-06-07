@@ -37,9 +37,6 @@ module.exports = function (grunt) {
         file_version: '',
 
         shell: {
-            publish: {
-                command: 'npm publish dist/wrapper && npm publish dist/wrapper_lite',
-            },
             install: {
                 command: 'npm install'
             },
@@ -72,35 +69,6 @@ module.exports = function (grunt) {
                                                  "dist/wrapper/hlsjs-p2p-wrapper.js",
                                                  "Hls",
                                                  true),
-        },
-
-        /* Release flow tasks */
-        check_changelog: {
-            options: {
-                version: '<%= pkg.version %>'
-            }
-        },
-        update_release_log: {
-            options: {
-                version: '<%= pkg.version %>'
-            }
-        },
-        bump: {
-            options: {
-                files: ['package.json', 'dist/package.json'],
-                updateConfigs: ['pkg'], // Updates so that tasks running in the same process see the updated value
-                commit: true,
-                createTag: true,
-                push: false,
-                pushTo: 'upstream',
-                commitFiles: [
-                    'package.json', 'dist/package.json', 'RELEASELOG.md'
-                ], // '-a' for all files
-                commitMessage: 'Release <%= version %>',
-                tagName: 'v<%= version %>',
-                tagMessage: 'Tagging version <%= version %>',
-                gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d' // options to use with '$ git describe'
-            }
         }
     });
 
@@ -109,22 +77,16 @@ module.exports = function (grunt) {
         'browserify:wrapper'
     ]);
 
-    grunt.registerTask('bundle', [
+    grunt.registerTask('wrapper_lite', [
         'shell:install',
-        'browserify:bundle'
-    ]);
-
-    grunt.registerTask('build', [
-        'shell:install',
-        'browserify:wrapper',
-        'browserify:bundle'
+        'browserify:wrapper_lite'
     ]);
 
     grunt.registerTask('demo', [
         'shell:install',
         'shell:update_demo',
-        'browserify:bundle',
         'browserify:wrapper',
+        'browserify:wrapper_lite',
         'shell:start'
     ]);
 
@@ -132,16 +94,5 @@ module.exports = function (grunt) {
         'shell:install',
         'shell:docs',
         'shell:start'
-    ]);
-
-    /* Publishes to NPM, updates release log and bumps version number */
-    grunt.registerTask('release', [
-        'pre_build',
-        'check_changelog',
-        'build',
-        'shell:publish',
-        'update_release_log',
-        'bump',
-        'post_build'
     ]);
 };
