@@ -1,7 +1,7 @@
 node_modules/
 npm-debug.log
 dist/wrapper/*.js
-dist/bundle/*.js
+dist/wrapper_lite/*.js
 docs/
 demo-hls.js/
 example/build.js

@@ -11,7 +11,7 @@
     "build": "grunt build",
     "demo": "grunt demo",
     "test": "mocha --require mochahook",
-    "docs": "./node_modules/.bin/jsdoc -d docs lib/hlsjs-wrapper.js lib/streamroot-hlsjs-bundle.js",
+    "docs": "./node_modules/.bin/jsdoc -d docs lib/hlsjs-p2p-wrapper-lite.js lib/hlsjs-p2p-wrapper.js",
     "lint": "node_modules/.bin/eslint lib/ test/",
     "start": "node_modules/.bin/static",
     "debug": "iron-mocha --require mochahook",

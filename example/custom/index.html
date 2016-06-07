@@ -18,9 +18,9 @@
             window.previousTotalCDN = 0;
         </script>
 
-        <!--<script src="../../dist/bundle/streamroot-hlsjs-bundle.js"></script>-->
+        <!--<script src="../../dist/wrapper/hlsjs-p2p-wrapper.js"></script>-->
         <script src="../../node_modules/hls.js/dist/hls.js"></script>
-        <script src="../../dist/wrapper/hlsjs-wrapper.js"></script>
+        <script src="../../dist/wrapper_lite/hlsjs-p2p-wrapper.js"></script>
 
         <script src="http://cdn.streamroot.io/2/scripts/p2pGraph.js"></script>
         <script src="http://cdn.streamroot.io/2/scripts/peerStat.js"></script>
@@ -43,7 +43,7 @@
                     var video = document.getElementById('video');
 
                     // Create wrapper where we DI the Hls.js constructor (in this example we use the one provided by the bundle)
-                    var wrapper = new HlsjsWrapper(Hls);
+                    var wrapper = new HlsjsP2PWrapper(Hls);
 
                     // To create a new configured default player using the wrapper toolkit
                     hls = wrapper.createPlayer(config.hlsjsConfig, config.p2pConfig, config.contentId);

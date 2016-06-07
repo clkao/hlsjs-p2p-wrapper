@@ -38,7 +38,7 @@ module.exports = function (grunt) {
 
         shell: {
             publish: {
-                command: 'npm publish dist/bundle && npm publish dist/wrapper',
+                command: 'npm publish dist/wrapper && npm publish dist/wrapper_lite',
             },
             install: {
                 command: 'npm install'
@@ -56,22 +56,22 @@ module.exports = function (grunt) {
 
         /* Compile & watch */
         browserify: {
-            wrapper: makeBrowserifyTask ("lib/hlsjs-wrapper.js",
-                                    "dist/wrapper/hlsjs-wrapper.js",
-                                    "HlsjsWrapper",
-                                    false),
-            wrapper_dev: makeBrowserifyTask ("lib/hlsjs-wrapper.js",
-                                    "dist/wrapper/hlsjs-wrapper.js",
-                                    "HlsjsWrapper",
-                                    true),
-            bundle: makeBrowserifyTask ("lib/streamroot-hlsjs-bundle.js",
-                                    "dist/bundle/streamroot-hlsjs-bundle.js",
-                                    "Hls",
-                                    false),
-            bundle_dev: makeBrowserifyTask ("lib/streamroot-hlsjs-bundle.js",
-                                    "dist/bundle/streamroot-hlsjs-bundle.js",
-                                    "Hls",
-                                    true),
+            wrapper_lite:     makeBrowserifyTask("lib/hlsjs-p2p-wrapper-lite.js",
+                                                 "dist/wrapper_lite/hlsjs-p2p-wrapper.js",
+                                                 "HlsjsP2PWrapper",
+                                                 false),
+            wrapper_lite_dev: makeBrowserifyTask("lib/hlsjs-p2p-wrapper-lite.js",
+                                                 "dist/wrapper/hlsjs-p2p-wrapper.js",
+                                                 "HlsjsP2PWrapper",
+                                                 true),
+            wrapper:          makeBrowserifyTask("lib/hlsjs-p2p-wrapper.js",
+                                                 "dist/wrapper/hlsjs-p2p-wrapper.js",
+                                                 "Hls",
+                                                 false),
+            wrapper_dev:      makeBrowserifyTask("lib/hlsjs-p2p-wrapper.js",
+                                                 "dist/wrapper/hlsjs-p2p-wrapper.js",
+                                                 "Hls",
+                                                 true),
         },
 
         /* Release flow tasks */

@@ -1,4 +1,4 @@
-# Hlsjs-wrapper
+# hlsjs-p2p-wrapper
 
 This module wraps an instance of hls.js to bootstrap it with the Streamroot P2P agent module.
 
@@ -31,34 +31,34 @@ Run this task to build the distro:
 grunt build
 ```
 
-Now you can include `dist/bundle/streamroot-hlsjs-bundle` (high-level) or `dist/wrapper/hlsjs-wrapper` (low-level) into your application. You can access the respective public APIs via the namespaces `StreamrootHlsjsBundle` and `StreamrootHlsjsWrapper`.
+Now you can include `dist/wrapper/hlsjs-p2p-wrapper.js` (high-level) or `dist/wrapper_lite/hlsjs-p2p-wrapper` (low-level) into your application. You can access the respective public APIs via the namespaces `StreamrootHlsjsP2PWrapper`.
 
 ### Install
 
 You can install the artifacts distributed as NPM modules:
 
-For the wrapper:
+For the wrapper with hls.js included:
 
 ```
 npm install streamroot-hlsjs-wrapper
 ```
 
-For the bundle
+For the wrapper without hls.js:
 
 ```
-npm install streamroot-hlsjs-bundle
+npm install streamroot-hlsjs-wrapper-lite
 ```
 
 In your application import/require the package you want to use as in the example like
 
 ```
-import StreamrootHlsjsBundle from 'streamroot-hlsjs-bundle';
+import StreamrootHlsjsP2PWrapper from 'streamroot-hlsjs-wrapper';
 ```
 
 or
 
 ```
-import HlsjsWrapper from 'streamroot-hlsjs-wrapper.js';
+import StreamrootHlsjsP2PWrapper from 'streamroot-hlsjs-wrapper-lite';
 ```
 
 ### Example
@@ -67,21 +67,17 @@ High-level Hls.js extended constructor:
 
 ```
 // Override Hls constructor with our bundle
-var Hls = window.StreamrootHlsjsBundle;
-...
-var hls = new Hls(myHlsjsConfig, myStreamrootP2PConfig);
-...
+let Hls = window.StreamrootHlsjsP2PWrapper;
+let hls = new Hls(myHlsjsConfig, myStreamrootP2PConfig);
 // Use `hls` just like your usual hls.js ...
 ```
 
-Low-level wrapper for DI:
+Low-level wrapper for direct instanciation:
 
 ```
-var wrapper = new HlsJsWrapper(Hls);
-...
-var hls = wrapper.createPlayer(myHlsjsConfig, myStreamrootP2PConfig, myOptionalContentId);
-...
-// Use `hls` just like your usual hls.js ...
+let wrapper = new HlsjsP2PWrapper(Hls);
+let hls = wrapper.createPlayer(myHlsjsConfig, myStreamrootP2PConfig, myOptionalContentId);
+// Use `hls` just like your usual hls.js…
 ```
 
 To see full sample code and extended possibilites of how to use this module, take a look at `example/main.js`.
@@ -116,7 +112,7 @@ This will start a server. Go to <http://localhost:8080/docs>
 
 Make sure to have run `npm install` at least once.
 
-To build and compile-watch the wrapper/bundle/example files run:
+To build and compile-watch the example files run:
 
 ```
 grunt browserify:wrapper_dev
@@ -125,7 +121,7 @@ grunt browserify:wrapper_dev
 or
 
 ```
-grunt browserify:bundle_dev
+grunt browserify:wrapper_lite_dev
 ```
 
 

@@ -1,10 +1,10 @@
 {
-  "name": "streamroot-hlsjs-bundle",
-  "version": "2.0.8",
+  "name": "hlsjs-p2p-wrapper",
+  "version": "2.0.9",
   "homepage": "www.streamroot.io",
   "author": {
     "name": "Streamroot",
     "email": "contact@streamroot.io"
   },
-  "main": "./streamroot-hlsjs-bundle.js"
+  "main": "./hlsjs-p2p-wrapper.js"
 }
