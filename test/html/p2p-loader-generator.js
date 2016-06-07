@@ -1,5 +1,5 @@
-import P2PLoaderGenerator from "../lib/integration/p2p-loader-generator";
-import HlsjsWrapperMock from "./mocks/wrapper";
+import P2PLoaderGenerator from "../../lib/integration/p2p-loader-generator";
+import HlsjsWrapperMock from "../mocks/wrapper";
 import Hls from "hls.js";
 
 const TEST_URL1 = "http://www.streambox.fr/playlists/test_001/stream_110k_48k_416x234_000.ts";
