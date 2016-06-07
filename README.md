@@ -29,7 +29,19 @@ Now you can include `dist/bundle/streamroot-hlsjs-bundle` (high-level) or `dist/
 
 ### Tests
 
-FIXME
+For browser tests, start a server in the project root, then run
+
+```
+grunt browserify:test_dev
+```
+
+Now go to http://localhost:8080/test/html/
+
+For node tests, run
+
+```
+npm test
+``
 
 ### Install
 
