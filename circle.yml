@@ -29,14 +29,14 @@ deployment:
             - git clone git@github.com:streamroot/toolkit.git
 
             # Upload dist
+            - grunt browserify:bundle
             - grunt browserify:wrapper
-            - grunt browserify:wrapper_lite
 
+            - toolkit/add_banner.rb --file dist/bundle/$DIST_FILE --deploy_env $CIRCLE_BRANCH
             - toolkit/add_banner.rb --file dist/wrapper/$DIST_FILE --deploy_env $CIRCLE_BRANCH
-            - toolkit/add_banner.rb --file dist/wrapper_lite/$DIST_FILE --deploy_env $CIRCLE_BRANCH
 
-            - cp dist/wrapper/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE
-            - cp dist/wrapper_lite/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE_LITE
+            - cp dist/bundle/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE
+            - cp dist/wrapper/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE_LITE
 
             - toolkit/upload_to_s3.rb --bucket $S3_FEATURES_BUCKET
                                       --region eu-west-1
@@ -64,31 +64,31 @@ deployment:
             - rm -rf dist
 
             # Generate dist
+            - grunt browserify:bundle
             - grunt browserify:wrapper
-            - grunt browserify:wrapper_lite
 
+            - toolkit/add_banner.rb --file dist/bundle/$DIST_FILE
+                                    --deploy_env staging
+                                    --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
             - toolkit/add_banner.rb --file dist/wrapper/$DIST_FILE
                                     --deploy_env staging
                                     --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
-            - toolkit/add_banner.rb --file dist/wrapper_lite/$DIST_FILE
-                                    --deploy_env staging
-                                    --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
 
-            - cp dist/wrapper/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE
-            - cp dist/wrapper_lite/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE_LITE
+            - cp dist/bundle/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE
+            - cp dist/wrapper/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE_LITE
 
             # Build package.json
             - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
                                             --main ./$DIST_FILE
-                                            -o dist/wrapper/package.json
+                                            -o dist/bundle/package.json
             - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
                                             --main ./$DIST_FILE
-                                            --name hlsjs-p2p-wrapper-lite
-                                            -o dist/wrapper_lite/package.json
+                                            --name hlsjs-p2p-wrapper
+                                            -o dist/wrapper/package.json
 
             # Publish
+            - npm publish dist/bundle --tag beta
             - npm publish dist/wrapper --tag beta
-            - npm publish dist/wrapper_lite --tag beta
 
             # Upload version
             - toolkit/upload_to_s3.rb --bucket $S3_STAGING_BUCKET
@@ -137,29 +137,29 @@ deployment:
             - rm -rf dist
 
             # Generate dist
+            - grunt browserify:bundle
             - grunt browserify:wrapper
-            - grunt browserify:wrapper_lite
 
+            - toolkit/add_banner.rb --file dist/bundle/$DIST_FILE
+                                    --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
             - toolkit/add_banner.rb --file dist/wrapper/$DIST_FILE
                                     --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
-            - toolkit/add_banner.rb --file dist/wrapper_lite/$DIST_FILE
-                                    --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
 
-            - cp dist/wrapper/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE
-            - cp dist/wrapper_lite/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE_LITE
+            - cp dist/bundle/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE
+            - cp dist/wrapper/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE_LITE
 
             # Build package.json
             - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb)
                                             --main ./$DIST_FILE
-                                            -o dist/wrapper/package.json
+                                            -o dist/bundle/package.json
             - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb)
                                             --main ./$DIST_FILE
-                                            -o dist/wrapper_lite/package.json
-                                            --name hlsjs-p2p-wrapper-lite
+                                            -o dist/wrapper/package.json
+                                            --name hlsjs-p2p-wrapper
 
             # Publish
+            - npm publish dist/bundle
             - npm publish dist/wrapper
-            - npm publish dist/wrapper_lite
 
             # Upload version
             - toolkit/upload_to_s3.rb --bucket $S3_PREPROD_BUCKET

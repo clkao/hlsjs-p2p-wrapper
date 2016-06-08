@@ -53,40 +53,40 @@ module.exports = function (grunt) {
 
         /* Compile & watch */
         browserify: {
-            wrapper_lite:     makeBrowserifyTask("lib/hlsjs-p2p-wrapper-lite.js",
-                                                 "dist/wrapper_lite/hlsjs-p2p-wrapper.js",
+            wrapper:     makeBrowserifyTask("lib/hlsjs-p2p-wrapper.js",
+                                                 "dist/wrapper/hlsjs-p2p-wrapper.js",
                                                  "HlsjsP2PWrapper",
                                                  false),
-            wrapper_lite_dev: makeBrowserifyTask("lib/hlsjs-p2p-wrapper-lite.js",
+            wrapper_dev: makeBrowserifyTask("lib/hlsjs-p2p-wrapper.js",
                                                  "dist/wrapper/hlsjs-p2p-wrapper.js",
                                                  "HlsjsP2PWrapper",
                                                  true),
-            wrapper:          makeBrowserifyTask("lib/hlsjs-p2p-wrapper.js",
-                                                 "dist/wrapper/hlsjs-p2p-wrapper.js",
+            bundle:          makeBrowserifyTask("lib/hlsjs-p2p-bundle.js",
+                                                 "dist/bundle/hlsjs-p2p-bundle.js",
                                                  "Hls",
                                                  false),
-            wrapper_dev:      makeBrowserifyTask("lib/hlsjs-p2p-wrapper.js",
-                                                 "dist/wrapper/hlsjs-p2p-wrapper.js",
+            bundle_dev:      makeBrowserifyTask("lib/hlsjs-p2p-bundle.js",
+                                                 "dist/bundle/hlsjs-p2p-bundle.js",
                                                  "Hls",
                                                  true),
         }
     });
+
+    grunt.registerTask('bundle', [
+        'shell:install',
+        'browserify:bundle'
+    ]);
 
     grunt.registerTask('wrapper', [
         'shell:install',
         'browserify:wrapper'
     ]);
 
-    grunt.registerTask('wrapper_lite', [
-        'shell:install',
-        'browserify:wrapper_lite'
-    ]);
-
     grunt.registerTask('demo', [
         'shell:install',
         'shell:update_demo',
+        'browserify:bundle',
         'browserify:wrapper',
-        'browserify:wrapper_lite',
         'shell:start'
     ]);
 
