@@ -31,7 +31,7 @@ Run this task to build the distro:
 grunt build
 ```
 
-Now you can include `dist/bundle/hlsjs-p2p-bundle.js` (high-level) or `dist/wrapper/hlsjs-p2p-wrapper` (low-level) into your application. You can access the respective public APIs via the namespaces `StreamrootHlsjsP2PWrapper`.
+Now you can include `dist/bundle/hlsjs-p2p-bundle.js` (high-level) or `dist/wrapper/hlsjs-p2p-wrapper` (low-level) into your application. You can access the respective public APIs via the namespace `StreamrootHlsjsP2PWrapper`.
 
 ### Install
 
@@ -52,7 +52,7 @@ npm install hlsjs-p2p-wrapper
 In your application import/require the package you want to use as in the example like
 
 ```
-import StreamrootHlsjsP2PWrapper from 'hlsjs-p2p-bundle';
+import StreamrootHlsjsP2PBundle from 'hlsjs-p2p-bundle';
 ```
 
 or

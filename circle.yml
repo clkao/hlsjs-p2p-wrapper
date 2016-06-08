@@ -8,7 +8,7 @@ dependencies:
     pre:
         - gem install aws-sdk
         - npm install -g grunt-cli
-        - 'echo //registry.npmjs.org/:_authToken=${PUBLIC_NPM_TOKEN} > ~/.npmrc'
+        - 'echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > ~/.npmrc'
     override:
         - npm install
     post:
@@ -32,22 +32,22 @@ deployment:
             - grunt browserify:bundle
             - grunt browserify:wrapper
 
-            - toolkit/add_banner.rb --file dist/bundle/$DIST_FILE --deploy_env $CIRCLE_BRANCH
-            - toolkit/add_banner.rb --file dist/wrapper/$DIST_FILE --deploy_env $CIRCLE_BRANCH
+            - toolkit/add_banner.rb --file dist/bundle/$DIST_BUNDLE --deploy_env $CIRCLE_BRANCH
+            - toolkit/add_banner.rb --file dist/wrapper/$DIST_WRAPPER --deploy_env $CIRCLE_BRANCH
 
-            - cp dist/bundle/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE
-            - cp dist/wrapper/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE_LITE
+            - cp dist/bundle/$DIST_BUNDLE $CIRCLE_ARTIFACTS/$DIST_BUNDLE
+            - cp dist/wrapper/$DIST_WRAPPER $CIRCLE_ARTIFACTS/$DIST_WRAPPER
 
             - toolkit/upload_to_s3.rb --bucket $S3_FEATURES_BUCKET
                                       --region eu-west-1
-                                      --file $CIRCLE_ARTIFACTS/$DIST_FILE
-                                      --destinations $CIRCLE_PROJECT_REPONAME/$CIRCLE_BRANCH/$DIST_FILE
+                                      --file $CIRCLE_ARTIFACTS/$DIST_BUNDLE
+                                      --destinations $CIRCLE_PROJECT_REPONAME/$CIRCLE_BRANCH/$DIST_BUNDLE
                                       --key $S3_KEY
                                       --secret $S3_SECRET
             - toolkit/upload_to_s3.rb --bucket $S3_FEATURES_BUCKET
                                       --region eu-west-1
-                                      --file $CIRCLE_ARTIFACTS/$DIST_FILE_LITE
-                                      --destinations $CIRCLE_PROJECT_REPONAME/$CIRCLE_BRANCH/$DIST_FILE_LITE
+                                      --file $CIRCLE_ARTIFACTS/$DIST_WRAPPER
+                                      --destinations $CIRCLE_PROJECT_REPONAME/$CIRCLE_BRANCH/$DIST_WRAPPER
                                       --key $S3_KEY
                                       --secret $S3_SECRET
 
@@ -67,23 +67,24 @@ deployment:
             - grunt browserify:bundle
             - grunt browserify:wrapper
 
-            - toolkit/add_banner.rb --file dist/bundle/$DIST_FILE
+            - toolkit/add_banner.rb --file dist/bundle/$DIST_BUNDLE
                                     --deploy_env staging
                                     --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
-            - toolkit/add_banner.rb --file dist/wrapper/$DIST_FILE
+            - toolkit/add_banner.rb --file dist/wrapper/$DIST_WRAPPER
                                     --deploy_env staging
                                     --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
 
-            - cp dist/bundle/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE
-            - cp dist/wrapper/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE_LITE
+            - cp dist/bundle/$DIST_BUNDLE $CIRCLE_ARTIFACTS/$DIST_BUNDLE
+            - cp dist/wrapper/$DIST_WRAPPER $CIRCLE_ARTIFACTS/$DIST_WRAPPER
 
             # Build package.json
             - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
-                                            --main ./$DIST_FILE
+                                            --main ./$DIST_BUNDLE
+                                            --name $BUNDLE_NAME
                                             -o dist/bundle/package.json
             - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
-                                            --main ./$DIST_FILE
-                                            --name hlsjs-p2p-wrapper
+                                            --main ./$DIST_WRAPPER
+                                            --name $WRAPPER_NAME
                                             -o dist/wrapper/package.json
 
             # Publish
@@ -93,16 +94,16 @@ deployment:
             # Upload version
             - toolkit/upload_to_s3.rb --bucket $S3_STAGING_BUCKET
                                       --region eu-west-1
-                                      --file $CIRCLE_ARTIFACTS/$DIST_FILE
-                                      --destinations $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})/$DIST_FILE
-                                                     $CIRCLE_PROJECT_REPONAME/latest/$DIST_FILE
+                                      --file $CIRCLE_ARTIFACTS/$DIST_BUNDLE
+                                      --destinations $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})/$DIST_BUNDLE
+                                                     $CIRCLE_PROJECT_REPONAME/latest/$DIST_BUNDLE
                                       --key $S3_KEY
                                       --secret $S3_SECRET
             - toolkit/upload_to_s3.rb --bucket $S3_STAGING_BUCKET
                                       --region eu-west-1
-                                      --file $CIRCLE_ARTIFACTS/$DIST_FILE_LITE
-                                      --destinations $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})/$DIST_FILE_LITE
-                                                     $CIRCLE_PROJECT_REPONAME/latest/$DIST_FILE_LITE
+                                      --file $CIRCLE_ARTIFACTS/$DIST_WRAPPER
+                                      --destinations $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})/$DIST_WRAPPER
+                                                     $CIRCLE_PROJECT_REPONAME/latest/$DIST_WRAPPER
                                       --key $S3_KEY
                                       --secret $S3_SECRET
 
@@ -140,22 +141,23 @@ deployment:
             - grunt browserify:bundle
             - grunt browserify:wrapper
 
-            - toolkit/add_banner.rb --file dist/bundle/$DIST_FILE
+            - toolkit/add_banner.rb --file dist/bundle/$DIST_BUNDLE
                                     --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
-            - toolkit/add_banner.rb --file dist/wrapper/$DIST_FILE
+            - toolkit/add_banner.rb --file dist/wrapper/$DIST_WRAPPER
                                     --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
 
-            - cp dist/bundle/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE
-            - cp dist/wrapper/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE_LITE
+            - cp dist/bundle/$DIST_BUNDLE $CIRCLE_ARTIFACTS/$DIST_BUNDLE
+            - cp dist/wrapper/$DIST_WRAPPER $CIRCLE_ARTIFACTS/$DIST_WRAPPER
 
             # Build package.json
             - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb)
-                                            --main ./$DIST_FILE
+                                            --main ./$DIST_BUNDLE
+                                            --name $BUNDLE_NAME
                                             -o dist/bundle/package.json
             - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb)
-                                            --main ./$DIST_FILE
+                                            --main ./$DIST_WRAPPER
+                                            --name $WRAPPER_NAME
                                             -o dist/wrapper/package.json
-                                            --name hlsjs-p2p-wrapper
 
             # Publish
             - npm publish dist/bundle
@@ -164,20 +166,20 @@ deployment:
             # Upload version
             - toolkit/upload_to_s3.rb --bucket $S3_PREPROD_BUCKET
                                       --region eu-west-1
-                                      --file $CIRCLE_ARTIFACTS/$DIST_FILE
-                                      --destinations $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --major)/$DIST_FILE
-                                                     $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --no_patch)/$DIST_FILE
-                                                     $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb)/$DIST_FILE
-                                                     $CIRCLE_PROJECT_REPONAME/latest/$DIST_FILE
+                                      --file $CIRCLE_ARTIFACTS/$DIST_BUNDLE
+                                      --destinations $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --major)/$DIST_BUNDLE
+                                                     $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --no_patch)/$DIST_BUNDLE
+                                                     $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb)/$DIST_BUNDLE
+                                                     $CIRCLE_PROJECT_REPONAME/latest/$DIST_BUNDLE
                                       --key $S3_KEY
                                       --secret $S3_SECRET
             - toolkit/upload_to_s3.rb --bucket $S3_PREPROD_BUCKET
                                       --region eu-west-1
-                                      --file $CIRCLE_ARTIFACTS/$DIST_FILE_LITE
-                                      --destinations $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --major)/$DIST_FILE_LITE
-                                                     $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --no_patch)/$DIST_FILE_LITE
-                                                     $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb)/$DIST_FILE_LITE
-                                                     $CIRCLE_PROJECT_REPONAME/latest/$DIST_FILE_LITE
+                                      --file $CIRCLE_ARTIFACTS/$DIST_WRAPPER
+                                      --destinations $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --major)/$DIST_WRAPPER
+                                                     $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --no_patch)/$DIST_WRAPPER
+                                                     $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb)/$DIST_WRAPPER
+                                                     $CIRCLE_PROJECT_REPONAME/latest/$DIST_WRAPPER
                                       --key $S3_KEY
                                       --secret $S3_SECRET
 
