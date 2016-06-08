@@ -24,8 +24,8 @@ deployment:
         branch: /^(?!(?:dev|master)$).+$/
         commands:
             # Clone tool
-            - git config --global user.email "test@streamroot.io"
-            - git config --global user.name "Jean Hum"
+            - git config --global user.email $STREAMROOT_EMAIL
+            - git config --global user.name $STREAMROOT_USERNAME
             - git clone git@github.com:streamroot/toolkit.git
 
             # Upload dist
@@ -38,13 +38,13 @@ deployment:
             - cp dist/wrapper/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE
             - cp dist/wrapper_lite/$DIST_FILE $CIRCLE_ARTIFACTS/$DIST_FILE_LITE
 
-            - toolkit/upload_to_s3.rb --bucket features.streamroot.io
+            - toolkit/upload_to_s3.rb --bucket $S3_FEATURES_BUCKET
                                       --region eu-west-1
                                       --file $CIRCLE_ARTIFACTS/$DIST_FILE
                                       --destinations $CIRCLE_PROJECT_REPONAME/$CIRCLE_BRANCH/$DIST_FILE
                                       --key $S3_KEY
                                       --secret $S3_SECRET
-            - toolkit/upload_to_s3.rb --bucket features.streamroot.io
+            - toolkit/upload_to_s3.rb --bucket $S3_FEATURES_BUCKET
                                       --region eu-west-1
                                       --file $CIRCLE_ARTIFACTS/$DIST_FILE_LITE
                                       --destinations $CIRCLE_PROJECT_REPONAME/$CIRCLE_BRANCH/$DIST_FILE_LITE
@@ -55,8 +55,8 @@ deployment:
         branch: dev
         commands:
             # Clone tools
-            - git config --global user.email "test@streamroot.io"
-            - git config --global user.name "Jean Hum"
+            - git config --global user.email $STREAMROOT_EMAIL
+            - git config --global user.name $STREAMROOT_USERNAME
             - git clone git@github.com:streamroot/bridge.git
             - git clone git@github.com:streamroot/toolkit.git
 
@@ -91,14 +91,14 @@ deployment:
             - npm publish dist/wrapper_lite --tag beta
 
             # Upload version
-            - toolkit/upload_to_s3.rb --bucket staging.streamroot.io
+            - toolkit/upload_to_s3.rb --bucket $S3_STAGING_BUCKET
                                       --region eu-west-1
                                       --file $CIRCLE_ARTIFACTS/$DIST_FILE
                                       --destinations $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})/$DIST_FILE
                                                      $CIRCLE_PROJECT_REPONAME/latest/$DIST_FILE
                                       --key $S3_KEY
                                       --secret $S3_SECRET
-            - toolkit/upload_to_s3.rb --bucket staging.streamroot.io
+            - toolkit/upload_to_s3.rb --bucket $S3_STAGING_BUCKET
                                       --region eu-west-1
                                       --file $CIRCLE_ARTIFACTS/$DIST_FILE_LITE
                                       --destinations $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})/$DIST_FILE_LITE
@@ -109,11 +109,11 @@ deployment:
             # Changelog
             - toolkit/post_changelog.rb   --project $CIRCLE_PROJECT_REPONAME
                                           --env staging
-                                          --subtitle _Rompopopom_
-                                          --channel team-client
+                                          --subtitle $ALERTING_SUBTITLE
+                                          --channel $ALERTING_CHANNEL
                                           --slack-token $SLACK_TOKEN
-                                          --username Rihanna
-                                          --icon-url https://pbs.twimg.com/profile_images/3630440066/534fcdee974c7311d13aa2a2e3381bb6.jpeg
+                                          --username $ALERTING_USERNAME
+                                          --icon-url $ALERTING_PICTURE
 
             # Run bridge
             - bridge/run.rb --current_module $CIRCLE_PROJECT_REPONAME --trigger_branch dev --token $BRIDGE_TOKEN
@@ -122,8 +122,8 @@ deployment:
         branch: master
         commands:
             # Clone tools
-            - git config --global user.email "test@streamroot.io"
-            - git config --global user.name "Jean Hum"
+            - git config --global user.email $STREAMROOT_EMAIL
+            - git config --global user.name $STREAMROOT_USERNAME
             - git clone git@github.com:streamroot/bridge.git
             - git clone git@github.com:streamroot/toolkit.git
 
@@ -162,7 +162,7 @@ deployment:
             - npm publish dist/wrapper_lite
 
             # Upload version
-            - toolkit/upload_to_s3.rb --bucket preprod.streamroot.io
+            - toolkit/upload_to_s3.rb --bucket $S3_PREPROD_BUCKET
                                       --region eu-west-1
                                       --file $CIRCLE_ARTIFACTS/$DIST_FILE
                                       --destinations $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --major)/$DIST_FILE
@@ -171,7 +171,7 @@ deployment:
                                                      $CIRCLE_PROJECT_REPONAME/latest/$DIST_FILE
                                       --key $S3_KEY
                                       --secret $S3_SECRET
-            - toolkit/upload_to_s3.rb --bucket preprod.streamroot.io
+            - toolkit/upload_to_s3.rb --bucket $S3_PREPROD_BUCKET
                                       --region eu-west-1
                                       --file $CIRCLE_ARTIFACTS/$DIST_FILE_LITE
                                       --destinations $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --major)/$DIST_FILE_LITE
@@ -184,12 +184,11 @@ deployment:
             # Changelog
             - toolkit/post_changelog.rb   --project $CIRCLE_PROJECT_REPONAME
                                           --env preprod
-                                          --subtitle _Rompopopom_
-                                          --channel team-client
+                                          --subtitle $ALERTING_SUBTITLE
+                                          --channel $ALERTING_CHANNEL
                                           --slack-token $SLACK_TOKEN
-                                          --username Rihanna
-                                          --icon-url https://pbs.twimg.com/profile_images/3630440066/534fcdee974c7311d13aa2a2e3381bb6.jpeg
+                                          --username $ALERTING_USERNAME
+                                          --icon-url $ALERTING_PICTURE
 
             # Run bridge
             - bridge/run.rb --current_module $CIRCLE_PROJECT_REPONAME --trigger_branch master --token $BRIDGE_TOKEN
-
