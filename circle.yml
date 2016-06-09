@@ -9,6 +9,17 @@ dependencies:
         - gem install aws-sdk
         - npm install -g grunt-cli
         - 'echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > ~/.npmrc'
+
+        # Clone tool
+        - git config --global user.email $STREAMROOT_EMAIL
+        - git config --global user.name $STREAMROOT_USERNAME
+        - git clone git@github.com:streamroot/toolkit.git
+
+        # Set peer-agent version
+        - toolkit/set_dependency_version.rb --exclude_branches master
+                                            --dependency_path dependencies.streamroot-p2p
+                                            --version beta
+
     override:
         - npm install
     post:
@@ -23,11 +34,6 @@ deployment:
     features:
         branch: /^(?!(?:dev|master)$).+$/
         commands:
-            # Clone tool
-            - git config --global user.email $STREAMROOT_EMAIL
-            - git config --global user.name $STREAMROOT_USERNAME
-            - git clone git@github.com:streamroot/toolkit.git
-
             # Upload dist
             - grunt browserify:bundle
             - grunt browserify:wrapper
@@ -55,10 +61,7 @@ deployment:
         branch: dev
         commands:
             # Clone tools
-            - git config --global user.email $STREAMROOT_EMAIL
-            - git config --global user.name $STREAMROOT_USERNAME
             - git clone git@github.com:streamroot/bridge.git
-            - git clone git@github.com:streamroot/toolkit.git
 
             # Cleanup
             - rm -rf dist
@@ -123,10 +126,7 @@ deployment:
         branch: master
         commands:
             # Clone tools
-            - git config --global user.email $STREAMROOT_EMAIL
-            - git config --global user.name $STREAMROOT_USERNAME
             - git clone git@github.com:streamroot/bridge.git
-            - git clone git@github.com:streamroot/toolkit.git
 
             # Changelog
             - toolkit/bump_current_changelog.rb --version $(toolkit/current_version.rb --no_beta)
@@ -194,3 +194,4 @@ deployment:
 
             # Run bridge
             - bridge/run.rb --current_module $CIRCLE_PROJECT_REPONAME --trigger_branch master --token $BRIDGE_TOKEN
+
