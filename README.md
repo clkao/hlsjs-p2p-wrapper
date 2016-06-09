@@ -76,7 +76,7 @@ Low-level wrapper for direct instanciation:
 
 ```javascript
 var wrapper = new HlsjsP2PWrapper(Hls);
-var hls = wrapper.createPlayer(myHlsjsConfig, myStreamrootP2PConfig, myOptionalContentId);
+var hls = wrapper.createPlayer(myHlsjsConfig, myStreamrootP2PConfig);
 // Use `hls` just like your usual hls.js…
 ```
 
