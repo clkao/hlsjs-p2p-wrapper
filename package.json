@@ -33,7 +33,7 @@
     "browserify": "~2.35",
     "browserify-derequire": "^0.9.4",
     "eslint": "2.9.0",
-    "eslint-config-streamroot": "0.0.0",
+    "eslint-config-streamroot": "1.0.1",
     "grunt": "^0.4.5",
     "grunt-browserify": "^5.0.0",
     "grunt-bump": "^0.6.0",
