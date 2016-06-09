@@ -10,6 +10,7 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 ### Changed
 - Pass HLS streamType to PeerAgent constructor.
 - Custom headers are now in JSON format
+- Remove contentUrl formatting. Expect optional contentId in p2pConfig, except for deprecated method createSRModule
 - Rely on streamroot-p2p v4.x
 
 ## [Unreleased]
