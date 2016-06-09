@@ -4,12 +4,12 @@ function makeBrowserifyTask (src, dest, standalone, dev) {
         src: src,
         dest: dest,
         options: {
-            transform: ['babelify'/*, ['uglifyify', {
+            transform: ['babelify', ['uglifyify', {
                     global: true,
                     compress: {
                         drop_console: true,
                     }
-            }]*/],
+            }]],
             plugin: [
               ['browserify-derequire']
             ],
@@ -37,9 +37,6 @@ module.exports = function (grunt) {
         file_version: '',
 
         shell: {
-            publish: {
-                command: 'npm publish dist/bundle && npm publish dist/wrapper',
-            },
             install: {
                 command: 'npm install'
             },
@@ -56,68 +53,33 @@ module.exports = function (grunt) {
 
         /* Compile & watch */
         browserify: {
-            wrapper: makeBrowserifyTask ("lib/hlsjs-wrapper.js",
-                                    "dist/wrapper/hlsjs-wrapper.js",
-                                    "HlsjsWrapper",
-                                    false),
-            wrapper_dev: makeBrowserifyTask ("lib/hlsjs-wrapper.js",
-                                    "dist/wrapper/hlsjs-wrapper.js",
-                                    "HlsjsWrapper",
-                                    true),
-            bundle: makeBrowserifyTask ("lib/streamroot-hlsjs-bundle.js",
-                                    "dist/bundle/streamroot-hlsjs-bundle.js",
-                                    "Hls",
-                                    false),
-            bundle_dev: makeBrowserifyTask ("lib/streamroot-hlsjs-bundle.js",
-                                    "dist/bundle/streamroot-hlsjs-bundle.js",
-                                    "Hls",
-                                    true),
-        },
-
-        /* Release flow tasks */
-        check_changelog: {
-            options: {
-                version: '<%= pkg.version %>'
-            }
-        },
-        update_release_log: {
-            options: {
-                version: '<%= pkg.version %>'
-            }
-        },
-        bump: {
-            options: {
-                files: ['package.json', 'dist/package.json'],
-                updateConfigs: ['pkg'], // Updates so that tasks running in the same process see the updated value
-                commit: true,
-                createTag: true,
-                push: false,
-                pushTo: 'upstream',
-                commitFiles: [
-                    'package.json', 'dist/package.json', 'RELEASELOG.md'
-                ], // '-a' for all files
-                commitMessage: 'Release <%= version %>',
-                tagName: 'v<%= version %>',
-                tagMessage: 'Tagging version <%= version %>',
-                gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d' // options to use with '$ git describe'
-            }
+            wrapper:     makeBrowserifyTask("lib/hlsjs-p2p-wrapper.js",
+                                                 "dist/wrapper/hlsjs-p2p-wrapper.js",
+                                                 "HlsjsP2PWrapper",
+                                                 false),
+            wrapper_dev: makeBrowserifyTask("lib/hlsjs-p2p-wrapper.js",
+                                                 "dist/wrapper/hlsjs-p2p-wrapper.js",
+                                                 "HlsjsP2PWrapper",
+                                                 true),
+            bundle:          makeBrowserifyTask("lib/hlsjs-p2p-bundle.js",
+                                                 "dist/bundle/hlsjs-p2p-bundle.js",
+                                                 "Hls",
+                                                 false),
+            bundle_dev:      makeBrowserifyTask("lib/hlsjs-p2p-bundle.js",
+                                                 "dist/bundle/hlsjs-p2p-bundle.js",
+                                                 "Hls",
+                                                 true),
         }
     });
-
-    grunt.registerTask('wrapper', [
-        'shell:install',
-        'browserify:wrapper'
-    ]);
 
     grunt.registerTask('bundle', [
         'shell:install',
         'browserify:bundle'
     ]);
 
-    grunt.registerTask('build', [
+    grunt.registerTask('wrapper', [
         'shell:install',
-        'browserify:wrapper',
-        'browserify:bundle'
+        'browserify:wrapper'
     ]);
 
     grunt.registerTask('demo', [
@@ -132,16 +94,5 @@ module.exports = function (grunt) {
         'shell:install',
         'shell:docs',
         'shell:start'
-    ]);
-
-    /* Publishes to NPM, updates release log and bumps version number */
-    grunt.registerTask('release', [
-        'pre_build',
-        'check_changelog',
-        'build',
-        'shell:publish',
-        'update_release_log',
-        'bump',
-        'post_build'
     ]);
 };

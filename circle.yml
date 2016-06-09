@@ -1,16 +1,197 @@
 machine:
-  node:
-    version: 4.2.3
+    node:
+        version: 6.2.0
+    ruby:
+        version: 2.2.0
 
 dependencies:
-  pre:
-    - npm set registry http:${NPM_HOST}
-    - npm set always-auth true
-    - 'echo ${NPM_HOST}:_authToken=${NPM_TOKEN} > ~/.npmrc'
-  override:
-    - npm install
+    pre:
+        - gem install aws-sdk
+        - npm install -g grunt-cli
+        - 'echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > ~/.npmrc'
+
+        # Clone tool
+        - git config --global user.email $STREAMROOT_EMAIL
+        - git config --global user.name $STREAMROOT_USERNAME
+        - git clone git@github.com:streamroot/toolkit.git
+
+        # Set peer-agent version
+        - toolkit/set_dependency_version.rb --exclude_branches master
+                                            --dependency_path dependencies.streamroot-p2p
+                                            --version beta
+
+    override:
+        - npm install
+    post:
+        - npm ls --depth=0 > $CIRCLE_ARTIFACTS/package.lock
 
 test:
-  override:
-    - npm test
-    - npm run lint
+    override:
+        - npm test
+        - npm run lint
+
+deployment:
+    features:
+        branch: /^(?!(?:dev|master)$).+$/
+        commands:
+            # Upload dist
+            - grunt browserify:bundle
+            - grunt browserify:wrapper
+
+            - toolkit/add_banner.rb --file dist/bundle/$DIST_BUNDLE --deploy_env $CIRCLE_BRANCH
+            - toolkit/add_banner.rb --file dist/wrapper/$DIST_WRAPPER --deploy_env $CIRCLE_BRANCH
+
+            - cp dist/bundle/$DIST_BUNDLE $CIRCLE_ARTIFACTS/$DIST_BUNDLE
+            - cp dist/wrapper/$DIST_WRAPPER $CIRCLE_ARTIFACTS/$DIST_WRAPPER
+
+            - toolkit/upload_to_s3.rb --bucket $S3_FEATURES_BUCKET
+                                      --region eu-west-1
+                                      --file $CIRCLE_ARTIFACTS/$DIST_BUNDLE
+                                      --destinations $CIRCLE_PROJECT_REPONAME/$CIRCLE_BRANCH/$DIST_BUNDLE
+                                      --key $S3_KEY
+                                      --secret $S3_SECRET
+            - toolkit/upload_to_s3.rb --bucket $S3_FEATURES_BUCKET
+                                      --region eu-west-1
+                                      --file $CIRCLE_ARTIFACTS/$DIST_WRAPPER
+                                      --destinations $CIRCLE_PROJECT_REPONAME/$CIRCLE_BRANCH/$DIST_WRAPPER
+                                      --key $S3_KEY
+                                      --secret $S3_SECRET
+
+    staging:
+        branch: dev
+        commands:
+            # Clone tools
+            - git clone git@github.com:streamroot/bridge.git
+
+            # Cleanup
+            - rm -rf dist
+
+            # Generate dist
+            - grunt browserify:bundle
+            - grunt browserify:wrapper
+
+            - toolkit/add_banner.rb --file dist/bundle/$DIST_BUNDLE
+                                    --deploy_env staging
+                                    --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
+            - toolkit/add_banner.rb --file dist/wrapper/$DIST_WRAPPER
+                                    --deploy_env staging
+                                    --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
+
+            - cp dist/bundle/$DIST_BUNDLE $CIRCLE_ARTIFACTS/$DIST_BUNDLE
+            - cp dist/wrapper/$DIST_WRAPPER $CIRCLE_ARTIFACTS/$DIST_WRAPPER
+
+            # Build package.json
+            - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
+                                            --main ./$DIST_BUNDLE
+                                            --name $BUNDLE_NAME
+                                            -o dist/bundle/package.json
+            - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
+                                            --main ./$DIST_WRAPPER
+                                            --name $WRAPPER_NAME
+                                            -o dist/wrapper/package.json
+
+            # Publish
+            - npm publish dist/bundle --tag beta
+            - npm publish dist/wrapper --tag beta
+
+            # Upload version
+            - toolkit/upload_to_s3.rb --bucket $S3_STAGING_BUCKET
+                                      --region eu-west-1
+                                      --file $CIRCLE_ARTIFACTS/$DIST_BUNDLE
+                                      --destinations $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})/$DIST_BUNDLE
+                                                     $CIRCLE_PROJECT_REPONAME/latest/$DIST_BUNDLE
+                                      --key $S3_KEY
+                                      --secret $S3_SECRET
+            - toolkit/upload_to_s3.rb --bucket $S3_STAGING_BUCKET
+                                      --region eu-west-1
+                                      --file $CIRCLE_ARTIFACTS/$DIST_WRAPPER
+                                      --destinations $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})/$DIST_WRAPPER
+                                                     $CIRCLE_PROJECT_REPONAME/latest/$DIST_WRAPPER
+                                      --key $S3_KEY
+                                      --secret $S3_SECRET
+
+            # Changelog
+            - toolkit/post_changelog.rb   --project $CIRCLE_PROJECT_REPONAME
+                                          --env staging
+                                          --subtitle $ALERTING_SUBTITLE
+                                          --channel $ALERTING_CHANNEL
+                                          --slack-token $SLACK_TOKEN
+                                          --username $ALERTING_USERNAME
+                                          --icon-url $ALERTING_PICTURE
+
+            # Run bridge
+            - bridge/run.rb --current_module $CIRCLE_PROJECT_REPONAME --trigger_branch dev --token $BRIDGE_TOKEN
+
+    preprod:
+        branch: master
+        commands:
+            # Clone tools
+            - git clone git@github.com:streamroot/bridge.git
+
+            # Changelog
+            - toolkit/bump_current_changelog.rb --version $(toolkit/current_version.rb --no_beta)
+
+            # Update version
+            - toolkit/update_version.rb
+
+            # Cleanup
+            - rm -rf dist
+
+            # Generate dist
+            - grunt browserify:bundle
+            - grunt browserify:wrapper
+
+            - toolkit/add_banner.rb --file dist/bundle/$DIST_BUNDLE
+                                    --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
+            - toolkit/add_banner.rb --file dist/wrapper/$DIST_WRAPPER
+                                    --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
+
+            - cp dist/bundle/$DIST_BUNDLE $CIRCLE_ARTIFACTS/$DIST_BUNDLE
+            - cp dist/wrapper/$DIST_WRAPPER $CIRCLE_ARTIFACTS/$DIST_WRAPPER
+
+            # Build package.json
+            - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb)
+                                            --main ./$DIST_BUNDLE
+                                            --name $BUNDLE_NAME
+                                            -o dist/bundle/package.json
+            - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb)
+                                            --main ./$DIST_WRAPPER
+                                            --name $WRAPPER_NAME
+                                            -o dist/wrapper/package.json
+
+            # Publish
+            - npm publish dist/bundle
+            - npm publish dist/wrapper
+
+            # Upload version
+            - toolkit/upload_to_s3.rb --bucket $S3_PREPROD_BUCKET
+                                      --region eu-west-1
+                                      --file $CIRCLE_ARTIFACTS/$DIST_BUNDLE
+                                      --destinations $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --major)/$DIST_BUNDLE
+                                                     $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --no_patch)/$DIST_BUNDLE
+                                                     $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb)/$DIST_BUNDLE
+                                                     $CIRCLE_PROJECT_REPONAME/latest/$DIST_BUNDLE
+                                      --key $S3_KEY
+                                      --secret $S3_SECRET
+            - toolkit/upload_to_s3.rb --bucket $S3_PREPROD_BUCKET
+                                      --region eu-west-1
+                                      --file $CIRCLE_ARTIFACTS/$DIST_WRAPPER
+                                      --destinations $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --major)/$DIST_WRAPPER
+                                                     $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb --no_patch)/$DIST_WRAPPER
+                                                     $CIRCLE_PROJECT_REPONAME/$(toolkit/current_version.rb)/$DIST_WRAPPER
+                                                     $CIRCLE_PROJECT_REPONAME/latest/$DIST_WRAPPER
+                                      --key $S3_KEY
+                                      --secret $S3_SECRET
+
+            # Changelog
+            - toolkit/post_changelog.rb   --project $CIRCLE_PROJECT_REPONAME
+                                          --env preprod
+                                          --subtitle $ALERTING_SUBTITLE
+                                          --channel $ALERTING_CHANNEL
+                                          --slack-token $SLACK_TOKEN
+                                          --username $ALERTING_USERNAME
+                                          --icon-url $ALERTING_PICTURE
+
+            # Run bridge
+            - bridge/run.rb --current_module $CIRCLE_PROJECT_REPONAME --trigger_branch master --token $BRIDGE_TOKEN
+
