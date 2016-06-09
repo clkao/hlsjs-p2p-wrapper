@@ -129,7 +129,7 @@ deployment:
             - git clone git@github.com:streamroot/toolkit.git
 
             # Changelog
-            - toolkit/bump_current_changelog.rb --version $(toolkit/current_version.rb)
+            - toolkit/bump_current_changelog.rb --version $(toolkit/current_version.rb --no_beta)
 
             # Update version
             - toolkit/update_version.rb
