@@ -128,11 +128,11 @@ deployment:
             # Clone tools
             - git clone git@github.com:streamroot/bridge.git
 
-            # Changelog
-            - toolkit/bump_current_changelog.rb --version $(toolkit/current_version.rb --no_beta)
-
             # Update version
             - toolkit/update_version.rb
+
+            # Changelog
+            - toolkit/bump_current_changelog.rb --version $(toolkit/current_version.rb)
 
             # Cleanup
             - rm -rf dist
