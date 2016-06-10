@@ -5,7 +5,7 @@ For the Hls bundle nothing changes. You can still construct a player like before
 This is the legacy v2 way of configuring a player to use Streamroot using the wrapper directly:
 
 ```
-// Create plain wrapper without DI (legacy way)
+// Create plain wrapper without dependency injection (legacy way)
 const wrapper = new HlsjsP2PWrapper();
 
 // Create Hls.js instance your way
@@ -28,7 +28,7 @@ This is still supported in v3 but is deprecated. Please migrate as soon as possi
 var hls;
 var video = document.getElementById('video');
 
-// Create wrapper where we DI the Hls.js constructor (in this example we use the one provided by the bundle)
+// Create wrapper where we dependency-inject the Hls.js constructor (in this example we use the one provided by the bundle)
 var wrapper = new HlsjsP2PWrapper(Hls);
 
 // To create a new configured default player using the wrapper toolkit
