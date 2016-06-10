@@ -20,7 +20,8 @@ dependencies:
                                             --dependency_path dependencies.streamroot-p2p
                                             --version beta
 
-        - rm -Rf node_modules
+
+        - npm prune
     override:
         - npm install
     post:
