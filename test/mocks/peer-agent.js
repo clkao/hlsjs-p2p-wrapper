@@ -1,3 +1,5 @@
+/* eslint no-unused-vars: ["error", { "argsIgnorePattern": "segmentView", "varsIgnorePattern": "headers" }]*/
+
 class PeerAgentMock {
 
     getSegment(reqInfo, callbacks, segmentView) {
@@ -31,11 +33,11 @@ class PeerAgentMock {
             xhr.responseType = 'arraybuffer';
 
             if (this.xhrSetup) {
-              this.xhrSetup(xhr, url);
+                this.xhrSetup(xhr, url);
             }
             xhr.send();
 
-        } catch(e) {
+        } catch (e) {
             console.log(e);
         }
     }

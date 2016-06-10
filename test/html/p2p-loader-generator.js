@@ -1,4 +1,6 @@
-import P2PLoaderGenerator from "../../lib/integration/p2p-loader-generator";
+/* eslint no-unused-vars: ["error", { "argsIgnorePattern": "event" }]*/
+
+import p2pLoaderGenerator from "../../lib/integration/p2p-loader-generator";
 import HlsjsWrapperMock from "../mocks/wrapper";
 import Hls from "hls.js";
 
@@ -13,9 +15,7 @@ describe("P2PLoaderGenerator", () => {
 
     it("should succeed to load a fragment, trigger success events and return valid stats", (done) => {
 
-
-
-        const P2PLoader = P2PLoaderGenerator(new HlsjsWrapperMock());
+        const P2PLoader = p2pLoaderGenerator(new HlsjsWrapperMock());
 
         let hls = new Hls({
             fLoader: P2PLoader
@@ -27,7 +27,7 @@ describe("P2PLoaderGenerator", () => {
         const frag = {
             loadCounter: 1,
             url: TEST_URL1
-        }
+        };
 
         hls.on(Hls.Events.FRAG_LOADED, (event, data) => {
             fragLoaded++;
@@ -56,7 +56,7 @@ describe("P2PLoaderGenerator", () => {
 
             loadedEventData.payload.byteLength.should.be.equal(expectedSize);
 
-            loadedEventData.stats.trequest.should.be.above(0),
+            loadedEventData.stats.trequest.should.be.above(0);
             loadedEventData.stats.tfirst.should.be.above(loadedEventData.stats.trequest);
             loadedEventData.stats.tload.should.be.above(loadedEventData.stats.tfirst);
             loadedEventData.stats.loaded.should.be.equal(expectedSize);
@@ -66,7 +66,7 @@ describe("P2PLoaderGenerator", () => {
             fragLoadProgress.should.be.above(0);
             fragLoaded.should.be.equal(1);
 
-            const estimatedBW = 8*expectedSize / ((loadedEventData.stats.tload - loadedEventData.stats.trequest) / 1000.0);
+            const estimatedBW = 8 * expectedSize / ((loadedEventData.stats.tload - loadedEventData.stats.trequest) / 1000.0);
 
             (hls.abrController.lastbw / estimatedBW).should.be.approximately(1, 0.01); // delta of 1%
 
@@ -76,7 +76,7 @@ describe("P2PLoaderGenerator", () => {
 
     it("should fail to load a fragment and trigger error events", (done) => {
 
-        const P2PLoader = P2PLoaderGenerator(new HlsjsWrapperMock());
+        const P2PLoader = p2pLoaderGenerator(new HlsjsWrapperMock());
 
         let hls = new Hls({
             fLoader: P2PLoader
@@ -93,7 +93,7 @@ describe("P2PLoaderGenerator", () => {
 
         let frag = {
             url: TEST_URL1 + "foo"
-        }
+        };
 
         hls.trigger(Hls.Events.FRAG_LOADING, {frag});
 

@@ -1,115 +1,115 @@
-import Hls from "../../lib/streamroot-hlsjs-bundle"
+import Hls from "../../lib/streamroot-hlsjs-bundle";
 
 describe("StreamrootHlsjsBundle", function() { // NOTE: We need to use the oldschool syntax
                                                // (no ES6 arraw funcs) here because of mocha`s `this.timeout`
 
-  let video, config, hls, isDone;
+    let video, config, hls, isDone;
 
-  if (!Hls.isSupported()) {
-    throw new Error('Hls is not supported');
-  }
+    if (!Hls.isSupported()) {
+        throw new Error('Hls is not supported');
+    }
 
-  this.timeout("30000");
+    this.timeout("30000");
 
-  before(() => {
+    before(() => {
 
-    window._DEBUG_ = true;
-    window._TEST_ = false;
+        window._DEBUG_ = true;
+        window._TEST_ = false;
 
-    config = {
-      p2pConfig:{
-          streamrootKey: "ry-v7xuywnt",
-          debug: true,
-      },
-      contentUrl: 'http://www.streambox.fr/playlists/test_001/stream.m3u8',
-    };
-  });
-
-  beforeEach(() => {
-    isDone = false;
-    hls = null;
-    video = document.createElement('video');
-    document.body.appendChild(video);
-  });
-
-  afterEach(() => {
-    video.pause();
-    hls && hls.detachMedia();
-    document.body.removeChild(video);
-  });
-
-  it("should play from the start", (done) => {
-
-    video.addEventListener('timeupdate', () => {
-      if (video.currentTime > 1.0) {
-        doneOnce(done);
-      }
+        config = {
+            p2pConfig:{
+                streamrootKey: "ry-v7xuywnt",
+                debug: true,
+            },
+            contentUrl: 'http://www.streambox.fr/playlists/test_001/stream.m3u8',
+        };
     });
 
-    createAndStartPlayer();
-  });
-
-  it("should seek to 30 seconds", (done) => {
-
-    let seeking = false;
-    let seeked = false;
-
-    video.addEventListener('timeupdate', () => {
-
-      if (video.currentTime > 1 && !seeking) {
-        video.currentTime = 30;
-        seeking = true;
-      }
-
-      if (video.currentTime > 31 && seeked) {
-        doneOnce(done);
-      }
+    beforeEach(() => {
+        isDone = false;
+        hls = null;
+        video = document.createElement('video');
+        document.body.appendChild(video);
     });
 
-    video.addEventListener('seeked', () => {
-      seeked = true;
+    afterEach(() => {
+        video.pause();
+        hls && hls.detachMedia();
+        document.body.removeChild(video);
     });
 
-    createAndStartPlayer();
-  });
+    it("should play from the start", (done) => {
 
-  it("should play at lowest quality with bandwidth shaping enabled", (done) => {
+        video.addEventListener('timeupdate', () => {
+            if (video.currentTime > 1.0) {
+                doneOnce(done);
+            }
+        });
 
-    XMLHttpRequest.Shaper.maxBandwidth = 64;
-
-    createAndStartPlayer(() => {
-      setTimeout(() => {
-        console.log('current level: ' + hls.loadLevel);
-        console.log('next level: ' + hls.nextLoadLevel);
-        video.currentTime = 30;
-      }, 1000);
+        createAndStartPlayer();
     });
 
-    video.addEventListener('seeked', () => {
-      console.log('current level: ' + hls.loadLevel);
-      console.log('next level: ' + hls.nextLoadLevel);
+    it("should seek to 30 seconds", (done) => {
 
-      hls.loadLevel.should.be.equal(0);
-      hls.nextLoadLevel.should.be.equal(0);
+        let seeking = false;
+        let seeked = false;
 
-      doneOnce(done);
+        video.addEventListener('timeupdate', () => {
+
+            if (video.currentTime > 1 && !seeking) {
+                video.currentTime = 30;
+                seeking = true;
+            }
+
+            if (video.currentTime > 31 && seeked) {
+                doneOnce(done);
+            }
+        });
+
+        video.addEventListener('seeked', () => {
+            seeked = true;
+        });
+
+        createAndStartPlayer();
     });
-  });
 
-  function createAndStartPlayer(cb) {
-    hls = new Hls({debug: true}, config.p2pConfig);
-    hls.loadSource(config.contentUrl);
-    hls.attachMedia(video);
-    hls.on(Hls.Events.MANIFEST_PARSED,function() {
-      video.volume = 0;
-      video.play();
-      cb();
+    it("should play at lowest quality with bandwidth shaping enabled", (done) => {
+
+        XMLHttpRequest.Shaper.maxBandwidth = 64;
+
+        createAndStartPlayer(() => {
+            setTimeout(() => {
+                console.log('current level: ' + hls.loadLevel);
+                console.log('next level: ' + hls.nextLoadLevel);
+                video.currentTime = 30;
+            }, 1000);
+        });
+
+        video.addEventListener('seeked', () => {
+            console.log('current level: ' + hls.loadLevel);
+            console.log('next level: ' + hls.nextLoadLevel);
+
+            hls.loadLevel.should.be.equal(0);
+            hls.nextLoadLevel.should.be.equal(0);
+
+            doneOnce(done);
+        });
     });
-  }
 
-  function doneOnce(doneFn) {
-    !isDone && doneFn();
-    isDone = true;
-  }
+    function createAndStartPlayer(cb) {
+        hls = new Hls({debug: true}, config.p2pConfig);
+        hls.loadSource(config.contentUrl);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED,function() {
+            video.volume = 0;
+            video.play();
+            cb();
+        });
+    }
+
+    function doneOnce(doneFn) {
+        !isDone && doneFn();
+        isDone = true;
+    }
 
 });
