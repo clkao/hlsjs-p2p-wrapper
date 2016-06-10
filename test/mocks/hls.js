@@ -1,6 +1,6 @@
 class HlsMock {
 
-  constructor (levelNumber, live, definedLevel = 0) {
+  constructor (levelNumber, live, definedLevel = 0, emptyLevel = true) {
 
     //this.hls.levels can return undefined if master playlist as not been parsed
     if (levelNumber > 0) {
@@ -16,8 +16,20 @@ class HlsMock {
       })
     }
 
-    for (var i=0; i<levelNumber; i++) {
-      let level = {};
+    for (var i=0; i < levelNumber; i++) {
+      let level;
+
+      if (emptyLevel) {
+        level = {};
+      } else {
+        level = {
+          details: {
+              totalduration: 120
+          },
+          audioCodec: "fooCodec"
+        };
+      }
+
       if (live !== undefined && i === definedLevel) {
         level.details = { live, fragments };
       }
@@ -29,7 +41,9 @@ class HlsMock {
     return this._levels;
   }
 
-  on(){}
+  on() {}
+
+  trigger() {}
 
 }
 

@@ -27,6 +27,28 @@ grunt build
 
 Now you can include `dist/bundle/streamroot-hlsjs-bundle` (high-level) or `dist/wrapper/hlsjs-wrapper` (low-level) into your application. You can access the respective public APIs via the namespaces `StreamrootHlsjsBundle` and `StreamrootHlsjsWrapper`.
 
+### Tests
+
+For node tests, run
+
+```
+npm test
+```
+
+For automated browser tests, run
+
+```
+npm run karma
+```
+
+For browser tests in dev mode, start a server in the project root, then run
+
+```
+grunt browserify:test_dev
+```
+
+Now go to http://localhost:8080/test/html/
+
 ### Install
 
 You can install the artifacts distributed as NPM modules:
