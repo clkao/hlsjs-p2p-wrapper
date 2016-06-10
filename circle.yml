@@ -39,8 +39,12 @@ deployment:
             - grunt browserify:bundle
             - grunt browserify:wrapper
 
-            - toolkit/add_banner.rb --file dist/bundle/$DIST_BUNDLE --deploy_env $CIRCLE_BRANCH
-            - toolkit/add_banner.rb --file dist/wrapper/$DIST_WRAPPER --deploy_env $CIRCLE_BRANCH
+            - toolkit/add_banner.rb --file dist/bundle/$DIST_BUNDLE
+                                    --deploy_env $CIRCLE_BRANCH
+                                    --dependencies streamroot-p2p hls.js
+            - toolkit/add_banner.rb --file dist/wrapper/$DIST_WRAPPER
+                                    --deploy_env $CIRCLE_BRANCH
+                                    --dependencies streamroot-p2p
 
             - cp dist/bundle/$DIST_BUNDLE $CIRCLE_ARTIFACTS/$DIST_BUNDLE
             - cp dist/wrapper/$DIST_WRAPPER $CIRCLE_ARTIFACTS/$DIST_WRAPPER
@@ -74,9 +78,11 @@ deployment:
             - toolkit/add_banner.rb --file dist/bundle/$DIST_BUNDLE
                                     --deploy_env staging
                                     --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
+                                    --dependencies streamroot-p2p hls.js
             - toolkit/add_banner.rb --file dist/wrapper/$DIST_WRAPPER
                                     --deploy_env staging
                                     --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
+                                    --dependencies streamroot-p2p
 
             - cp dist/bundle/$DIST_BUNDLE $CIRCLE_ARTIFACTS/$DIST_BUNDLE
             - cp dist/wrapper/$DIST_WRAPPER $CIRCLE_ARTIFACTS/$DIST_WRAPPER
@@ -144,8 +150,10 @@ deployment:
 
             - toolkit/add_banner.rb --file dist/bundle/$DIST_BUNDLE
                                     --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
+                                    --dependencies streamroot-p2p hls.js
             - toolkit/add_banner.rb --file dist/wrapper/$DIST_WRAPPER
                                     --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
+                                    --dependencies streamroot-p2p
 
             - cp dist/bundle/$DIST_BUNDLE $CIRCLE_ARTIFACTS/$DIST_BUNDLE
             - cp dist/wrapper/$DIST_WRAPPER $CIRCLE_ARTIFACTS/$DIST_WRAPPER
