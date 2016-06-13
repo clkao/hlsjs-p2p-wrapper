@@ -1,6 +1,6 @@
 {
   "name": "streamroot-hlsjs-p2p-wrapper",
-  "version": "3.0.0",
+  "version": "3.0.0-beta.0",
   "main": "lib/streamroot-wrapper.js",
   "homepage": "www.streamroot.io",
   "author": {
@@ -10,7 +10,8 @@
   "scripts": {
     "build": "grunt build",
     "demo": "grunt demo",
-    "test": "mocha --require mochahook",
+    "test": "node_modules/.bin/mocha --require mochahook",
+    "karma": "node_modules/.bin/grunt browserify:test && ./node_modules/.bin/karma start --single-run",
     "docs": "./node_modules/.bin/jsdoc -d docs lib/hlsjs-p2p-wrapper.js lib/hlsjs-p2p-bundle.js",
     "lint": "node_modules/.bin/eslint lib/ test/",
     "start": "node_modules/.bin/static",
@@ -26,7 +27,8 @@
     "hls.js": "0.5.27",
     "lodash.defaults": "4.0.1",
     "streamroot-p2p": "^4.0.0",
-    "ua-parser-js": "^0.7.10"
+    "ua-parser-js": "^0.7.10",
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "babel-core": "^6.7.7",
@@ -43,9 +45,14 @@
     "grunt-bump": "^0.8.0",
     "grunt-shell": "^1.1.2",
     "jsdoc": "^3.4.0",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-mocha": "^1.0.1",
+    "karma-should": "^1.0.0",
     "matchdep": "^1.0.1",
     "mocha": "^2.4.5",
     "should": "^9.0.0",
-    "uglifyify": "^3.0.1"
+    "uglifyify": "^3.0.1",
+    "xhr-shaper": "^0.2.1"
   }
 }
