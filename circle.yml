@@ -88,19 +88,15 @@ deployment:
             - cp dist/bundle/$DIST_BUNDLE $CIRCLE_ARTIFACTS/$DIST_BUNDLE
             - cp dist/wrapper/$DIST_WRAPPER $CIRCLE_ARTIFACTS/$DIST_WRAPPER
 
-            # Build package.json
+            # Build package.json for the bundle
             - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
                                             --main ./$DIST_BUNDLE
                                             --name $BUNDLE_NAME
                                             -o dist/bundle/package.json
-            - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
-                                            --main ./$DIST_WRAPPER
-                                            --name $WRAPPER_NAME
-                                            -o dist/wrapper/package.json
 
             # Publish
             - npm publish dist/bundle --tag beta
-            - npm publish dist/wrapper --tag beta
+            - npm publish --tag beta
 
             # Upload version
             - toolkit/upload_to_s3.rb --bucket $S3_STAGING_BUCKET
@@ -159,19 +155,15 @@ deployment:
             - cp dist/bundle/$DIST_BUNDLE $CIRCLE_ARTIFACTS/$DIST_BUNDLE
             - cp dist/wrapper/$DIST_WRAPPER $CIRCLE_ARTIFACTS/$DIST_WRAPPER
 
-            # Build package.json
+            # Build package.json for the bundle
             - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb)
                                             --main ./$DIST_BUNDLE
                                             --name $BUNDLE_NAME
                                             -o dist/bundle/package.json
-            - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb)
-                                            --main ./$DIST_WRAPPER
-                                            --name $WRAPPER_NAME
-                                            -o dist/wrapper/package.json
 
             # Publish
             - npm publish dist/bundle
-            - npm publish dist/wrapper
+            - npm publish
 
             # Upload version
             - toolkit/upload_to_s3.rb --bucket $S3_PREPROD_BUCKET
