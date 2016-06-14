@@ -88,8 +88,7 @@ import StreamrootHlsjsP2PWrapper from 'hlsjs-p2p-wrapper';
 High-level Hls.js extended constructor:
 
 ```javascript
-// Override Hls constructor with our bundle
-var Hls = window.StreamrootHlsjsP2PWrapper;
+// Hls constructor is overriden by including bundle
 var hls = new Hls(myHlsjsConfig, myStreamrootP2PConfig);
 // Use `hls` just like your usual hls.js ...
 ```
