@@ -1,4 +1,4 @@
-# Hlsjs-wrapper
+# hlsjs-p2p-wrapper
 
 This module wraps an instance of hls.js to bootstrap it with the Streamroot P2P agent module.
 
@@ -7,6 +7,11 @@ It provides a high-level Hls.js extended constructor to create fully configured 
 It also provides a low-level wrapper that allows you to create/configure a player based on a DI'd constructor or instance so you can rule over what Hls.js version to use or initialize the player instance on your own and set an optional custom content ID.
 
 # Usage
+
+### Pre-requisites 
+
+Since the installation uses a Ruby script, you need Ruby to be installed on your machine. On most Linux distros and on Mac OSX, it's installed by default, but for windows you need to install it [manually](https://www.ruby-lang.org/en/).
+
 
 ### Setup
 
@@ -19,63 +24,81 @@ npm install
 
 ### Build
 
+
 Run this task to build the distro:
 
 ```
 grunt build
 ```
 
-Now you can include `dist/bundle/streamroot-hlsjs-bundle` (high-level) or `dist/wrapper/hlsjs-wrapper` (low-level) into your application. You can access the respective public APIs via the namespaces `StreamrootHlsjsBundle` and `StreamrootHlsjsWrapper`.
+Now you can include `dist/bundle/hlsjs-p2p-bundle.js` (high-level) or `dist/wrapper/hlsjs-p2p-wrapper` (low-level) into your application. You can access the respective public APIs via the namespace `StreamrootHlsjsP2PWrapper`.
+
+### Tests
+
+For node tests, run
+
+```
+npm test
+```
+
+For automated browser tests, run
+
+```
+npm run karma
+```
+
+For browser tests in dev mode, start a server in the project root, then run
+
+```
+grunt browserify:test_dev
+```
+
+Now go to http://localhost:8080/test/html/
 
 ### Install
 
 You can install the artifacts distributed as NPM modules:
 
-For the wrapper:
+For the wrapper with hls.js included:
 
 ```
-npm install streamroot-hlsjs-wrapper
+npm install hlsjs-p2p-bundle
 ```
 
-For the bundle
+For the wrapper without hls.js:
 
 ```
-npm install streamroot-hlsjs-bundle
+npm install hlsjs-p2p-wrapper
 ```
 
 In your application import/require the package you want to use as in the example like
 
 ```
-import StreamrootHlsjsBundle from 'streamroot-hlsjs-bundle';
+import StreamrootHlsjsP2PBundle from 'hlsjs-p2p-bundle';
 ```
 
 or
 
 ```
-import HlsjsWrapper from 'streamroot-hlsjs-wrapper.js';
+import StreamrootHlsjsP2PWrapper from 'hlsjs-p2p-wrapper';
 ```
 
 ### Example
 
 High-level Hls.js extended constructor:
 
-```
-// Override Hls constructor with our bundle
-var Hls = window.StreamrootHlsjsBundle;
-...
+```javascript
+// Hls constructor is overriden by including bundle
 var hls = new Hls(myHlsjsConfig, myStreamrootP2PConfig);
-...
 // Use `hls` just like your usual hls.js ...
 ```
 
-Low-level wrapper for DI:
+Low-level wrapper for direct instanciation:
 
-```
-var wrapper = new HlsJsWrapper(Hls);
-...
-var hls = wrapper.createPlayer(myHlsjsConfig, myStreamrootP2PConfig, myOptionalContentId);
-...
-// Use `hls` just like your usual hls.js ...
+```javascript
+var wrapper = new HlsjsP2PWrapper(Hls);
+var hls = wrapper.createPlayer(myHlsjsConfig, myStreamrootP2PConfig);
+// Use `hls` just like your usual hls.js…
 ```
 
 To see full sample code and extended possibilites of how to use this module, take a look at `example/main.js`.
@@ -110,16 +133,16 @@ This will start a server. Go to <http://localhost:8080/docs>
 
 Make sure to have run `npm install` at least once.
 
-To build and compile-watch the wrapper/bundle/example files run:
+To build and compile-watch the example files run:
 
 ```
-grunt browserify:wrapper_dev
+grunt browserify:bundle_dev
 ```
 
 or
 
 ```
-grunt browserify:bundle_dev
+grunt browserify:wrapper_dev
 ```
 
 
@@ -143,7 +166,11 @@ var hlsjsConfig = {
   // ... ,
   request: {
     withCredentials: true, // true | false.
-    headers: [ ["X-CUSTOM-HEADER-1", value1], ["X-CUSTOM-HEADER-2", value2] ] // List of headers you want to set for your requests
+    headers: {
+        'X-CUSTOM-HEADER-1': value1,
+        'X-CUSTOM-HEADER-2': value2
+        // List of headers you want to set for your requests
+    }
   },
   // ... ,
 }

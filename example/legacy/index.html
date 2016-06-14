@@ -11,7 +11,7 @@
                 p2pConfig:{
                     streamrootKey: "ry-v7xuywnt",
                     debug: true,
-                },
+                }
                 contentUrl: 'http://www.streambox.fr/playlists/test_001/stream.m3u8',
             }
 
@@ -19,7 +19,7 @@
         </script>
 
         <script src="../../node_modules/hls.js/dist/hls.js"></script>
-        <script src="../../dist/wrapper/hlsjs-wrapper.js"></script>
+        <script src="../../dist/wrapper/hlsjs-p2p-wrapper.js"></script>
 
         <script src="http://cdn.streamroot.io/2/scripts/p2pGraph.js"></script>
         <script src="http://cdn.streamroot.io/2/scripts/peerStat.js"></script>
@@ -41,10 +41,12 @@
                     const video = document.getElementById('video');
 
                     // Create plain wrapper without DI (legacy way)
-                    const wrapper = new HlsjsWrapper();
+                    const wrapper = new HlsjsP2PWrapper();
 
                     // Create Hls.js instance your way
-                    let hls = new Hls(config.hlsConfig);
+                    let hls = new Hls({
+                        fLoader: wrapper.P2PLoader
+                    });
 
                     hls.on(Hls.Events.MANIFEST_LOADING, (event, data) => {
                         wrapper.createSRModule(config.p2pConfig, hls, Hls.Events);
