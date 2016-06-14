@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This changelog's template come from [keepachangelog.com](http://keepachangelog.com/). When editing this document, please follow the convention specified there.
 
 ## [Dev]
+
+## [Unreleased]
+
+## [3.0.3] - 2016-06-14
 ### Added
 - getId() method in SegmentView to identify segments
 - getTracksList() is now getTrackList()
@@ -13,8 +17,6 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 - Remove contentUrl formatting. Expect optional contentId in p2pConfig, except for deprecated method createSRModule
 - Rely on streamroot-p2p v4.x
 - uglify the bundle and remove console.log in it.
-
-## [Unreleased]
 
 ## [2.0.8] - 2016-05-11
 ### Added
