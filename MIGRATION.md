@@ -9,7 +9,9 @@ This is the legacy v2 way of configuring a player to use Streamroot using the wr
 const wrapper = new HlsjsP2PWrapper();
 
 // Create Hls.js instance your way
-let hls = new Hls(config.hlsConfig);
+let hls = new Hls({
+	fLoader: wrapper.P2PLoader
+});
 
 hls.on(Hls.Events.MANIFEST_LOADING, (event, data) => {
     wrapper.createSRModule(config.p2pConfig, hls, Hls.Events);
