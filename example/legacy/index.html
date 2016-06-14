@@ -11,7 +11,7 @@
                 p2pConfig:{
                     streamrootKey: "ry-v7xuywnt",
                     debug: true,
-                },
+                }
                 contentUrl: 'http://www.streambox.fr/playlists/test_001/stream.m3u8',
             }
 
@@ -44,7 +44,9 @@
                     const wrapper = new HlsjsP2PWrapper();
 
                     // Create Hls.js instance your way
-                    let hls = new Hls(config.hlsConfig);
+                    let hls = new Hls({
+                        fLoader: wrapper.P2PLoader
+                    });
 
                     hls.on(Hls.Events.MANIFEST_LOADING, (event, data) => {
                         wrapper.createSRModule(config.p2pConfig, hls, Hls.Events);
