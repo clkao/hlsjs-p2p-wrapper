@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This changelog's template come from [keepachangelog.com](http://keepachangelog.com/). When editing this document, please follow the convention specified there.
 
 ## [Dev]
+
+## [Unreleased]
+
+## [3.0.4] - 2016-06-15
+- Change bundle name in banner
+
+## [3.0.3] - 2016-06-14
 ### Added
 - getId() method in SegmentView to identify segments
 - getTracksList() is now getTrackList()
@@ -12,9 +19,6 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 - Custom headers are now in JSON format
 - Remove contentUrl formatting. Expect optional contentId in p2pConfig, except for deprecated method createSRModule
 - Rely on streamroot-p2p v4.x
-
-## [Unreleased]
-### Changed
 - uglify the bundle and remove console.log in it.
 
 ## [2.0.8] - 2016-05-11
