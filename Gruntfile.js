@@ -45,9 +45,6 @@ module.exports = function (grunt) {
             },
             docs: {
                 command: 'npm run docs'
-            },
-            update_demo: {
-                command: './update_demo.rb'
             }
         },
 
@@ -93,7 +90,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('demo', [
         'shell:install',
-        'shell:update_demo',
         'browserify:bundle',
         'browserify:wrapper',
         'shell:start'
