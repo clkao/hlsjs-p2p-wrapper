@@ -25,13 +25,23 @@ npm install
 ### Build
 
 
-Run this task to build the distro:
+#### Wrapper
 
+Run this task to build it:
 ```
-grunt build
+grunt browserify:wrapper
 ```
 
-Now you can include `dist/bundle/hlsjs-p2p-bundle.js` (high-level) or `dist/wrapper/hlsjs-p2p-wrapper` (low-level) into your application. You can access the respective public APIs via the namespace `StreamrootHlsjsP2PWrapper`.
+Now you can include `dist/wrapper/hlsjs-p2p-wrapper.js` in your application.
+
+#### Bundle
+
+Run this task to build it:
+```
+grunt browserify:bundle
+```
+
+Now you can include `dist/bundle/hlsjs-p2p-bundle.js` in your application.
 
 ### Tests
 
@@ -62,25 +72,25 @@ You can install the artifacts distributed as NPM modules:
 For the wrapper with hls.js included:
 
 ```
-npm install hlsjs-p2p-bundle
+npm install streamroot-hlsjs-p2p-bundle
 ```
 
 For the wrapper without hls.js:
 
 ```
-npm install hlsjs-p2p-wrapper
+npm install streamroot-hlsjs-p2p-wrapper
 ```
 
 In your application import/require the package you want to use as in the example like
 
 ```
-import StreamrootHlsjsP2PBundle from 'hlsjs-p2p-bundle';
+import StreamrootHlsjsP2PBundle from 'streamroot-hlsjs-p2p-bundle';
 ```
 
 or
 
 ```
-import StreamrootHlsjsP2PWrapper from 'hlsjs-p2p-wrapper';
+import StreamrootHlsjsP2PWrapper from 'streamroot-hlsjs-p2p-wrapper';
 ```
 
 ### Example
