@@ -43,6 +43,7 @@ deployment:
             - toolkit/add_banner.rb --file dist/bundle/$DIST_BUNDLE
                                     --deploy_env $CIRCLE_BRANCH
                                     --dependencies streamroot-p2p hls.js
+                                    --name $BUNDLE_NAME
             - toolkit/add_banner.rb --file dist/wrapper/$DIST_WRAPPER
                                     --deploy_env $CIRCLE_BRANCH
                                     --dependencies streamroot-p2p
@@ -83,6 +84,7 @@ deployment:
                                     --deploy_env staging
                                     --version $(toolkit/current_version.rb)
                                     --dependencies streamroot-p2p hls.js
+                                    --name $BUNDLE_NAME
             - toolkit/add_banner.rb --file dist/wrapper/$DIST_WRAPPER
                                     --deploy_env staging
                                     --version $(toolkit/current_version.rb)
@@ -151,6 +153,7 @@ deployment:
             - toolkit/add_banner.rb --file dist/bundle/$DIST_BUNDLE
                                     --version $(toolkit/current_version.rb)
                                     --dependencies streamroot-p2p hls.js
+                                    --name $BUNDLE_NAME
             - toolkit/add_banner.rb --file dist/wrapper/$DIST_WRAPPER
                                     --version $(toolkit/current_version.rb)
                                     --dependencies streamroot-p2p

@@ -6,6 +6,7 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 ## [Dev]
 
 ## [Unreleased]
+- Change bundle name in banner
 
 ## [3.0.3] - 2016-06-14
 ### Added
