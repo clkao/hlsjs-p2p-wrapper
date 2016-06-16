@@ -11,8 +11,9 @@
                 p2pConfig:{
                     streamrootKey: "ry-v7xuywnt",
                     debug: true,
+                    contentId: null
                 },
-                contentUrl: 'http://www.streambox.fr/playlists/test_001/stream.m3u8',
+                contentUrl: 'http://www.streambox.fr/playlists/test_001/stream.m3u8'
             }
 
             window.previousTotalCDN = 0;
@@ -45,7 +46,7 @@
                     var wrapper = new HlsjsP2PWrapper(Hls);
 
                     // To create a new configured default player using the wrapper toolkit
-                    hls = wrapper.createPlayer(config.hlsjsConfig, config.p2pConfig, config.contentId);
+                    hls = wrapper.createPlayer(config.hlsjsConfig, config.p2pConfig);
 
                     hls.loadSource(config.contentUrl);
                     hls.attachMedia(video);

@@ -13,6 +13,7 @@
                     debug: true,
                 },
                 contentUrl: 'http://www.streambox.fr/playlists/test_001/stream.m3u8',
+                contentId: null
             }
 
             window.previousTotalCDN = 0;
@@ -49,7 +50,7 @@
                     });
 
                     hls.on(Hls.Events.MANIFEST_LOADING, (event, data) => {
-                        wrapper.createSRModule(config.p2pConfig, hls, Hls.Events);
+                        wrapper.createSRModule(config.p2pConfig, hls, Hls.Events, config.contentId);
                     });
 
                     hls.loadSource(config.contentUrl);
