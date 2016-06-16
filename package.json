@@ -1,6 +1,6 @@
 {
   "name": "streamroot-hlsjs-p2p-wrapper",
-  "version": "3.1.0-beta.0",
+  "version": "3.2.0-beta.0",
   "main": "dist/wrapper/hlsjs-p2p-wrapper.js",
   "homepage": "www.streamroot.io",
   "author": {
@@ -8,6 +8,7 @@
     "email": "contact@streamroot.io"
   },
   "scripts": {
+    "clean": "rm -Rf dist",
     "build": "grunt build",
     "demo": "grunt demo",
     "test": "node_modules/.bin/mocha --require mochahook",
@@ -16,6 +17,7 @@
     "lint": "node_modules/.bin/eslint lib/ test/",
     "start": "node_modules/.bin/static",
     "debug": "iron-mocha --require mochahook",
+    "preinstall": "npm run clean",
     "postinstall": "./update_demo.rb"
   },
   "browserify": {
@@ -52,6 +54,7 @@
     "karma-should": "^1.0.0",
     "matchdep": "^1.0.1",
     "mocha": "^2.4.5",
+    "node-static": "^0.7.7",
     "should": "^9.0.0",
     "uglifyify": "^3.0.1",
     "xhr-shaper": "^0.2.1"
