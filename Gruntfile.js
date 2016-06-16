@@ -88,6 +88,12 @@ module.exports = function (grunt) {
         'browserify:wrapper'
     ]);
 
+    grunt.registerTask('build', [
+        'shell:install',
+        'browserify:wrapper',
+        'browserify:bundle'
+    ])
+
     grunt.registerTask('demo', [
         'shell:install',
         'browserify:bundle',

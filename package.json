@@ -8,6 +8,7 @@
     "email": "contact@streamroot.io"
   },
   "scripts": {
+    "clean": "rm -Rf dist",
     "build": "grunt build",
     "demo": "grunt demo",
     "test": "node_modules/.bin/mocha --require mochahook",
@@ -16,6 +17,7 @@
     "lint": "node_modules/.bin/eslint lib/ test/",
     "start": "node_modules/.bin/static",
     "debug": "iron-mocha --require mochahook",
+    "preinstall": "npm run clean",
     "postinstall": "./update_demo.rb"
   },
   "browserify": {
