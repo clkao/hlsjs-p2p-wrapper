@@ -1,4 +1,4 @@
-import Hls from "../../lib/streamroot-hlsjs-bundle";
+import Hls from "../../lib/hlsjs-p2p-bundle";
 
 describe("StreamrootHlsjsBundle", function() { // NOTE: We need to use the oldschool syntax
                                                // (no ES6 arraw funcs) here because of mocha`s `this.timeout`
