@@ -34,7 +34,7 @@ OLD_CONSTRUCTOR = 'hls = new Hls({debug:true, enableWorker : enableWorker, defau
 NEW_CONSTRUCTOR = 'hls = new Hls({debug:true, enableWorker : enableWorker, defaultAudioCodec : defaultAudioCodec}, {streamrootKey: "ry-v7xuywnt", debug: true});'
 
 OLD_SCRIPT = '<script src="../dist/hls.js"></script>'
-NEW_SCRIPT = '<script src="../dist/bundle/streamroot-hlsjs-bundle.js"></script>'
+NEW_SCRIPT = '<script src="../dist/bundle/hlsjs-p2p-bundle.js"></script>'
 
 INDEX = File.read(DEMO_INDEX)
 
