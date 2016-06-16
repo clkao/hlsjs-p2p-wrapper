@@ -7,7 +7,7 @@ function makeBrowserifyTask (src, dest, standalone, dev) {
             transform: ['babelify', ['uglifyify', {
                     global: true,
                     compress: {
-                        drop_console: true,
+                        drop_console: !dev,
                     }
             }]],
             plugin: [
