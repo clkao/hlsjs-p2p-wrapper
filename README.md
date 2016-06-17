@@ -18,7 +18,7 @@ Since the installation uses a Ruby script, you need Ruby to be installed on your
 After cloning the repo, make sure that you have `grunt-cli` installed in your global node binaries and install local dependencies in the project root:
 
 ```
-npm install -g grunt-cli
+sudo npm install -g grunt-cli
 npm install
 ```
 
