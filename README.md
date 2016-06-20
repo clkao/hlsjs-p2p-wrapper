@@ -1,10 +1,11 @@
 # hlsjs-p2p-wrapper
 
-This module wraps an instance of hls.js to bootstrap it with the Streamroot P2P agent module.
+This module wraps an instance of [`Hls.js`](https://github.com/dailymotion/hls.js) to bootstrap it with the Streamroot P2P module.
 
-It provides a high-level Hls.js extended constructor to create fully configured player which will use the agent, giving you the exact same API. Which means you can integrate the wrapper player with minimal changes in your application (you only need to add an additional argument to the constructor).
+It provides a **bundle** that extends the [`Hls.js`](https://github.com/dailymotion/hls.js) constructor to create a fully configured player which will use the Streamroot P2P module, giving you the exact same API.  
+You can integrate this bundle with minimal changes in your application (you only need to add an additional argument to the [`Hls.js`](https://github.com/dailymotion/hls.js) constructor).
 
-It also provides a low-level wrapper that allows you to create/configure a player based on a DI'd constructor or instance so you can rule over what Hls.js version to use or initialize the player instance on your own and set an optional custom content ID.
+It also provides a **wrapper** that allows you to create/configure a player with a specific version of [`Hls.js`](https://github.com/dailymotion/hls.js).
 
 # Usage
 
@@ -18,7 +19,7 @@ Since the installation uses a Ruby script, you need Ruby to be installed on your
 After cloning the repo, make sure that you have `grunt-cli` installed in your global node binaries and install local dependencies in the project root:
 
 ```
-npm install -g grunt-cli
+sudo npm install -g grunt-cli
 npm install
 ```
 
@@ -95,7 +96,7 @@ import StreamrootHlsjsP2PWrapper from 'streamroot-hlsjs-p2p-wrapper';
 
 ### Example
 
-High-level Hls.js extended constructor:
+#### Bundle instantiation
 
 ```javascript
 // Hls constructor is overriden by including bundle
@@ -103,7 +104,7 @@ var hls = new Hls(myHlsjsConfig, myStreamrootP2PConfig);
 // Use `hls` just like your usual hls.js ...
 ```
 
-Low-level wrapper for direct instanciation:
+#### Wrapper instantiation
 
 ```javascript
 var wrapper = new HlsjsP2PWrapper(Hls);
@@ -111,7 +112,7 @@ var hls = wrapper.createPlayer(myHlsjsConfig, myStreamrootP2PConfig);
 // Use `hls` just like your usual hls.js…
 ```
 
-To see full sample code and extended possibilites of how to use this module, take a look at `example/main.js`.
+To see full sample code and extended possibilities of how to use this module, take a look at the code in the `example` directory.
 
 ### Run demos
 
