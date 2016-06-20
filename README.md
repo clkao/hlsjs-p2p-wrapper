@@ -112,7 +112,7 @@ var hls = wrapper.createPlayer(myHlsjsConfig, myStreamrootP2PConfig);
 // Use `hls` just like your usual hls.js…
 ```
 
-To see full sample code and extended possibilities of how to use this module, take a look at `example/main.js`.
+To see full sample code and extended possibilities of how to use this module, take a look at the code in the `example` directory.
 
 ### Run demos
 
