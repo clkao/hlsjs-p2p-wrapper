@@ -162,32 +162,6 @@ grunt browserify:wrapper_dev
 
 # Important notes
 
-### Hls.js xhrSetup, cookies and headers
-
-In Hls.js config, `xhrSetup` is broken by this wrapper. The reason is that we override the loader for fragments, and this loader does not use XHR directly. Thus we throw if `xhrSetup` is defined.
-
-However, we think that the overwhelming majority of the xhr configuration developpers need to do is:
-- enable use of cookies
-- set custom headers
-
-We introduced a custom object in hls.js configuration object for that purpose:
-
-```javascript
-var hlsjsConfig = {
-  // ... ,
-  request: {
-    withCredentials: true, // true | false.
-    headers: {
-        'X-CUSTOM-HEADER-1': value1,
-        'X-CUSTOM-HEADER-2': value2
-        // List of headers you want to set for your requests
-    }
-  },
-  // ... ,
-}
-
-```
-
 ### Content identifier
 
 :warning: If you plan on using the optionnal content identifier, you must be careful about several things:

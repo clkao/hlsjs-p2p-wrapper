@@ -122,11 +122,11 @@ deployment:
             # Changelog
             - toolkit/post_changelog.rb   --project $CIRCLE_PROJECT_REPONAME
                                           --env staging
-                                          --subtitle $ALERTING_SUBTITLE
-                                          --channel $ALERTING_CHANNEL
+                                          --subtitle $POST_SUBTITLE
+                                          --channel $SLACK_CHANNEL
                                           --slack-token $SLACK_TOKEN
-                                          --username $ALERTING_USERNAME
-                                          --icon-url $ALERTING_PICTURE
+                                          --username $POST_USERNAME
+                                          --icon-url $POST_PICTURE
 
             # Run bridge
             - bridge/run.rb --current_module $CIRCLE_PROJECT_REPONAME --trigger_branch dev --token $BRIDGE_TOKEN
@@ -194,11 +194,11 @@ deployment:
             # Changelog
             - toolkit/post_changelog.rb   --project $CIRCLE_PROJECT_REPONAME
                                           --env preprod
-                                          --subtitle $ALERTING_SUBTITLE
-                                          --channel $ALERTING_CHANNEL
+                                          --subtitle $POST_SUBTITLE
+                                          --channel $SLACK_CHANNEL
                                           --slack-token $SLACK_TOKEN
-                                          --username $ALERTING_USERNAME
-                                          --icon-url $ALERTING_PICTURE
+                                          --username $POST_USERNAME
+                                          --icon-url $POST_PICTURE
 
             # Run bridge
             - bridge/run.rb --current_module $CIRCLE_PROJECT_REPONAME --trigger_branch master --token $BRIDGE_TOKEN
