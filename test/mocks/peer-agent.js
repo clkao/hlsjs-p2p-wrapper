@@ -12,7 +12,6 @@ class PeerAgentMock {
             let xhr = new XMLHttpRequest();
 
             xhr.onreadystatechange = (e) => {
-
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200 || xhr.status === 206) {
                         onSuccess(xhr.response);
@@ -22,8 +21,6 @@ class PeerAgentMock {
                 }
             };
             xhr.onprogress = (e) => {
-
-                console.log(e);
 
                 e.cdnDownloaded = e.loaded;
                 onProgress(e);

@@ -20,7 +20,7 @@ function makeBrowserifyTask (src, dest, standalone, dev) {
         task.options.transform.push(['uglifyify', {
                 global: true,
                 compress: {
-                    drop_console: true,
+                    drop_console: !dev,
                 }
         }]);
     }
