@@ -32,7 +32,16 @@
 
             window.addEventListener("load", () => {
 
-                window.StartApp(config.hlsjsConfig, config.p2pConfig);
+                var hls;
+                var video = document.getElementById('video');
+
+                hls = window.CreatePlayer(config.hlsjsConfig, config.p2pConfig);
+
+                hls.loadSource(config.contentUrl);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED,function() {
+                    video.play();
+                });
 
             });
         </script>
