@@ -27,7 +27,6 @@ describe("Hls controllers", () => {
         };
 
         abrController.onFragLoading({frag});
-        //abrController.onFragLoadProgress({frag, stats});
         abrController.onFragLoaded({frag, stats});
 
         abrController.bwEstimator.getEstimate().should.be.approximately(1024000, 4000);
