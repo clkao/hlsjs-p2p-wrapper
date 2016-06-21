@@ -9,4 +9,5 @@ bridge/
 .ruby-version
 .gitattributes
 test/html/build.js
+example/app/build.js
 
