@@ -1,3 +1,5 @@
+import Hls from 'hls.js';
+
 class HlsMock {
 
     constructor (levelNumber, live, definedLevel = 0, emptyLevel = true) {
@@ -39,6 +41,10 @@ class HlsMock {
 
     get levels() {
         return this._levels;
+    }
+
+    get config() {
+        return Hls.DefaultConfig;
     }
 
     on() {}
