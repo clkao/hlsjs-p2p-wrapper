@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This changelog's template come from [keepachangelog.com](http://keepachangelog.com/). When editing this document, please follow the convention specified there.
 
 ## [Dev]
+### Changed
+- Hls.js version upgraded to 0.5.39 (fixes issues with Apple streams on Firefox) and updated bandwidth estimation integration tests
+### Fixed
+- Fixed regression in P2P-loader retrying routine (missing to clear timeout after fixing initial bug around calling abort function on handling errors)
 
 ## [Unreleased]
 
