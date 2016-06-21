@@ -68,7 +68,7 @@ describe("P2PLoaderGenerator", () => {
 
             const estimatedBW = 8 * expectedSize / ((loadedEventData.stats.tload - loadedEventData.stats.trequest) / 1000.0);
 
-            (hls.abrController.lastbw / estimatedBW).should.be.approximately(1, 0.01); // delta of 1%
+            (hls.abrController.bwEstimator.getEstimate() / estimatedBW).should.be.approximately(1, 0.01); // delta of 1%
 
             done();
         }
