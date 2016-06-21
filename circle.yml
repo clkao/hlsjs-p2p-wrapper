@@ -23,7 +23,6 @@ dependencies:
 
         - npm prune
     override:
-        - npm install
         - npm update
     post:
         - npm ls --depth=0 > $CIRCLE_ARTIFACTS/package.lock
