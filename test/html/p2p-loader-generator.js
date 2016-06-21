@@ -6,7 +6,8 @@ import Hls from "hls.js";
 
 const TEST_URL1 = "http://www.streambox.fr/playlists/test_001/stream_110k_48k_416x234_000.ts";
 
-describe("P2PLoaderGenerator", function() {
+describe("P2PLoaderGenerator", function() { // using plain ES5 function here
+                                            // otherwise `this.timeout` is broken
 
     this.timeout(10000);
 
