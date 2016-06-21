@@ -6,7 +6,10 @@ import Hls from "hls.js";
 
 const TEST_URL1 = "http://www.streambox.fr/playlists/test_001/stream_110k_48k_416x234_000.ts";
 
-describe("P2PLoaderGenerator", () => {
+describe("P2PLoaderGenerator", function() { // using plain ES5 function here
+                                            // otherwise `this.timeout` is broken
+
+    this.timeout(10000);
 
     // this should only run in the browser
     if (typeof window === 'undefined') {
@@ -68,7 +71,7 @@ describe("P2PLoaderGenerator", () => {
 
             const estimatedBW = 8 * expectedSize / ((loadedEventData.stats.tload - loadedEventData.stats.trequest) / 1000.0);
 
-            (hls.abrController.lastbw / estimatedBW).should.be.approximately(1, 0.01); // delta of 1%
+            (hls.abrController.bwEstimator.getEstimate() / estimatedBW).should.be.approximately(1, 0.01); // delta of 1%
 
             done();
         }
@@ -82,12 +85,11 @@ describe("P2PLoaderGenerator", () => {
             fLoader: P2PLoader
         });
 
+        let isDone = false;
         let error = 0;
-
 
         hls.on(Hls.Events.ERROR, (event) => {
             error++;
-
             finish();
         });
 
@@ -98,6 +100,10 @@ describe("P2PLoaderGenerator", () => {
         hls.trigger(Hls.Events.FRAG_LOADING, {frag});
 
         function finish() {
+            if (isDone) {
+                return;
+            }
+            isDone = true;
             error.should.be.equal(1);
             done();
         }

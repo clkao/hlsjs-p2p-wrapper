@@ -1,15 +1,10 @@
 
 function makeBrowserifyTask (src, dest, standalone, dev) {
-    const task = {
+    let task = {
         src: src,
         dest: dest,
         options: {
-            transform: ['babelify', ['uglifyify', {
-                    global: true,
-                    compress: {
-                        drop_console: true,
-                    }
-            }]],
+            transform: ['babelify'],
             plugin: [
               ['browserify-derequire']
             ],
@@ -20,6 +15,14 @@ function makeBrowserifyTask (src, dest, standalone, dev) {
             watch: dev,
             keepAlive: dev
         }
+    };
+    if (!dev) {
+        task.options.transform.push(['uglifyify', {
+                global: true,
+                compress: {
+                    drop_console: !dev,
+                }
+        }]);
     }
     return task;
 }
@@ -87,6 +90,12 @@ module.exports = function (grunt) {
         'shell:install',
         'browserify:wrapper'
     ]);
+
+    grunt.registerTask('build', [
+        'shell:install',
+        'browserify:wrapper',
+        'browserify:bundle'
+    ])
 
     grunt.registerTask('demo', [
         'shell:install',
