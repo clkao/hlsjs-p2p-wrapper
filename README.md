@@ -158,18 +158,3 @@ grunt browserify:wrapper_dev
 
 
 **NOTE:** it's better to use `babel-runtime` when building this module. It makes use of Object.assign, and IE11 reports error due to the use of Symbol, although we don't make use of them
-
-
-# Important notes
-
-### Content identifier
-
-:warning: If you plan on using the optionnal content identifier, you must be careful about several things:
-- You should be really careful that you pass a string that identifies a content in a truly unique manner. If there's a collision, our backend is going to match peers that aren't watching the same content together, and that can lead to unpredicable results.
-
-
-- Furthermore, you should be careful that we need a content identified by the same id to be **packaged** in the exact same way. If you are packaging your content in an origin server, and using your edge servers merely as cache servers, you're fine. If your edge servers are doing the packaging, as can happen with some Wowza or Nimble configurations for example, then you shouldn't identify contents coming from different edge servers as being the same content. It is advised then that you don't set this optionnal parameter and that you use the default (full url without the query string).
-
-
-- Be careful about elements non-related to the content in your id. For example, if you derive your content id from its url, and you have a user specific token in your query string, you're going to have to strip that token from the id. Same thing if you have query parameters identifying the device, you'll want to remove them if your content is package the same for all devices (but keep it if the content is different for mobile and desktop for example).
-
