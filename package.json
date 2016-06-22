@@ -18,7 +18,8 @@
     "start": "node_modules/.bin/static",
     "debug": "iron-mocha --require mochahook",
     "preinstall": "npm run clean",
-    "postinstall": "./update_demo.rb"
+    "postinstall": "./update_demo.rb",
+    "babel": "babel lib --out-dir lib-es5"
   },
   "browserify": {
     "transform": [
@@ -34,6 +35,7 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.10.1",
     "babel-core": "^6.7.7",
     "babel-eslint": "^6.0.4",
     "babel-plugin-add-module-exports": "^0.2.0",
