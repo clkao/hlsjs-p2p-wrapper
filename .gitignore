@@ -10,4 +10,5 @@ bridge/
 .gitattributes
 test/html/build.js
 lib-es5/
+example/app/build.js
 
