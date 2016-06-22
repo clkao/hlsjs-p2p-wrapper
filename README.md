@@ -1,6 +1,6 @@
 # hlsjs-p2p-wrapper
 
-This module wraps an instance of [`Hls.js`](https://github.com/dailymotion/hls.js) to bootstrap it with the Streamroot P2P module.
+This module wraps an instance of [`Hls.js`](https://github.com/dailymotion/hls.js) to bootstrap it with the Streamroot P2P module. Check the [Streamroot
 
 It provides a **bundle** that extends the [`Hls.js`](https://github.com/dailymotion/hls.js) constructor to create a fully configured player which will use the Streamroot P2P module, giving you the exact same API.  
 You can integrate this bundle with minimal changes in your application (you only need to add an additional argument to the [`Hls.js`](https://github.com/dailymotion/hls.js) constructor).
@@ -100,7 +100,7 @@ import StreamrootHlsjsP2PWrapper from 'streamroot-hlsjs-p2p-wrapper';
 
 ```javascript
 // Hls constructor is overriden by including bundle
-var hls = new Hls(myHlsjsConfig, myStreamrootP2PConfig);
+var hls = new Hls(hlsjsConfig, p2pConfig);
 // Use `hls` just like your usual hls.js ...
 ```
 
@@ -108,7 +108,7 @@ var hls = new Hls(myHlsjsConfig, myStreamrootP2PConfig);
 
 ```javascript
 var wrapper = new HlsjsP2PWrapper(Hls);
-var hls = wrapper.createPlayer(myHlsjsConfig, myStreamrootP2PConfig);
+var hls = wrapper.createPlayer(hlsjsConfig, p2pConfig);
 // Use `hls` just like your usual hls.js…
 ```
 
