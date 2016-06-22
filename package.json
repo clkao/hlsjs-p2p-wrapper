@@ -21,11 +21,6 @@
     "postinstall": "./update_demo.rb",
     "babel": "babel lib --out-dir lib-es5"
   },
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
-  },
   "dependencies": {
     "hls.js": "0.5.39",
     "lodash.assigninwith": "^4.0.7",
@@ -59,6 +54,7 @@
     "node-static": "^0.7.7",
     "should": "^9.0.0",
     "uglifyify": "^3.0.1",
+    "webpack": "^1.13.1",
     "xhr-shaper": "^0.2.1"
   }
 }
