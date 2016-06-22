@@ -114,6 +114,8 @@ var hls = wrapper.createPlayer(hlsjsConfig, p2pConfig);
 
 To see full sample code and extended possibilities of how to use this module, take a look at the code in the `example` directory.
 
+Check the p2pConfig documentation [here](https://streamroot.readme.io/docs/p2p-config) and our recommendations about hls.js configuration [here](https://streamroot.readme.io/docs/hls-config).
+
 ### Run demos
 
 To build and run the shipped Hls.js and Streamroot demos run:
