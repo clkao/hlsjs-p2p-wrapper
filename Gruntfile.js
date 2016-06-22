@@ -79,7 +79,7 @@ module.exports = function (grunt) {
                                     false),
             example_app: makeBrowserifyTask("example/app/main.js", 
                                             "example/app/build.js",
-                                            "ExampleApp", false)
+                                            "ExampleApp", true)
         }
     });
 
