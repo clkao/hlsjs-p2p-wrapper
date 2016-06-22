@@ -1,4 +1,4 @@
-import HlsjsWrapper from '../../dist/wrapper/hlsjs-p2p-wrapper-common';
+import HlsjsWrapper from '../../lib-es5/hlsjs-p2p-wrapper';
 import Hls from 'hls.js';
 
 window.CreatePlayer = function(hlsjsConfig, p2pConfig) {

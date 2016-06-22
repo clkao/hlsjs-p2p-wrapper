@@ -37,6 +37,7 @@ deployment:
         branch: /^(?!(?:dev|master)$).+$/
         commands:
             # Upload dist
+            - npm run babel
             - grunt browserify:bundle
             - grunt browserify:wrapper
 
@@ -77,6 +78,7 @@ deployment:
             - toolkit/set_version.rb --version $(toolkit/current_version.rb --beta ${CIRCLE_BUILD_NUM})
 
             # Generate dist
+            - npm run babel
             - grunt browserify:bundle
             - grunt browserify:wrapper
 
@@ -158,6 +160,7 @@ deployment:
             - rm -rf dist
 
             # Generate dist
+            - npm run babel
             - grunt browserify:bundle
             - grunt browserify:wrapper
 
