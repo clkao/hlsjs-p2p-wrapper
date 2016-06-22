@@ -61,6 +61,6 @@ So it is not necessary anymore to create the module on manifest loading. This pa
 
 ###### NOTE:
 
-You can still pass a custom `contentId` but in v3 you have to pass it as a `p2pConfig` property instead of an additional optional argument of `createSRModule` (which is deprecated). 
+You can still pass a custom `contentId` but in v3 you have to pass it as a [p2pConfig](https://streamroot.readme.io/docs/p2p-config) property instead of an additional optional argument of `createSRModule` (which is deprecated).
 
 
