@@ -206,7 +206,7 @@ deployment:
             - toolkit/post_changelog.rb   --project $CIRCLE_PROJECT_REPONAME
                                           --env preprod
                                           --subtitle $POST_SUBTITLE
-                                          --channel $SLACK_CHANNEL
+                                          --channel $PREPROD_SLACK_CHANNEL
                                           --slack-token $SLACK_TOKEN
                                           --username $POST_USERNAME
                                           --icon-url $POST_PICTURE
