@@ -9,6 +9,9 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 
+## [3.2.5] - 2016-06-28
+- Replace the old optional method `getNextSegmentView` by `getSegmentDuration`
+
 ## [3.2.0] - 2016-06-21
 ### Changed
 - Hls.js version upgraded to 0.5.39 (fixes issues with Apple streams on Firefox) and updated bandwidth estimation integration tests
