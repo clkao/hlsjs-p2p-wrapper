@@ -116,6 +116,21 @@ To see full sample code and extended possibilities of how to use this module, ta
 
 Check the p2pConfig documentation [here](https://streamroot.readme.io/docs/p2p-config) and our recommendations about hls.js configuration [here](https://streamroot.readme.io/docs/hls-config).
 
+### Statistics
+
+#### Bundle
+
+No statistics available yet.
+
+#### Wrapper
+
+A `stats` object is available on a `HlsjsP2PWrapper` instance and contains the following properties:
+
+- `cdn`: cdn downloaded (cumulated bytes).
+- `p2p`: p2p offloaded from cdn (cumulated bytes).
+- `upload`: p2p uploaded (cumulated bytes).
+- `peers`: real time connected peers count.
+
 ### Run demos
 
 To build and run the shipped Hls.js and Streamroot demos run:
