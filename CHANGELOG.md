@@ -6,6 +6,8 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 ## [Dev]
 
 ## [Unreleased]
+
+## [3.2.5] - 2016-06-28
 - Replace the old optional method `getNextSegmentView` by `getSegmentDuration`
 
 ## [3.2.0] - 2016-06-21
