@@ -4,10 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This changelog's template come from [keepachangelog.com](http://keepachangelog.com/). When editing this document, please follow the convention specified there.
 
 ## [Dev]
-### Added
-- Expose peer-agent public stats api in HlsjsP2PWrapper.
 
 ## [Unreleased]
+
+## [3.3.0] - 2016-06-28
+### Added
+- Expose peer-agent public stats api in HlsjsP2PWrapper.
 
 ## [3.2.5] - 2016-06-28
 - Replace the old optional method `getNextSegmentView` by `getSegmentDuration`
