@@ -11,7 +11,7 @@ It also provides a **wrapper** that allows you to create/configure a player with
 
 ### Pre-requisites 
 
-Since the installation uses a Ruby script, you need Ruby to be installed on your machine. On most Linux distros and on Mac OSX, it's installed by default, but for windows you need to install it [manually](https://www.ruby-lang.org/en/).
+Since the installation uses a Ruby script, you need Ruby to be installed on your machine. On most Linux distros and on macOS, it's installed by default, but for windows you need to install it [manually](https://www.ruby-lang.org/en/).
 
 
 ### Setup
@@ -100,7 +100,7 @@ import StreamrootHlsjsP2PWrapper from 'streamroot-hlsjs-p2p-wrapper';
 
 ```javascript
 // Hls constructor is overriden by including bundle
-var hls = new Hls(myHlsjsConfig, myStreamrootP2PConfig);
+var hls = new Hls(hlsjsConfig, p2pConfig);
 // Use `hls` just like your usual hls.js ...
 ```
 
@@ -108,11 +108,28 @@ var hls = new Hls(myHlsjsConfig, myStreamrootP2PConfig);
 
 ```javascript
 var wrapper = new HlsjsP2PWrapper(Hls);
-var hls = wrapper.createPlayer(myHlsjsConfig, myStreamrootP2PConfig);
+var hls = wrapper.createPlayer(hlsjsConfig, p2pConfig);
 // Use `hls` just like your usual hls.js…
 ```
 
 To see full sample code and extended possibilities of how to use this module, take a look at the code in the `example` directory.
+
+Check the p2pConfig documentation [here](https://streamroot.readme.io/docs/p2p-config) and our recommendations about hls.js configuration [here](https://streamroot.readme.io/docs/hls-config).
+
+### Statistics
+
+#### Bundle
+
+No statistics available yet.
+
+#### Wrapper
+
+A `stats` object is available on a `HlsjsP2PWrapper` instance and contains the following properties:
+
+- `cdn`: cdn downloaded (cumulated bytes).
+- `p2p`: p2p offloaded from cdn (cumulated bytes).
+- `upload`: p2p uploaded (cumulated bytes).
+- `peers`: real time connected peers count.
 
 ### Run demos
 
@@ -158,18 +175,3 @@ grunt browserify:wrapper_dev
 
 
 **NOTE:** it's better to use `babel-runtime` when building this module. It makes use of Object.assign, and IE11 reports error due to the use of Symbol, although we don't make use of them
-
-
-# Important notes
-
-### Content identifier
-
-:warning: If you plan on using the optionnal content identifier, you must be careful about several things:
-- You should be really careful that you pass a string that identifies a content in a truly unique manner. If there's a collision, our backend is going to match peers that aren't watching the same content together, and that can lead to unpredicable results.
-
-
-- Furthermore, you should be careful that we need a content identified by the same id to be **packaged** in the exact same way. If you are packaging your content in an origin server, and using your edge servers merely as cache servers, you're fine. If your edge servers are doing the packaging, as can happen with some Wowza or Nimble configurations for example, then you shouldn't identify contents coming from different edge servers as being the same content. It is advised then that you don't set this optionnal parameter and that you use the default (full url without the query string).
-
-
-- Be careful about elements non-related to the content in your id. For example, if you derive your content id from its url, and you have a user specific token in your query string, you're going to have to strip that token from the id. Same thing if you have query parameters identifying the device, you'll want to remove them if your content is package the same for all devices (but keep it if the content is different for mobile and desktop for example).
-
