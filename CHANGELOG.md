@@ -7,6 +7,10 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 
+## [3.3.2] - 2016-06-29
+### Updated
+- hls.js to 0.5.40
+
 ## [3.3.0] - 2016-06-28
 ### Added
 - Expose peer-agent public stats api in HlsjsP2PWrapper.

@@ -12,7 +12,7 @@ describe("Hls controllers", () => {
 
     it("should estimate the right bandwidth according to stats of loaded fragment", () => {
 
-        let hlsMock = new HlsMock();
+        let hlsMock = new HlsMock(5, false, 0, false);
         let abrController = new AbrController(hlsMock);
 
         const frag = {
