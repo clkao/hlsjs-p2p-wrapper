@@ -7,6 +7,8 @@
     "name": "streamroot",
     "email": "contact@streamroot.io"
   },
+  "repository": "https://github.com/streamroot/hlsjs-p2p-wrapper.git",
+  "license": "UNLICENSED",
   "scripts": {
     "clean": "rm -Rf dist",
     "build": "grunt build",
