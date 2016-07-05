@@ -54,11 +54,13 @@ For running unit tests (in node.js), use
 npm test
 ```
 
-For integration tests (Running in Chrome browser via Karma through Mocha plugin), use
+For integration tests (Running in PhantomJS/Chrome browsers via Karma through Mocha plugin), use
 
 ```
 npm run karma
 ```
+
+IMPORTANT: Set `export NODE_ENV=development` in your shell to make sure Karma will use all your local browser capabilities when in dev mode.
 
 For integration tests in dev mode (Mocha suite running in your favorite browser, better for debugging): 
 
