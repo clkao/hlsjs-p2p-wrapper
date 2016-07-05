@@ -11,10 +11,11 @@ It also provides a **wrapper** that allows you to create/configure a player with
 
 ### Pre-requisites 
 
-First of all, make sure you are using an `npm` version > 3.x
+First of all, make sure you are using an `npm` version > 3.x.
 
 Since the installation uses a Ruby script, you need Ruby to be installed on your machine. On most Linux distros and on macOS, it's installed by default, but for windows you need to install it [manually](https://www.ruby-lang.org/en/).
 
+Finally, one of the install steps assumes the presence of `wget` on your system. Again this is most likely installed on all Unix based systems. If you have a Mac, you could use [Homebrew](https://brew.sh/) and then run `brew install wget`.
 
 ### Setup
 
