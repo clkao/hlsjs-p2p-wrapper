@@ -11,7 +11,7 @@ It also provides a **wrapper** that allows you to create/configure a player with
 
 ### Pre-requisites 
 
-First of all, make sure you are using an `npm` version > 3.x.
+First of all, make sure you are using a Node.js version >= 6.0.0
 
 Since the installation uses a Ruby script, you need Ruby to be installed on your machine. On most Linux distros and on macOS, it's installed by default, but for windows you need to install it [manually](https://www.ruby-lang.org/en/).
 
