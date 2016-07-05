@@ -17,7 +17,7 @@ describe("P2PLoaderGenerator", function() { // using plain ES5 function here
     }
 
     beforeEach(() => {
-        XMLHttpRequest.Shaper.maxBandwidth = 512;   
+        XMLHttpRequest.Shaper.maxBandwidth = 512;
     });
 
     afterEach(() => {
