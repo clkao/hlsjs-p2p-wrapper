@@ -28,6 +28,14 @@ npm install
 
 ### Build
 
+#### Bundle
+
+Run this task to build it:
+```
+grunt browserify:bundle
+```
+
+Now you can include `dist/bundle/hlsjs-p2p-bundle.js` in your application.
 
 #### Wrapper
 
@@ -37,15 +45,6 @@ grunt browserify:wrapper
 ```
 
 Now you can include `dist/wrapper/hlsjs-p2p-wrapper.js` in your application.
-
-#### Bundle
-
-Run this task to build it:
-```
-grunt browserify:bundle
-```
-
-Now you can include `dist/bundle/hlsjs-p2p-bundle.js` in your application.
 
 ### Tests
 
