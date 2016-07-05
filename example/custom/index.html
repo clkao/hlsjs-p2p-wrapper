@@ -53,6 +53,8 @@
                     hls.on(Hls.Events.MANIFEST_PARSED,function() {
                         video.play();
                     });
+                } else {
+                    alert('Your browser does not support Hls.js based playback');
                 }
             });
 
