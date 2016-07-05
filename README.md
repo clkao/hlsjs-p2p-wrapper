@@ -46,25 +46,33 @@ Now you can include `dist/bundle/hlsjs-p2p-bundle.js` in your application.
 
 ### Tests
 
-For node tests, run
+For running unit tests (in node.js), use
 
 ```
 npm test
 ```
 
-For automated browser tests, run
+For integration tests (Running in Chrome browser via Karma through Mocha plugin), use
 
 ```
 npm run karma
 ```
 
-For browser tests in dev mode, start a server in the project root, then run
+For integration tests in dev mode (Mocha suite running in your favorite browser, better for debugging): 
+
+1. Start dev server:
+
+```
+npm start
+```
+
+2. Start compile&watch browserify process (in another shell):
 
 ```
 grunt browserify:test_dev
 ```
 
-Now go to http://localhost:8080/test/html/
+3. Go to http://localhost:8080/test/html/
 
 ### Install
 
