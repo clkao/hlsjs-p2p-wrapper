@@ -107,7 +107,7 @@ var hls = new Hls(hlsjsConfig, p2pConfig);
 #### Wrapper instantiation
 
 ```javascript
-var wrapper = new HlsjsP2PWrapper(Hls);
+var wrapper = new StreamrootHlsjsP2PWrapper(Hls);
 var hls = wrapper.createPlayer(hlsjsConfig, p2pConfig);
 // Use `hls` just like your usual hls.js…
 ```
