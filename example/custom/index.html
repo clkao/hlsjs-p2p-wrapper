@@ -37,7 +37,7 @@
                     var wrapper = new HlsjsP2PWrapper(Hls);
 
                     // To create a new configured default player using the wrapper toolkit
-                    hls = wrapper.createPlayer(config.hlsjsConfig, config.p2pConfig);
+                    hls = wrapper.createMediaEngine(config.hlsjsConfig, config.p2pConfig);
 
                     hls.loadSource(config.contentUrl);
                     hls.attachMedia(video);
