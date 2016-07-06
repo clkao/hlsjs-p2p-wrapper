@@ -11,8 +11,11 @@ It also provides a **wrapper** that allows you to create/configure a player with
 
 ### Pre-requisites 
 
+First of all, make sure you are using a Node.js version >= 6.0.0
+
 Since the installation uses a Ruby script, you need Ruby to be installed on your machine. On most Linux distros and on macOS, it's installed by default, but for windows you need to install it [manually](https://www.ruby-lang.org/en/).
 
+Finally, one of the install steps assumes the presence of `wget` on your system. Again this is most likely installed on all Unix based systems. If you have a Mac, you could use [Homebrew](https://brew.sh/) and then run `brew install wget`.
 
 ### Setup
 
@@ -25,6 +28,14 @@ npm install
 
 ### Build
 
+#### Bundle
+
+Run this task to build it:
+```
+grunt browserify:bundle
+```
+
+Now you can include `dist/bundle/hlsjs-p2p-bundle.js` in your application.
 
 #### Wrapper
 
@@ -35,36 +46,37 @@ grunt browserify:wrapper
 
 Now you can include `dist/wrapper/hlsjs-p2p-wrapper.js` in your application.
 
-#### Bundle
-
-Run this task to build it:
-```
-grunt browserify:bundle
-```
-
-Now you can include `dist/bundle/hlsjs-p2p-bundle.js` in your application.
-
 ### Tests
 
-For node tests, run
+For running unit tests (in node.js), use
 
 ```
 npm test
 ```
 
-For automated browser tests, run
+For integration tests (Running in PhantomJS/Chrome browsers via Karma through Mocha plugin), use
 
 ```
 npm run karma
 ```
 
-For browser tests in dev mode, start a server in the project root, then run
+IMPORTANT: Set `export NODE_ENV=development` in your shell to make sure Karma will use all your local browser capabilities when in dev mode.
+
+For integration tests in dev mode (Mocha suite running in your favorite browser, better for debugging): 
+
+1. Start dev server:
+
+```
+npm start
+```
+
+2. Start compile&watch browserify process (in another shell):
 
 ```
 grunt browserify:test_dev
 ```
 
-Now go to http://localhost:8080/test/html/
+3. Go to http://localhost:8080/test/html/
 
 ### Install
 
@@ -107,7 +119,7 @@ var hls = new Hls(hlsjsConfig, p2pConfig);
 #### Wrapper instantiation
 
 ```javascript
-var wrapper = new HlsjsP2PWrapper(Hls);
+var wrapper = new StreamrootHlsjsP2PWrapper(Hls);
 var hls = wrapper.createPlayer(hlsjsConfig, p2pConfig);
 // Use `hls` just like your usual hls.js…
 ```

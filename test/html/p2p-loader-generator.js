@@ -16,6 +16,16 @@ describe("P2PLoaderGenerator", function() { // using plain ES5 function here
         return;
     }
 
+    beforeEach(() => {
+        XMLHttpRequest.Shaper.maxBandwidth = 512;
+    });
+
+    afterEach(() => {
+
+        // Reset XHR-shaper to defaults !!!
+        XMLHttpRequest.Shaper.maxBandwidth = Infinity;
+    });
+
     it("should succeed to load a fragment, trigger success events and return valid stats", (done) => {
 
         const P2PLoader = p2pLoaderGenerator(new HlsjsWrapperMock());
@@ -35,16 +45,12 @@ describe("P2PLoaderGenerator", function() { // using plain ES5 function here
         hls.on(Hls.Events.FRAG_LOADED, (event, data) => {
             fragLoaded++;
 
-            console.log(data);
-
             loadedEventData = data;
 
             finish();
         });
 
         hls.on(Hls.Events.FRAG_LOAD_PROGRESS, (event, data) => {
-
-            console.log(data);
 
             data.frag.should.be.equal(frag);
 
@@ -70,6 +76,8 @@ describe("P2PLoaderGenerator", function() { // using plain ES5 function here
             fragLoaded.should.be.equal(1);
 
             const estimatedBW = 8 * expectedSize / ((loadedEventData.stats.tload - loadedEventData.stats.trequest) / 1000.0);
+
+            console.log('Estimated BW: ' + estimatedBW);
 
             (hls.abrController.bwEstimator.getEstimate() / estimatedBW).should.be.approximately(1, 0.01); // delta of 1%
 
