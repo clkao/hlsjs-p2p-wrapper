@@ -30,6 +30,7 @@ dependencies:
 test:
     override:
         - npm test
+        - npm run karma
         - npm run lint
 
 deployment:
@@ -93,15 +94,19 @@ deployment:
             - cp dist/bundle/$DIST_BUNDLE $CIRCLE_ARTIFACTS/$DIST_BUNDLE
             - cp dist/wrapper/$DIST_WRAPPER $CIRCLE_ARTIFACTS/$DIST_WRAPPER
 
-            # Build package.json for the bundle
+            # Build package.json
             - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb)
                                             --main ./$DIST_BUNDLE
                                             --name $BUNDLE_NAME
                                             -o dist/bundle/package.json
+            - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb)
+                                            --main ./$DIST_WRAPPER
+                                            --name $WRAPPER_NAME
+                                            -o dist/wrapper/package.json
 
             # Publish
             - npm publish dist/bundle --tag beta
-            - npm publish --tag beta
+            - npm publish dist/wrapper --tag beta
 
             # Upload version
             - toolkit/upload_to_s3.rb --bucket $S3_STAGING_BUCKET
@@ -172,15 +177,19 @@ deployment:
             - cp dist/bundle/$DIST_BUNDLE $CIRCLE_ARTIFACTS/$DIST_BUNDLE
             - cp dist/wrapper/$DIST_WRAPPER $CIRCLE_ARTIFACTS/$DIST_WRAPPER
 
-            # Build package.json for the bundle
+            # Build package.json
             - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb)
                                             --main ./$DIST_BUNDLE
                                             --name $BUNDLE_NAME
                                             -o dist/bundle/package.json
+            - toolkit/build_dist_package.rb --version $(toolkit/current_version.rb)
+                                            --main ./$DIST_WRAPPER
+                                            --name $WRAPPER_NAME
+                                            -o dist/wrapper/package.json
 
             # Publish
             - npm publish dist/bundle
-            - npm publish
+            - npm publish dist/wrapper
 
             # Upload version
             - toolkit/upload_to_s3.rb --bucket $S3_PREPROD_BUCKET
@@ -206,7 +215,7 @@ deployment:
             - toolkit/post_changelog.rb   --project $CIRCLE_PROJECT_REPONAME
                                           --env preprod
                                           --subtitle $POST_SUBTITLE
-                                          --channel $SLACK_CHANNEL
+                                          --channel $PREPROD_SLACK_CHANNEL
                                           --slack-token $SLACK_TOKEN
                                           --username $POST_USERNAME
                                           --icon-url $POST_PICTURE

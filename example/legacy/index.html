@@ -23,6 +23,10 @@
                     throw new Error('Streamroot config is not set');
                 }
 
+                if (!window.hasWebRTC) {
+                    alert('Your browser does not support P2P');
+                }
+
                 // Check feature support
                 if (Hls.isSupported()) {
 
@@ -45,6 +49,8 @@
                     hls.on(Hls.Events.MANIFEST_PARSED,function() {
                         video.play();
                     });
+                } else {
+                    alert('Your browser does not support Hls.js based playback');
                 }
             });
 

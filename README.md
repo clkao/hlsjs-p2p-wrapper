@@ -11,8 +11,11 @@ It also provides a **wrapper** that allows you to create/configure a player with
 
 ### Pre-requisites 
 
-Since the installation uses a Ruby script, you need Ruby to be installed on your machine. On most Linux distros and on Mac OSX, it's installed by default, but for windows you need to install it [manually](https://www.ruby-lang.org/en/).
+First of all, make sure you are using a Node.js version >= 6.0.0
 
+Since the installation uses a Ruby script, you need Ruby to be installed on your machine. On most Linux distros and on macOS, it's installed by default, but for windows you need to install it [manually](https://www.ruby-lang.org/en/).
+
+Finally, one of the install steps assumes the presence of `wget` on your system. Again this is most likely installed on all Unix based systems. If you have a Mac, you could use [Homebrew](https://brew.sh/) and then run `brew install wget`.
 
 ### Setup
 
@@ -25,6 +28,14 @@ npm install
 
 ### Build
 
+#### Bundle
+
+Run this task to build it:
+```
+grunt browserify:bundle
+```
+
+Now you can include `dist/bundle/hlsjs-p2p-bundle.js` in your application.
 
 #### Wrapper
 
@@ -35,36 +46,37 @@ grunt browserify:wrapper
 
 Now you can include `dist/wrapper/hlsjs-p2p-wrapper.js` in your application.
 
-#### Bundle
-
-Run this task to build it:
-```
-grunt browserify:bundle
-```
-
-Now you can include `dist/bundle/hlsjs-p2p-bundle.js` in your application.
-
 ### Tests
 
-For node tests, run
+For running unit tests (in node.js), use
 
 ```
 npm test
 ```
 
-For automated browser tests, run
+For integration tests (Running in PhantomJS/Chrome browsers via Karma through Mocha plugin), use
 
 ```
 npm run karma
 ```
 
-For browser tests in dev mode, start a server in the project root, then run
+IMPORTANT: Set `export NODE_ENV=development` in your shell to make sure Karma will use all your local browser capabilities when in dev mode.
+
+For integration tests in dev mode (Mocha suite running in your favorite browser, better for debugging): 
+
+1. Start dev server:
+
+```
+npm start
+```
+
+2. Start compile&watch browserify process (in another shell):
 
 ```
 grunt browserify:test_dev
 ```
 
-Now go to http://localhost:8080/test/html/
+3. Go to http://localhost:8080/test/html/
 
 ### Install
 
@@ -100,19 +112,36 @@ import StreamrootHlsjsP2PWrapper from 'streamroot-hlsjs-p2p-wrapper';
 
 ```javascript
 // Hls constructor is overriden by including bundle
-var hls = new Hls(myHlsjsConfig, myStreamrootP2PConfig);
+var hls = new Hls(hlsjsConfig, p2pConfig);
 // Use `hls` just like your usual hls.js ...
 ```
 
 #### Wrapper instantiation
 
 ```javascript
-var wrapper = new HlsjsP2PWrapper(Hls);
-var hls = wrapper.createPlayer(myHlsjsConfig, myStreamrootP2PConfig);
+var wrapper = new StreamrootHlsjsP2PWrapper(Hls);
+var hls = wrapper.createPlayer(hlsjsConfig, p2pConfig);
 // Use `hls` just like your usual hls.js…
 ```
 
 To see full sample code and extended possibilities of how to use this module, take a look at the code in the `example` directory.
+
+Check the p2pConfig documentation [here](https://streamroot.readme.io/docs/p2p-config) and our recommendations about hls.js configuration [here](https://streamroot.readme.io/docs/hls-config).
+
+### Statistics
+
+#### Bundle
+
+No statistics available yet.
+
+#### Wrapper
+
+A `stats` object is available on a `HlsjsP2PWrapper` instance and contains the following properties:
+
+- `cdn`: cdn downloaded (cumulated bytes).
+- `p2p`: p2p offloaded from cdn (cumulated bytes).
+- `upload`: p2p uploaded (cumulated bytes).
+- `peers`: real time connected peers count.
 
 ### Run demos
 
@@ -158,18 +187,3 @@ grunt browserify:wrapper_dev
 
 
 **NOTE:** it's better to use `babel-runtime` when building this module. It makes use of Object.assign, and IE11 reports error due to the use of Symbol, although we don't make use of them
-
-
-# Important notes
-
-### Content identifier
-
-:warning: If you plan on using the optionnal content identifier, you must be careful about several things:
-- You should be really careful that you pass a string that identifies a content in a truly unique manner. If there's a collision, our backend is going to match peers that aren't watching the same content together, and that can lead to unpredicable results.
-
-
-- Furthermore, you should be careful that we need a content identified by the same id to be **packaged** in the exact same way. If you are packaging your content in an origin server, and using your edge servers merely as cache servers, you're fine. If your edge servers are doing the packaging, as can happen with some Wowza or Nimble configurations for example, then you shouldn't identify contents coming from different edge servers as being the same content. It is advised then that you don't set this optionnal parameter and that you use the default (full url without the query string).
-
-
-- Be careful about elements non-related to the content in your id. For example, if you derive your content id from its url, and you have a user specific token in your query string, you're going to have to strip that token from the id. Same thing if you have query parameters identifying the device, you'll want to remove them if your content is package the same for all devices (but keep it if the content is different for mobile and desktop for example).
-

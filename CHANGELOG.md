@@ -7,6 +7,17 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 
 ## [Unreleased]
 
+## [3.3.2] - 2016-06-29
+### Updated
+- hls.js to 0.5.40
+
+## [3.3.0] - 2016-06-28
+### Added
+- Expose peer-agent public stats api in HlsjsP2PWrapper.
+
+## [3.2.5] - 2016-06-28
+- Replace the old optional method `getNextSegmentView` by `getSegmentDuration`
+
 ## [3.2.0] - 2016-06-21
 ### Changed
 - Hls.js version upgraded to 0.5.39 (fixes issues with Apple streams on Firefox) and updated bandwidth estimation integration tests
