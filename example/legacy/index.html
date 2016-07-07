@@ -16,7 +16,7 @@
 
             var config = window.streamrootConfig;
 
-            window.addEventListener("load", () => {
+            window.addEventListener("load", function() {
 
                 // Check for config in environment
                 if (!config) {
@@ -24,7 +24,7 @@
                 }
 
                 if (!window.hasWebRTC) {
-                    alert('Your browser does not support P2P');
+                    error('Your browser does not support WebRTC. Will play with P2P disabled');
                 }
 
                 // Check feature support
@@ -36,11 +36,11 @@
                     const wrapper = new HlsjsP2PWrapper();
 
                     // Create Hls.js instance your way
-                    let hls = new Hls({
+                    var hls = new Hls({
                         fLoader: wrapper.P2PLoader
                     });
 
-                    hls.on(Hls.Events.MANIFEST_LOADING, (event, data) => {
+                    hls.on(Hls.Events.MANIFEST_LOADING, function(event, data) {
                         wrapper.createSRModule(config.p2pConfig, hls, Hls.Events, config.contentId);
                     });
 
@@ -50,7 +50,7 @@
                         video.play();
                     });
                 } else {
-                    alert('Your browser does not support Hls.js based playback');
+                    error('Your browser does not support Hls.js based playback');
                 }
             });
 
@@ -58,6 +58,7 @@
 
     </head>
     <body>
-        <video id="video" controls></video>
+        <div id="error"></div>
+        <video controls id="video"></video>
     </body>
 </html>
