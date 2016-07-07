@@ -10,4 +10,8 @@ window.streamrootConfig = {
     contentUrl: 'http://www.streambox.fr/playlists/test_001/stream.m3u8'
 }
 window.previousTotalCDN = 0;
-window.hasWebRTC = window.RTCPeerConnection || window.webkitPeerConnection00 || window.webkitRTCPeerConnection;
+window.hasWebRTC = !!(window.RTCPeerConnection || window.webkitPeerConnection00 || window.webkitRTCPeerConnection);
+
+function error(message) {
+    document.getElementById('error').innerHTML = '<b>' + message + '</b>';
+}
