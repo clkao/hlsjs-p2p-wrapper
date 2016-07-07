@@ -2,6 +2,7 @@
 
 import p2pLoaderGenerator from "../../lib/integration/p2p-loader-generator";
 import HlsjsWrapperMock from "../mocks/wrapper";
+import HlsjsMock from "../mocks/hls";
 import Hls from "hls.js";
 
 const TEST_URL1 = "http://www.streambox.fr/playlists/test_001/stream_110k_48k_416x234_000.ts";
@@ -28,6 +29,7 @@ describe("P2PLoaderGenerator", function() { // using plain ES5 function here
 
     it("should succeed to load a fragment, trigger success events and return valid stats", (done) => {
 
+        const hlsjsMock = new HlsjsMock(1, false);
         const P2PLoader = p2pLoaderGenerator(new HlsjsWrapperMock());
 
         let hls = new Hls({
@@ -39,8 +41,11 @@ describe("P2PLoaderGenerator", function() { // using plain ES5 function here
 
         const frag = {
             loadCounter: 1,
-            url: TEST_URL1
+            url: TEST_URL1,
+            level: 0
         };
+
+        hls.levelController._levels = hlsjsMock.levels;
 
         hls.on(Hls.Events.FRAG_LOADED, (event, data) => {
             fragLoaded++;
