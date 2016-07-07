@@ -6,7 +6,8 @@ describe("StreamrootHlsjsBundle", function() { // NOTE: We need to use the oldsc
     let video, config, hls, isDone;
 
     if (!Hls.isSupported()) {
-        throw new Error('Hls is not supported');
+        console.warn('Hls.js is not supported here, skipping bundle integration test');
+        return;
     }
 
     this.timeout("30000");
@@ -36,6 +37,9 @@ describe("StreamrootHlsjsBundle", function() { // NOTE: We need to use the oldsc
         video.pause();
         hls && hls.detachMedia();
         document.body.removeChild(video);
+
+        // Reset XHR-shaper to defaults !!!
+        XMLHttpRequest.Shaper.maxBandwidth = Infinity;
     });
 
     it("should play from the start", (done) => {

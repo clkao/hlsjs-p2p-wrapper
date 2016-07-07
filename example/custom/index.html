@@ -4,20 +4,7 @@
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/rickshaw/1.4.6/rickshaw.min.css">
         <script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.9/d3.min.js"> </script>
 
-        <script>
-            window._DEBUG_ = true;
-            window._TEST_ = false;
-            window.streamrootConfig = {
-                p2pConfig:{
-                    streamrootKey: "ry-v7xuywnt",
-                    debug: true,
-                    contentId: null
-                },
-                contentUrl: 'http://www.streambox.fr/playlists/test_001/stream.m3u8'
-            }
-
-            window.previousTotalCDN = 0;
-        </script>
+        <script src="../config.js"></script>
 
         <script src="../../node_modules/hls.js/dist/hls.js"></script>
         <script src="../../dist/wrapper/hlsjs-p2p-wrapper.js"></script>
@@ -34,6 +21,10 @@
                 // Check for config in environment
                 if (!config) {
                     throw new Error('Streamroot config is not set');
+                }
+
+                if (!window.hasWebRTC) {
+                    alert('Your browser does not support P2P');
                 }
 
                 // Check feature support
@@ -53,6 +44,8 @@
                     hls.on(Hls.Events.MANIFEST_PARSED,function() {
                         video.play();
                     });
+                } else {
+                    alert('Your browser does not support Hls.js based playback');
                 }
             });
 
