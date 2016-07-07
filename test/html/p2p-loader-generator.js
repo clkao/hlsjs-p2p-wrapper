@@ -44,7 +44,6 @@ describe("P2PLoaderGenerator", function() { // using plain ES5 function here
     it("should succeed to load a fragment, trigger success events and return valid stats", (done) => {
 
         const hlsjsMock = new HlsjsMock(1, false);
-        const P2PLoader = p2pLoaderGenerator(new HlsjsWrapperMock());
 
         let hls = createHls();
 
