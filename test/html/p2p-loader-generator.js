@@ -46,9 +46,7 @@ describe("P2PLoaderGenerator", function() { // using plain ES5 function here
         const hlsjsMock = new HlsjsMock(1, false);
         const P2PLoader = p2pLoaderGenerator(new HlsjsWrapperMock());
 
-        let hls = new Hls({
-            fLoader: P2PLoader
-        });
+        let hls = createHls();
 
         let fragLoadProgress = 0, fragLoaded = 0;
         let loadedEventData;
