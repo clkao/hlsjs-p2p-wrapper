@@ -15,6 +15,7 @@
         <script>
 
             var config = window.streamrootConfig;
+            var p2pEnabled = true;
 
             window.addEventListener("load", function() {
 
@@ -25,6 +26,7 @@
 
                 if (!window.hasWebRTC) {
                     error('Your browser does not support WebRTC. Will play with P2P disabled');
+                    p2pEnabled = false;
                 }
 
                 // Check feature support
@@ -36,16 +38,22 @@
                     // Create wrapper where we DI the Hls.js constructor (in this example we use the one provided by the bundle)
                     var wrapper = new HlsjsP2PWrapper(Hls);
 
-                    // To create a new configured default player using the wrapper toolkit
-                    hls = wrapper.createPlayer(config.hlsjsConfig, config.p2pConfig);
-
+                    if (p2pEnabled) {
+                        // To create a new configured default player using the wrapper toolkit
+                        hls = wrapper.createPlayer(config.hlsjsConfig, config.p2pConfig);
+                           
+                    } else {
+                        // fall back on default Hls.js constructor
+                        hls = new Hls(config.hlsjsConfig);
+                    }
+ 
                     hls.loadSource(config.contentUrl);
                     hls.attachMedia(video);
                     hls.on(Hls.Events.MANIFEST_PARSED,function() {
                         video.play();
                     });
                 } else {
-                    error('Your browser does not support Hls.js based playback');
+                    error('Your browser is not supported.');
                 }
             });
 
