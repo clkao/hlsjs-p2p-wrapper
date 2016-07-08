@@ -10,15 +10,19 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 ## [3.5.0] - 2016-07-08
 ### Updated
 - hls.js to 0.5.40
+
 ### Added
 - Error message in example page
+
 ### Changed
 - P2P loader (not doing XHRs anymore)
 - Copy lib folder to wrapper dist before NPM publish (for internal testing usage)
+
 ### Fixed
 - Fixed race condition in retry logic
 - P2PLoader integration tests, fixed monkey-patching Hls.js instance for setup
 - Fixed example pages failover on Safari
+
 ### Removed
 - XHR loader
  
