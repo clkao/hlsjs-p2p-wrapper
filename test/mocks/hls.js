@@ -5,7 +5,7 @@ class HlsMock {
 
     constructor (levelNumber, live, definedLevel = 0, emptyLevel = true) {
 
-        this.url = "http://foo/bar"
+        this.url = "http://foo/bar";
 
         this.ee = new EventEmitter();
 

@@ -2,7 +2,7 @@
 
 class PeerAgentMock {
 
-    constructor(playerBridge, contentUrl, mediaMap, p2pConfig, SegmentView, streamType, integrationVersion) {
+    constructor() {
         PeerAgentMock.__onInit();
     }
 
@@ -46,13 +46,13 @@ class PeerAgentMock {
     static get StreamTypes() {
         return {
             HLS: "HLS"
-        }
+        };
     }
 }
 
 PeerAgentMock.__reset = () => {
-   PeerAgentMock.__onInit = (() => {}); 
-}
+    PeerAgentMock.__onInit = (() => {});
+};
 
 PeerAgentMock.__reset();
 
