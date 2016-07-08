@@ -17,6 +17,34 @@ Since the installation uses a Ruby script, you need Ruby to be installed on your
 
 Finally, one of the install steps assumes the presence of `wget` on your system. Again this is most likely installed on all Unix based systems. If you have a Mac, you could use [Homebrew](https://brew.sh/) and then run `brew install wget`.
 
+### Install
+
+You can install the artifacts distributed as NPM modules:
+
+For the wrapper with hls.js included:
+
+```
+npm install streamroot-hlsjs-p2p-bundle
+```
+
+For the wrapper without hls.js:
+
+```
+npm install streamroot-hlsjs-p2p-wrapper
+```
+
+In your application import/require the package you want to use as in the example like
+
+```
+import StreamrootHlsjsP2PBundle from 'streamroot-hlsjs-p2p-bundle';
+```
+
+or
+
+```
+import StreamrootHlsjsP2PWrapper from 'streamroot-hlsjs-p2p-wrapper';
+```
+
 ### Setup
 
 After cloning the repo, make sure that you have `grunt-cli` installed in your global node binaries and install local dependencies in the project root:
@@ -45,6 +73,22 @@ grunt browserify:wrapper
 ```
 
 Now you can include `dist/wrapper/hlsjs-p2p-wrapper.js` in your application.
+
+### Development
+
+Make sure to have run `npm install` at least once.
+
+To build and compile-watch the example files run:
+
+```
+grunt browserify:bundle_dev
+```
+
+or
+
+```
+grunt browserify:wrapper_dev
+```
 
 ### Tests
 
@@ -77,34 +121,6 @@ grunt browserify:test_dev
 ```
 
 3. Go to http://localhost:8080/test/html/
-
-### Install
-
-You can install the artifacts distributed as NPM modules:
-
-For the wrapper with hls.js included:
-
-```
-npm install streamroot-hlsjs-p2p-bundle
-```
-
-For the wrapper without hls.js:
-
-```
-npm install streamroot-hlsjs-p2p-wrapper
-```
-
-In your application import/require the package you want to use as in the example like
-
-```
-import StreamrootHlsjsP2PBundle from 'streamroot-hlsjs-p2p-bundle';
-```
-
-or
-
-```
-import StreamrootHlsjsP2PWrapper from 'streamroot-hlsjs-p2p-wrapper';
-```
 
 ### Example
 
@@ -168,22 +184,6 @@ grunt docs
 ```
 
 This will start a server. Go to <http://localhost:8080/docs>
-
-### Development
-
-Make sure to have run `npm install` at least once.
-
-To build and compile-watch the example files run:
-
-```
-grunt browserify:bundle_dev
-```
-
-or
-
-```
-grunt browserify:wrapper_dev
-```
 
 
 **NOTE:** it's better to use `babel-runtime` when building this module. It makes use of Object.assign, and IE11 reports error due to the use of Symbol, although we don't make use of them
