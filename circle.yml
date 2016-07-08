@@ -187,6 +187,11 @@ deployment:
                                             --name $WRAPPER_NAME
                                             -o dist/wrapper/package.json
 
+            # Copy sources (lib) into wrapper dist folder
+            # We ship the sources to be able to access private API
+            # for integration testing usage
+            - cp -R lib dist/wrapper/
+
             # Publish
             - npm publish dist/bundle
             - npm publish dist/wrapper
