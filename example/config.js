@@ -3,7 +3,7 @@ window._TEST_ = false;
 window._MOBILE_ = false;
 window._ENVIRONMENT_ = 'development';
 window.streamrootConfig = {
-    p2pConfig:{
+    p2pConfig: {
         streamrootKey: "ry-v7xuywnt",
         debug: true,
         contentId: null

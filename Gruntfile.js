@@ -69,11 +69,11 @@ module.exports = function (grunt) {
                                                  "dist/bundle/hlsjs-p2p-bundle.js",
                                                  "Hls",
                                                  true),
-            test_dev: makeBrowserifyTask("test/html/tests.js",
+            test_dev: makeBrowserifyTask("test/html/index.js",
                                     "test/html/build.js",
                                     "Tests",
                                     true),
-            test: makeBrowserifyTask("test/html/tests.js",
+            test: makeBrowserifyTask("test/html/index.js",
                                     "test/html/build.js",
                                     "Tests",
                                     false)

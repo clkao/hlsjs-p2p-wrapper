@@ -1,10 +1,15 @@
 import Hls from 'hls.js';
+import EventEmitter from 'eventemitter3';
 
 class HlsMock {
 
     constructor (levelNumber, live, definedLevel = 0, emptyLevel = true) {
 
-    // this.hls.levels can return undefined if master playlist as not been parsed
+        this.url = "http://foo/bar"
+
+        this.ee = new EventEmitter();
+
+        // this.hls.levels can return undefined if master playlist as not been parsed
         if (levelNumber > 0) {
             this._levels = [];
         }
@@ -47,10 +52,23 @@ class HlsMock {
         return Hls.DefaultConfig;
     }
 
-    on() {}
+    static get Events() {
+        return Hls.Events;
+    }
 
-    trigger() {}
+    on(event, func) {
+        this.ee.on(event, func);
+    }
 
+    trigger(event) {
+        this.ee.emit(event);
+    }
+
+    __triggerEventAsync(event, timeout = 0) {
+        setTimeout(() => {
+            this.trigger(event);
+        }, timeout);
+    }
 }
 
 export default HlsMock;

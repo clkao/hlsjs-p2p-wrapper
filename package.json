@@ -49,6 +49,7 @@
     "browserify-derequire": "^0.9.4",
     "eslint": "2.9.0",
     "eslint-config-streamroot": "1.0.1",
+    "eventemitter3": "1.2.0",
     "grunt": "^1.0.1",
     "grunt-browserify": "^5.0.0",
     "grunt-bump": "^0.8.0",
