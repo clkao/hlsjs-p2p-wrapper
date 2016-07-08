@@ -4,10 +4,21 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This changelog's template come from [keepachangelog.com](http://keepachangelog.com/). When editing this document, please follow the convention specified there.
 
 ## [Dev]
-
-## [Unreleased]
 ### Updated
 - hls.js to 0.5.40
+### Added
+- Error message in example page
+### Changed
+- P2P loader (not doing XHRs anymore)
+- Copy lib folder to wrapper dist before NPM publish (for internal testing usage)
+### Fixed
+- Fixed race condition in retry logic
+- P2PLoader integration tests, fixed monkey-patching Hls.js instance for setup
+- Fixed example pages failover on Safari
+### Removed
+- XHR loader
+ 
+## [Unreleased]
 
 ## [3.3.0] - 2016-06-28
 ### Added

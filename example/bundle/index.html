@@ -6,6 +6,10 @@
 
         <script src="../config.js"></script>
 
+        <script>
+            window.previousTotalCDN = 0;
+        </script>
+
         <script src="http://cdn.streamroot.io/2/scripts/p2pGraph.js"></script>
         <script src="http://cdn.streamroot.io/2/scripts/peerStat.js"></script>
 
@@ -15,7 +19,7 @@
 
             var config = window.streamrootConfig;
 
-            window.addEventListener("load", () => {
+            window.addEventListener("load", function() {
 
                 // Check for config in environment
                 if (!config) {
@@ -23,14 +27,13 @@
                 }
 
                 if (!window.hasWebRTC) {
-                    alert('Your browser does not support P2P. Can not play using bundle.');
-                    return;
+                    error('Your browser does not support WebRTC. Can not play using bundle');
                 }
 
                 // Check feature support
                 if (Hls.isSupported()) {
-                    let hls;
-                    const video = document.getElementById('video');
+                    var hls;
+                    var video = document.getElementById('video');
 
                     /**
                      * Preferred way is to simply use the bundle that shims the Hls.js constructor and leaves without
@@ -42,18 +45,17 @@
 
                     hls.loadSource(config.contentUrl);
                     hls.attachMedia(video);
-                    hls.on(Hls.Events.MANIFEST_PARSED,function() {
+                    hls.on(Hls.Events.MANIFEST_PARSED, function() {
                         video.play();
                     });
                 } else {
-                    alert('Your browser does not support Hls.js based playback');
+                    error('Your browser does not support Hls.js playback');
                 }
             });
         </script>
-
-
     </head>
     <body>
-        <video id="video" controls></video>
+        <div id="error"></div>
+        <video controls id="video"></video>
     </body>
 </html>
