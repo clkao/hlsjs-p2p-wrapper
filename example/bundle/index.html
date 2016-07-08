@@ -27,7 +27,8 @@
                 }
 
                 if (!window.hasWebRTC) {
-                    error('Your browser does not support WebRTC. Can not play using bundle');
+                    error('Your browser is not supported by the Hls.js P2P bundle.');
+                    return;
                 }
 
                 // Check feature support
@@ -49,7 +50,7 @@
                         video.play();
                     });
                 } else {
-                    error('Your browser does not support Hls.js playback');
+                    error('Your browser is not supported.');
                 }
             });
         </script>
