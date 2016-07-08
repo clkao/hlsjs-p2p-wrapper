@@ -10,6 +10,20 @@ const TEST_URL1 = "http://www.streambox.fr/playlists/test_001/stream_110k_48k_41
 describe("P2PLoaderGenerator", function() { // using plain ES5 function here
                                             // otherwise `this.timeout` is broken
 
+    function createHls() {
+        const P2PLoader = p2pLoaderGenerator(new HlsjsWrapperMock());
+        let hls = new Hls({
+            fLoader: P2PLoader,
+            debug: true
+        });
+
+        hls.on(Hls.Events.ERROR, (event, data) => {
+            console.log(data);
+        });
+
+        return hls;
+    }
+
     this.timeout(10000);
 
     // this should only run in the browser
@@ -30,11 +44,8 @@ describe("P2PLoaderGenerator", function() { // using plain ES5 function here
     it("should succeed to load a fragment, trigger success events and return valid stats", (done) => {
 
         const hlsjsMock = new HlsjsMock(1, false);
-        const P2PLoader = p2pLoaderGenerator(new HlsjsWrapperMock());
 
-        let hls = new Hls({
-            fLoader: P2PLoader
-        });
+        let hls = createHls();
 
         let fragLoadProgress = 0, fragLoaded = 0;
         let loadedEventData;
@@ -92,11 +103,7 @@ describe("P2PLoaderGenerator", function() { // using plain ES5 function here
 
     it("should fail to load a fragment and trigger error events", (done) => {
 
-        const P2PLoader = p2pLoaderGenerator(new HlsjsWrapperMock());
-
-        let hls = new Hls({
-            fLoader: P2PLoader
-        });
+        let hls = createHls();
 
         let isDone = false;
         let error = 0;
@@ -121,7 +128,5 @@ describe("P2PLoaderGenerator", function() { // using plain ES5 function here
             done();
         }
     });
-
-
 
 });
