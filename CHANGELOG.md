@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This changelog's template come from [keepachangelog.com](http://keepachangelog.com/). When editing this document, please follow the convention specified there.
 
 ## [Dev]
+
+## [Unreleased]
+
+## [3.5.0] - 2016-07-08
 ### Updated
 - hls.js to 0.5.40
 ### Added
@@ -18,8 +22,6 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 ### Removed
 - XHR loader
  
-## [Unreleased]
-
 ## [3.3.0] - 2016-06-28
 ### Added
 - Expose peer-agent public stats api in HlsjsP2PWrapper.
