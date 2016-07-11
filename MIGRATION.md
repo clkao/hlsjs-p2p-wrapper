@@ -53,11 +53,13 @@ hls.on(Hls.Events.MANIFEST_PARSED,function() {
 });
 ```
 
-The first difference lies in the fact that the Hls.js dependency is injected in the wrapper at construction, leaving you only to pass config values to the wrapper when creating a player. 
+Note that the Hls.js dependency is now injected in the wrapper at construction, leaving you only to pass config values to the wrapper when creating a player. 
 
-Instead of creating an Hls.js instance your side and having to create the peer-agent instance later, the new API features a player factory.
+Instead of creating an Hls.js instance on your side and having to create the peer-agent instance later, the new API will to factor an instance that is ready to go. This means that it is not necessary to pass a config overriding explicitly `fLoader`. The wrapper takes care of that internally, and of any other eventually necessary config overrides.
 
 So it is not necessary anymore to create the module on manifest loading. This part is now done internally by the wrapper. The `createSRModule` method is deprecated. If you use the `createPlayer` function, don't call `createSRModule` at all. The wrapper will throw an error as a session is already initialized.
+
+IMPORTANT: If you are still deciding to use the legacy mode, and are overriding the config on your side, please make sure to always use `fLoader` (NOT `loader`) when passing the Streamroot P2P-loader. Not using `fLoader` will result in runtime errors. 
 
 ###### NOTE:
 
