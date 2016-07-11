@@ -4,10 +4,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This changelog's template come from [keepachangelog.com](http://keepachangelog.com/). When editing this document, please follow the convention specified there.
 
 ## [Dev]
-### Changed
-- Publish npm dist as rc when comming from master
 
 ## [Unreleased]
+
+## [3.5.4] - 2016-07-11
+### Fixed
+- fixed toolkit (merge of master in fev failed because of fast forward)
+
+## [3.5.3] - 2016-07-11
+### Changed
+- Publish npm dist as rc when comming from master
 
 ## [3.5.0] - 2016-07-08
 ### Updated
