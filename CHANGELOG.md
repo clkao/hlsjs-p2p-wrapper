@@ -6,6 +6,8 @@ This changelog's template come from [keepachangelog.com](http://keepachangelog.c
 ## [Dev]
 
 ## [Unreleased]
+### Fixed
+- fixed toolkit (merge of master in fev failed because of fast forward)
 
 ## [3.5.3] - 2016-07-11
 ### Changed
