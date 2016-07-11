@@ -104,6 +104,11 @@ deployment:
                                             --name $WRAPPER_NAME
                                             -o dist/wrapper/package.json
 
+            # Copy sources (lib) into wrapper dist folder
+            # We ship the sources to be able to access private API
+            # for integration testing usage
+            - cp -R lib dist/wrapper/
+
             # Publish
             - npm publish dist/bundle --tag beta
             - npm publish dist/wrapper --tag beta
@@ -193,8 +198,8 @@ deployment:
             - cp -R lib dist/wrapper/
 
             # Publish
-            - npm publish dist/bundle
-            - npm publish dist/wrapper
+            - npm publish dist/bundle --tag rc
+            - npm publish dist/wrapper --tag rc
 
             # Upload version
             - toolkit/upload_to_s3.rb --bucket $S3_PREPROD_BUCKET
